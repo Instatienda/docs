@@ -1,0 +1,53 @@
+---
+title: Broadcast best practices & FAQs
+slug: /broadcast-best-practices
+id: broadcast-best-practices
+---
+
+Broadcasts are a powerful tool for communicating with your users. They can be used to send a message to many people at once using a CSV file and an approved message template. However, with great power comes great responsibility. This document outlines the best practices for using broadcasts.
+
+# Avoid Spam
+
+First and foremost, only send messages to customers or those who have opted in to receive messages from you. If you send messages to those who have not opted in, it may be considered spam and reported by users, leading to your number being restricted by Facebook and your WhatsApp account being suspended.
+
+<Tip>
+  Learn more about opt-in and how WhatsApp handles spam [here](/user/whatsapp-number-quality).
+</Tip>
+
+# Sizing your images correctly
+
+When sending a template including an image, the optimal ratio is 16:9 (landscape). If the image is not 16:9, it will be cropped vertically by whatsapp on the preview. If your image is bigger than this be sure to keep the most important information in the center of the image.
+
+# Don't Abuse Variables
+
+Variables should only be used for specific purposes when sending them for approval. Sending large pieces of text inside a template variable may result in rejection by WhatsApp.
+
+# Keep Messages Short
+
+Remember that all messages sent through broadcasts end up as WhatsApp messages and most users are not used to receiving long messages on WhatsApp. Keep messages concise and consider adding a call to action button to direct users to your website for more information.
+
+# Allow Users to Opt Out
+
+No one wants to be marked as spam, so make sure to give users the option to opt out of receiving messages from you. This can be done by adding a link to your website or a phone number they can contact to opt out. It's better to handle this yourself than to have users report you as spam, which would reduce your [WhatsApp number quality](/user/whatsapp-number-quality).
+
+<Note>
+  Soon you will be able to keep track of users that have opted out of receiving messages from you. Stay tuned for updates.
+</Note>
+
+## Add Tags to Your Broadcast
+
+Tags are useful for filtering conversations later in the inbox. To track conversations started by a broadcast, add a tag to the broadcast and then filter the conversations by that tag later. This is useful to keep track of users that have replied to a broadcast within the inbox.
+
+## Add a Phone Number to Alert of Large Broadcasts
+
+It is possible to accidentally send a broadcast to a large number of users before it is ready. To prevent this, [add a phone number to be alerted when a broadcast is sent to a large number of users](https://app.hilos.io/config/notifications). This adds an extra layer of protection, preventing increased billing costs from an erroneous whatsapp campaign.
+
+## Remember to Close Conversations
+
+Broadcast messages won't be sent if the Inbox conversation isn't `CLOSED`, so always remember to close conversations to avoid failed messages. You can take advantage of the [inbox setting to automatically close conversations after a certain amount of time](configuring-your-inbox).
+
+## Broadcasts Can Take Time to Send
+
+When sending a broadcast, many things happen behind the scenes, including sending the message to WhatsApp, waiting for the message to be delivered, and then sending the message to the user. This process can take a while, so don't expect instant delivery, especially if sending to a large number of people. If the messages haven't been delivered after a few hours, please contact us.
+
+By following these best practices, you can create a better experience for your users and get the most out of your broadcasts.

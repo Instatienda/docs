@@ -1,0 +1,72 @@
+---
+title: Prerequisites
+icon: check
+---
+
+**Welcome to Hilos 🎉** We're glad to have you onboard. In the following guides we're going to get everything set up so you can begin automating your WhatsApp with us.
+
+# Is Hilos right for you?
+
+Hilos is a great platform for automating and scaling your WhatsApp conversations. However it's not the right tool for everyone. Hilos is a great fit for businesses that:
+
+- Have more than 250 conversations per month
+- Have a heavy workload of repetitive manual messages
+- Want to connect to their CRM or other systems
+
+We want you to use the correct tool for your business. Hilos works great for business who are ramping up, but for small businesses, or business that are just getting started, WhatsApp Business is a better option as it's faster to set up!
+
+## Requisites
+
+Hilos uses WhatsApp Cloud API to send and receive messages. To start using Hilos we need to connect the phone number you want to use with WhatsApp. For this you'll need access to:
+
+1. A phone number that can receive SMS or calls
+2. Access to your company's Facebook (Meta) Business Manager Account
+
+<Tip>
+  To check if you have access to your company's Facebook Business Manager, you can try opening this [link](https://business.facebook.com/settings/info). If you see your company's account and info, you're ready to go. If you don't see your company's account, either you need to ask your team for access if they already have a Business Manager Account (if you're running ads on Facebook, it's very likely there's already an account), or you can create a new one.
+</Tip>
+
+# Choosing a phone number
+
+In order to use Hilos you'll need to have a phone number for your business that will be linked to your WhatsApp Business API account. This number will be used to send and receive messages from your customers. There are 3 ways to get a phone number to use with Hilos, You can read more about the pros and cons of each option below, once you've decided which option is best for you, feel free to follow our next guide where we'll be creating a Facebook App and link your phone number to it.
+
+<AccordionGroup>
+  <Accordion title="Buy a new number" icon="cart-shopping">
+    Buying a new number is the easiest and recommended way to get started with Hilos as this number is not yet associated with a WhatsApp account. This means that you'll be able to use it right away.
+
+    There are many ways to get a new number, here are some of the most popular ones:
+
+    - Buy a new SIM card from a local carrier (e.g. AT&T, Verizon, etc.)
+    - Buying a Digital number from a VoIP provider (e.g. Twilio, Vonage, DIDWW, Google Voice, Skype, etc.)
+
+    Whichever you choose, **make sure that the number you buy is capable of receiving voice calls or SMS**, this is required for the verification process.
+  </Accordion>
+  <Accordion title="Bring your number" icon="mobile">
+    You might be tempted to use an existing number that you are already using on your phone with WhatsApp or WhatsApp Business, however there are a few caveats to this approach:
+
+    - The WhatsApp account needs to be deleted before you can link it to your WhatsApp Business API account.
+    - Facebook hasn't yet provided an official way to migrate your chat history from WhatsApp to WhatsApp Business API, so you'll lose all of your chat history.
+    - **There is no way back**, once you delete your WhatsApp account you can't use it again on any of the WhatsApp apps.
+
+    <Warning>
+      Use this method if you wish to use a number that your customers are familiar with already but don't care about losing your chat history. If you choose this approach make sure to export your important chat history or make a backup on Google Drive or iCloud before deleting your WhatsApp account. Be mindful that this action cannot be undone and there is no way to recover your chat history.
+
+      <Accordion title="Why do I need to delete my WhatsApp Account?">
+        Though from an outside perspective WhatsApp Business and Whatsapp API might look the same, reality is that they are two different products. On one hand we have the WhatsApp Business app, which is a standalone app that you can use to manage your business account. However when it comes to Business Functionality it might be quite limited, for example you cannot use the same number on two different whatsapp apps and you cannot run automations.
+
+        On the other hand we have WhatsApp Business API, which is the official set of APIs offered by WhatsApp to bigger businesses, which you can use to integrate WhatsApp into an existing app or system (like Hilos).
+
+        The reason you need to delete your WhatsApp account is that a phone number can only be associated to one WhatsApp product at a time (either WhatsApp App, WhatsApp Business App or WhatsApp API), therefore the WhatsApp Account needs to be deleted before attempting to migrate to WhatsApp API.
+    </Accordion>
+    </Warning>
+
+    Another approach is to use the number that you use for inbound or outbound calls on your business. However keep in mind that if you're using an IVR menu, it might need to be temporarily disabled during verification for receiving the verification code.
+  </Accordion>
+  <Accordion title="Migrate from another BSP" icon="arrow-right-arrow-left">
+    If you are already using WhatsApp Business API with another BSP you can migrate your number to Hilos. We can migrate your current number from your current BSP to Hilos. If you choose this method [arrange a call with us](https://calendly.com/alfonso-hilos/onboarding-clone) and we'll help you migrate your number to Hilos.
+
+    <Warning>
+      Any existing chat history will be lost in the migration.
+    </Warning>
+  </Accordion>
+</AccordionGroup>

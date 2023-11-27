@@ -1,0 +1,236 @@
+---
+id: connect-a-new-number
+slug: /connect-a-new-number
+title: Connect a new number
+---
+
+In this guide we will connect your phone number to Hilos so you can start levelling up your company's WhatsApp. This will take roughly 15 minutes.
+
+To follow along with this guide, go to [Hilos > Settings > WhatsApp Accounts > Start now > Connect your phone number](https://app.hilos.io/config/channel/cloud-api/create).
+
+This is where we will be copy pasting information from Meta, in order to connect your number to Hilos.
+
+Let's get started!
+
+<Warning>
+Before getting started with this guide check out our [Getting started](userdocs/getting-started/getting-started) guide to learn if Hilos is right for your needs.
+
+You can't connect a number to Hilos that is currently connected to WhatsApp Business at the same time, for more information [click here](userdocs/getting-started/getting-started#use-an-existing-number).
+</Warning>
+
+<Steps>
+  
+  <Step title="Setting up your Facebook App">
+    In order to get access to WhatsApp's Business API, and connect that number to Hilos, we will first need to create a Meta Developer account. Once you have one you'll be able to create an App which contains all of the relevant info to associate your number to your business.
+    Before you begin, you need to have access to a personal Facebook profile. We will use this to create the App, connect it to your business and connect the number, so [**be sure to have admin access to your company Meta Business Suite account**](https://www.facebook.com/business/help/2169003770027706) as you'll need it for creating the app.
+    <AccordionGroup>
+      <Accordion title="Set up your developer account">
+        The first thing we need to do is go to [Facebook developers](https://developers.facebook.com) and click Get Started on the top right corner
+
+        <Note>
+          **Don't see a Get started button?** It's likely that you haven't logged into
+          your Facebook account yet, click on the Log In on the top right corner.
+        </Note>
+
+        ![Getting started on Facebook Developers](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/dev1.jpg)
+
+        If prompted to enter your Facebook account password, do so, and fill any other necessary
+        information.
+
+        When asked for your role, select Developer.
+
+        ![Developer onboarding 1](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/dev2.jpg)
+
+        ![Developer onboarding 2](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/dev3.jpg)
+      </Accordion>
+      <Accordion title="Configuring the app">
+        Click on **Create App**
+
+        ![Creating a Facebook app](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app1.jpg)
+
+        Select **Business** and click **Next**
+
+        ![Facebook app form 1](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app2.jpg)
+
+        Fill in the necessary details with your business information and click **Create app**
+
+        ![Facebook app form 2](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app3.jpg)
+
+        Scroll down to the bottom to find WhatsApp and click on **Set up**
+
+        ![Facebook app WhatsApp setup](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app4.jpg)
+
+        Select your Meta Business account from the dropdown list and click on **Continue**
+
+        ![Facebook app Business selector](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app5.jpg)
+      </Accordion>
+    </AccordionGroup>
+
+  </Step>
+  <Step title="Connecting your app to your number">
+    Now that we have the app created we will be connecting your phone number to it, this includes verifying the phone number, adding a payment method and making our facebook app Live
+
+    <AccordionGroup>
+      <Accordion title="Set up phone number">
+        On the left hand side of the page you'll see a menu, Under "products" click on **WhatsApp**. And then on **Getting started**.
+
+        ![Setting up WhatsApp](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app6.jpg)
+
+        Scroll to the bottom of the page and click on **Add a phone number**.
+
+        ![Adding your phone number](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app7.jpg)
+
+        In some cases, you may be asked to fill in information about your business.
+
+        ![WhatsApp Business form 1](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app8.jpg)
+
+        Now add the details you wish to use for your WhatsApp Business profile, keep in mind that the name you choose here will be your Display Name on WhatsApp, then click on **Next**.
+
+        ![WhatsApp Business form 2](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app9.jpg)
+
+        Add the phone number you wish to use for WhatsApp and click on a verification method (SMS or Voice Call) and **Next**.
+
+        ![WhatsApp API Verification 1](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app10.jpg)
+
+        Wait for the verification code to arrive, enter it on the field and click on **Verify**. (If the code doesn't arrive via SMS, select the Phone Call option).
+
+        ![WhatsApp API Verification 2](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app11.jpg)
+      </Accordion>
+      <Accordion title="Set up payment method">
+        - Go to the Facebook [Billing Hub](https://business.facebook.com/billing_hub/payment_settings)
+        - Click on "Add Payment Method".
+
+        ![Facebook Payment Method 1](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/payment1.jpg)
+
+        - Select a desired payment method and follow the steps to complete adding your payment Method.
+
+        ![Facebook Payment Method 2](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/payment2.jpg)
+      </Accordion>
+      <Accordion title="Finishing touches">
+        You'll now be able to select your phone number in the "From" field at the top of the page.
+
+        ![Select your phone number](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app12.jpg)
+
+        Finally, we need to activate the Live version of your app, toggle the switch at the top to Live.
+
+        ![Turning Facebook App Live](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app13.jpg)
+
+        If you receive an error message saying that you do not have set a privacy policy URL, on the sidebar click on Settings > Basic and put the URL to your site's Privacy Policy on the Privacy Policy URL field.
+
+        ![App settings 1](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app14.jpg)
+
+        ![App settings 2](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/app15.jpg)
+
+        You're done! Now let's connect your number to the API and add it to Hilos.
+      </Accordion>
+    </AccordionGroup>
+
+  </Step>
+  <Step title="Connecting to Hilos">
+    We now have everything we need to conenct your number to Hilos, on this step we will show you where to find each of the tokens required to get started.
+
+    <AccordionGroup>
+      <Accordion title="Phone number">
+        Copy your phone number exactly as it appears on Facebook, and enter it on Hilos (with "+", country code, and without spaces).
+      </Accordion>
+      <Accordion title="Meta Developer App ID">
+        Go to [your apps](https://developers.facebook.com/apps/) and click on the app you've created. At the top of the page you'll see the **App ID**. This is your **Meta Developer ID**, copy it.
+
+        ![Developer App Id](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token1.jpg)
+
+        Paste it in Hilos in the **Meta Developer App ID** input.
+
+        ![Hilos setup form 1](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token2.jpg)
+      </Accordion>
+      <Accordion title="WhatsApp Phone number ID">
+        Under your Phone Number, you will see a Phone Number ID, click the button on the right to copy it.
+        
+        ![WhatsApp Phone Number ID](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token3.jpg)
+
+        Paste the ID on Hilos in the **WhatsApp Phone number ID** input.
+
+        ![Hilos setup form 2](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token4.jpg)
+      </Accordion>
+      <Accordion title="WhatsApp Business Account ID">
+        On Facebook, next to the phone number ID you'll see the **WhatsApp Business Account ID**, click the button to copy it.
+
+        ![WhatsApp Business Account ID](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token5.jpg)
+
+        Paste the ID in the **WhatsApp Business Account ID** input on Hilos.
+
+        ![Hilos setup form 3](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token6.jpg)
+      </Accordion>
+      <Accordion title="App Token">
+        1. Go to [Facebook's token tool](https://developers.facebook.com/tools/accesstoken/) and copy the **App Token** of the application you just created.
+
+        ![Facebook Developer Token Tool](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token7.jpg)
+
+        2. Paste the token into the **App Token** field in Hilos.
+
+        ![Hilos setup form 4](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token8.jpg)
+      </Accordion>
+      <Accordion title="System User Access Token">
+        The last token we need is the a system user access token. This is a bit more complicated to get, but we'll walk you through it.
+
+        1. Go to [Meta Business Settings](https://business.facebook.com/settings/system-users) and select your business.
+
+        ![Meta Business Manager Settings select](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token9.jpg)
+
+        2. In the side bar, click on "System users" click on "Add".
+
+        ![Adding a system user](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token10.jpg)
+
+        3. Give the System user any name, set the role to "Admin" and click "Create system user"
+
+        ![Naming and giving a role to the admin](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token11.jpg)
+
+        4. Select the newly created System user and click on "Add Assets"
+
+        ![Adding assets to the system user](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token12.jpg)
+
+        5. In the popup:
+          1. Click on "Apps" on the left
+          2. Select the App you created previously
+          3. Give "Full control" to the system user
+          4. Click on "Save Changes" and "Done" in the confirmation dialog.
+
+        ![App permissions for system user](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token13.jpg)
+
+        6. Next click on "Generate new token"
+
+        ![Generating a System User Access Token](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token14.jpg)
+
+        7. Select the app that we added in the previous step
+
+        ![Selecting our app for the token](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token15.jpg)
+
+        8. A list of permissions will be loaded, you will need to select the three following permissions:
+        - "business_management"
+        - "whatsapp_business_messaging"
+        - "whatsapp_business_management"
+
+        And click on "Generate Token" at the bottom.
+
+        ![Adding permissions to the token](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token16.jpg)
+
+        9. Now you will be shown the created access token, copy it
+
+        ![Copying the system user access token](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token17.jpg)
+
+        10. And paste the access token in the **System User Access Token** input on Hilos.
+
+        ![Hilos setup form 5](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/getting-started/connecting-to-hilos/connect-number/token18.jpg)
+      </Accordion>
+    </AccordionGroup>
+    Click on **Save changes** in the Hilos channel configuration and you're done! 🎉
+
+  </Step>
+</Steps>
+
+<Check>
+  Congratulations, you've connected your number to Hilos! let's get started automating your WhatsApp conversations.
+</Check>
+
+<Note>
+  Unverified businesses are only able to start/receive 250 conversations per month, You can check our [documentation on business verification](/user/business-verification) to increase your limits.
+</Note>

@@ -1,0 +1,74 @@
+---
+id: conditional-step
+title: Conditional step
+slug: /conditional-step
+---
+
+# Conditional Steps
+
+Conditional steps enable you to execute a step only if a specific condition is fulfilled. This is beneficial for running steps on certain branches, such as when qualifying leads from a particular source or when a certain field is filled out.
+
+Conditional steps combine the conditions using an AND operator, meaning all conditions must be met for the step to be run. When you use a conditional step, two branches appear on the flow editor: one for when the conditions are met (`THEN`) and one for when they are not met (`OTHERWISE`).
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/conditional-step/conditional-board.png'
+    alt='Conditional canvas view'
+  />
+</figure>
+
+## Available conditions
+
+For a condition, you can use four types of data:
+
+- **Contact variables**: information in a contact's profile, such as their email, name, website, or custom attributes.
+
+  <figure>
+    <img
+      src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/conditional-step/contact-vars.png'
+      alt='Contact variables'
+    />
+  </figure>
+
+- **Flow variables**: variables set within the flow via [question](/user/question-step), [action](/user/action-step), [template](/user/step-types#template) or [menu](menu-step) steps.
+
+  <figure>
+    <img
+      src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/conditional-step/flow-vars.png'
+      alt='Flow variables'
+    />
+  </figure>
+
+- **Global variables**: variables set by the system, like the current date, time, day of the week, and if you are in business hours or not.
+
+  <figure>
+    <img
+      src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/conditional-step/global-vars.png'
+      alt='System variables'
+    />
+  </figure>
+
+- **Execution variables**: variables passed when starting a flow.
+
+When checking a conditional, you can look for:
+
+- if a value is empty or not
+- if a value contains another value
+- if a value matches the operators `>`, `<`, `>=`, `<=`
+- if a condition is met through a boolean, e.g. if the current time is in business hours.
+
+  <figure>
+    <img
+      src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/conditional-step/conditions.png'
+      alt='Conditional conditions'
+    />
+  </figure>
+
+All conditions are evaluated with an `AND` operator, meaning all conditions in the conditional must be met for the `THEN` branch to run, or the `OTHERWISE` branch will be executed.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/conditional-step/conditional-branches.png'
+    alt='Conditional canvas view'
+  />
+</figure>

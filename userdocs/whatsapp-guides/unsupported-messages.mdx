@@ -1,0 +1,79 @@
+---
+title: Unsupported messages
+icon: circle-exclamation
+---
+
+WhatsApp API does not support all the messages that are available in the WhatsApp application. When a customer sends one of this unsupported messages, you'll see an alert in the conversation stating the message is not supported.
+
+## Unsupported message types
+
+Currently WhatsApp API does not have support for the following message types:
+
+- Live location
+- Dissapearing messages (ephemeral)
+- WhatsApp warnings and notices, for example:
+  - Number has changed
+  - Conversation is using end-to-end encryption
+  - Dissapearing messages are not supported on this conversation
+  - etc.
+
+## How to solve ephemeral message errors
+
+<img
+  src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/unsupported-messages/ephemeral.png'
+  alt='Ephemeral warning message'
+/>
+
+Chatting with businesses should have by default dissapearing messages turned off, however sometimes because of a bug with the WhatsApp Application the messages are sent as ephemeral and there is no easy way to turn it off on the conversation. If you see an error that says "Unsupported message: ephemeral" ask your customer to do the following:
+
+1. Ask them to go into their WhatsApp settings > Privacy > Dissapearing messages and turn off their dissapearing messages.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/unsupported-messages/privacy.PNG'
+    alt='Go into privacy settings'
+    width='500'
+  />
+  <figcaption>Go into privacy settings</figcaption>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/unsupported-messages/message-timer.PNG'
+    alt='Select dissapearing messages'
+    width='500'
+  />
+  <figcaption>Select dissapearing messages</figcaption>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/unsupported-messages/off.PNG'
+    alt='Turn the timer off'
+    width='500'
+  />
+  <figcaption>Turn the timer off</figcaption>
+</figure>
+
+2. Ask them to delete the WhatsApp conversation with your business entirely
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/unsupported-messages/delete.PNG'
+    alt='Delete a conversation'
+    width='500'
+  />
+</figure>
+
+3. Ask them to start a new conversation
+
+This should set the conversation to not use dissapearing messages and you should be able to chat normally with your customer. If the customer wishes to use dissapearing messages, you can tell them to turn them back on again after the conversation has started.
+
+## How to solve Unsupported or Unknown message errors:
+
+<img
+  src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/unsupported-messages/unknown.png'
+  alt='Unknown warning message'
+/>
+
+When you receive any of this message types in the conversation, you'll see an alert stating the message is not supported, unfortunately this type of error comes from a functionality that WhatsApp hasn't yet implemented on their API, so there is nothing we can do to solve it, here are some known common workarounds:
+
+**Live Location**
+If the customer is trying to send a live location ask them to send their exact location instead
+
+**WhatsApp Notices**
+Notices usually don't provide any useful information to the conversation other than informing of privacy related information, so you can just ignore them.

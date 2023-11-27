@@ -1,0 +1,30 @@
+---
+title: Conversation statuses
+id: conversation-statuses
+slug: /conversation-statuses
+---
+
+# Conversation statuses
+
+Conversation statuses are used to track the progress of a conversation. Use them to keep track of which conversations you haven't seen, still need work from your side or to mark conversations as completed, so you can better organize your WhatsApp They are also used to determine wether a broadcast or flow should be sent to a conversation or not.
+
+<Tip>
+By default broadcasts and flows are only sent to conversations that are in the `Closed` status. This is so that the conversation with an agent is not interrupted. However, you can override this behaviour by setting the `has_priority` option to `true` when sending a broadcast.
+</Tip>
+
+## Conversation statuses
+
+| Status          | Description                                                                                                                                                                                                                                                                              |
+| :-------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Not contacted` | The contact exists but has not yet contacted or been contacted by an agent.                                                                                                                                                                                                              |
+| `New`           | The conversation has started and hasn't yet been seen by an agent.                                                                                                                                                                                                                       |
+| `In progress`   | The conversation has been seen by an agent and is currently in progress.                                                                                                                                                                                                                 |
+| `Closed`        | The conversation has been resolved.                                                                                                                                                                                                                                                      |
+| `Resolved`      | Only for those that have C-SAT survey activated, after an agent marks the conversation as closed the C-SAT survey will be sent and the status Resolved will be shown. After the user answers the C-SAT or after a certain amount of time, the conversation will be then marked as closed |
+| `In a flow`     | The user is currently inside a flow execution.                                                                                                                                                                                                                                           |
+
+Conversations can be automatically marked as closed after some time if you set the option under your [inbox settings](https://app.hilos.io/config/account/inbox). When a conversation is marked as `Closed` the conversation tags added to it will be locked and can no longer be removed. The conversation will be moved to conversation history. You can also archive the conversation automatically if you set the option under the [inbox settings](https://app.hilos.io/config/account/inbox).
+
+<Tip>
+Try archiving conversations after closing them. This will help you keep your inbox clean and organized. You can use this to filter your conversations later on using filters to hide this conversations.
+</Tip>

@@ -1,0 +1,77 @@
+---
+title: Integrating a WhatsApp Button on Your Web Page
+sidebarTitle: Website widget
+icon: browser
+---
+
+Adding a WhatsApp button to your web page can greatly enhance communication with your audience and improve customer support. In this article, we will guide you through the simple steps of integrating a WhatsApp button and show you how to customize its appearance and behavior.
+
+To begin, the integration of the WhatsApp button is done in the HTML code of your web page, specifically at the end of the body section. Follow these steps:
+
+### 1. Add the following script to your HTML code:
+
+```html
+<html>
+  <head>
+    <!-- other stuff -->
+  </head>
+  <body>
+    <!-- other stuff -->
+
+    <script type="module">
+      import { CreateHilosWhatsappButton } from "https://button.hilos.io/whatsapp-button.esm.js";
+
+      CreateHilosWhatsappButton({
+        phone: "<Add your phone number here>",
+        message: "Hey there! Thanks for reaching out",
+      });
+    </script>
+  </body>
+</html>
+```
+
+This code will add a button on the lower right part of your website that will open WhatsApp on your user's device when clicked, with a pre-filled message (optional).
+
+This is how it looks like on mobile:
+
+<figure>
+  <img
+    src="https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/integrating-whatsapp-button/phone.png"
+    alt="WhatsApp button in mobile devices"
+  />
+</figure>
+
+This is how it looks like on desktop:
+
+<figure>
+  <img
+    src="https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/how-whatsapp-works/integrating-whatsapp-button/desktop.png"
+    alt="WhatsApp button on a desktop"
+  />
+</figure>
+
+### 2. Configure the phone number that the WhatsApp button will redirect to in a new window when clicked. Replace `<Add your phone number here>` with the desired phone number.
+
+Once the script is added and the phone number is configured, the WhatsApp button will be integrated into your web page.
+
+### 3. Customizing the WhatsApp Button
+
+You have the option to customize the appearance and behavior of the WhatsApp button using various parameters. Here's how you can modify its settings:
+
+- `enabled`: Set this parameter to true to enable the button or false to disable it.
+- `phone`: Specify the phone number that the WhatsApp button will contact. This parameter is required.
+- `padding`: Adjust the padding around the button in pixels to increase or decrease space.
+- `position`: Set the position of the button. Options include "left" or "right".
+- `color`: Define the color of the WhatsApp icon using CSS color names, hexadecimal, or RGB values.
+- `background`: Choose the background color of the button. Use the same color options as the color parameter.
+- `message`: Enter the default message that will be sent when the button is clicked.
+
+<Tip>
+The phone number should be in the full international format, without any spaces or special characters.<br/>
+**Use**: 1XXXXXXXXXX<br/>
+**Don't use**: +001-(XXX)XXXXXXX
+</Tip>
+
+By customizing these parameters, you can tailor the WhatsApp button to fit the design and functionality of your web page.
+
+Enhancing communication and improving customer support is just a step away with the integration of a WhatsApp button on your web page. Follow the simple steps and customize it to your liking. Connect with your audience effortlessly and make their experience even better.

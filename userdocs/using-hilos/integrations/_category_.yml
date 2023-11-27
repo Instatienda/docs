@@ -1,0 +1,5 @@
+label: "Integrations"
+link: {
+  type: "doc",
+  id: "integrations"
+}

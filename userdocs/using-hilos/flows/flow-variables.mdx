@@ -1,0 +1,60 @@
+---
+id: flow-variables
+title: Flow Variables
+slug: /flow-variables
+---
+
+# Flow variables
+
+Flows true power come by using the users answers to questions to dynamically change the flow, either by personalizing messages, by updating their contact and saving important information, getting their recent orders from a database and showing them as a list on WhatsApp, etc.
+
+On this doc we'll go through the 4 different type of variables you'll use on your flows:
+
+- [Contact variables](#contact-variables)
+- [Flow variables](#flow-variables)
+- [Global variables](#global-variables)
+- [Execution variables](#execution-variables)
+
+## Contact variables
+
+Contact variables come, as their name implies, from a contact's information. By default each contact comes with 5 variables:
+
+- First name
+- Last name
+- Phone number
+- Email
+- URL
+
+In addition you can have as many variables as you might need as contact's attributes. This contact attributes can then be used inside of the flows or may be changed dinamically by the flow.
+
+A contact variable is always preceded by a `contact.` and then the name of the variable. For example, if you want to use the contact's first name you would use `{{contact.first_name}}`.
+
+## Flow variables
+
+Flow variables are variables that are created and used inside of a flow. They are created by using a question step, menu step, template with buttons, action step. This variables are accessible during the flow execution and, unless you save them as contact attributes or send them to a webhook, they will be lost once the flow finishes.
+
+A flow variable is always preceded by a `step.` and then the name of the step which got the variable. For example, if you want to use the flow's variable `ask_name` from a question step called ask_name you would use `{{step.ask_name}}`.
+
+## Global variables
+
+Global variables are variables that are set by the server, they are set according to your account's settings and include your current day, time, weekday, etc.
+
+A global variable is always preceded by a `global.` and then the name of the variable. For example, if you want to use the global variable `Weekday` you would use `{{global.Weekday}}`.
+
+## Execution variables
+
+Execution variables are set when making an execution through an API call. They are passed to the flow as a JSON object and can be used inside of the flow.
+
+An execution variable is always preceded by a `flow_execution_variables.` and then the name of the variable. For example, if you want to use the execution variable `name` you would use `{{flow_execution_variables.user_id}}`.
+
+<Note>
+Learn more about executing flows through the API [here](https://hilos.io/docs/api#tag/Flow-Execution/operation/Create%20a%20Flow%20Execution).
+</Note>
+
+## Using variables
+
+Variables are great to use to personalize templates, messages or to use them as conditions to change the flow. For instance, you could create an attribute inside of the contact called Language and use this in conjunction with a conditional step to send the user to a different flow depending on their language (we do this at Hilos to send users to a Spanish or English flow depending on their language).
+
+Another potential use case is a chatbot that allows users to track their orders from a website, here you may use the user's phone number to get their recent orders from your database using an action step and show them as a list on WhatsApp, and take action depending on the order they select.
+
+Flows in and of themselves are powerful, but when you combine them with variables you can create truly amazing experiences for your users, trully automating your WhatsApp communication.

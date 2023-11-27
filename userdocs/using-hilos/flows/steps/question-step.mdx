@@ -1,0 +1,257 @@
+---
+id: question-step
+title: Question step
+slug: /question-step
+---
+
+# Question Steps
+
+On this page, we'll discuss the various types of question steps and how to use them. We'll also cover using validation and timeout messages.
+
+## Free text
+
+Free-text questions let users answer with text. We just check that the answer is in text form. If the answer isn't text, the system sends a validation message asking the user to provide a text response.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/free-text.png'
+    alt='Free text question'
+  />
+</figure>
+
+## Single option
+
+Single-option questions display a list of options for the user to choose from. You can use buttons, a list of options, emojis, or numbers to provide the choices.
+
+### Buttons
+
+Buttons provide users with up to three options and validate that the response is one of the given choices.
+
+Buttons have a maximum of 20 characters per option. If you need more characters, use the `Emoji or numbers` feature.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/single-button.png'
+    alt='Single option question with buttons'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/buttons.png'
+    alt='Single option question with buttons public view'
+  />
+</figure>
+
+### List of options
+
+Add a list of options to your message with the `List of options` WhatsApp feature. WhatsApp limits this to 10 items. You can customize the opening text and the title of the list. Validation ensures that the answer is one of the options provided.
+
+List options have a limit of 20 characters per option. If you need more characters, use the `Emoji or numbers` feature.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/list.png'
+    alt='Single option question with list of options public view'
+  />
+</figure>
+
+### Emojis or numbers
+
+If you want to send more than 10 options, this option is recommended. It sends an unlimited list of options and allows the user to reply with an emoji or a number that corresponds to the option. Depending on the type of list, the message will be appended with an emoji or number and validates that the answer is one of the provided number/emoji options.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/emoji.png'
+    alt='Single option question with emojis public view'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/number.png'
+    alt='Single option question with numbers public view'
+  />
+</figure>
+
+### Dynamic options
+
+You may provide a list of options manually or retrieve them from an external source, for example, an API. One use case is if you have a menu that retrieves a user order history and wants to use this information to create a list of options. You can use the `Dynamic options` feature to retrieve the list of options from a webhook.
+
+When using Dynamic options you need to configure the ID for them and which label will be shown. Here's an example of a List question with dynamic options using Pokemons:
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/action-get.png'
+    alt='Action step getting options'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/dynamic-toggle.png'
+    alt='Dynamic options toggle'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/dynamic-config.png'
+    alt='Dynamic options configuration'
+  />
+</figure>
+
+<Note>
+In order to use the dynamic list option, the options must be a list of elements. For example: `[{name: "Pikachu", value: 1}, {name: "Bulbasaur", value: 2}, ...]`
+</Note>
+
+## Validation messages
+
+You can customize the validation message for each question step. The system will send this message when the user's response does not match the expected answer.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/validation-message.png'
+    alt='Validation message configuration'
+  />
+</figure>
+
+<Tip>
+You can also send your users to another step if they fail to answer a certain amount of times. Learn more about this option [here](#limit-attempts).
+</Tip>
+
+## Timeout messages
+
+You can set a timeout to move the user to the next step if they haven't answered after a certain amount of time. This creates a branch in the flow that will be triggered when the timeout is reached. You can also add extra steps, like sending the user a message to ask if they need help before sending them back to the question step.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/timeout.png'
+    alt='Timeout configuration'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/timeout-board.png'
+    alt='Canvas view of a timeout branch'
+  />
+</figure>
+
+## Number
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/number.png'
+    alt='Number question'
+  />
+</figure>
+
+Validates that it receives a numerical value in the answer. By default, the number question only allows integers. To enable decimals, you can check the `Allow decimals in answer` option.
+
+Additionally, you can set a minimum and maximum value for the answer. If the user sends a number outside of the range, the validation message will be sent.
+
+## Location
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/location.png'
+    alt='Location question'
+  />
+</figure>
+
+Validation ensures that the system receives a location and saves its latitude and longitude.
+
+## Date
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/date.png'
+    alt='Date question'
+  />
+</figure>
+
+Validates that the user sends a date, it supports several formats.
+
+## File
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/file.png'
+    alt='File question'
+  />
+</figure>
+
+Validates that the user sends a image, video or document file.
+
+## URL
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/url.png'
+    alt='URL question'
+  />
+</figure>
+
+Validates that the user sends a valid URL, including a top-level domain (e.g., .com, .io, or .mx).
+
+## Email
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/email.png'
+    alt='Email question'
+  />
+</figure>
+
+Validates that the user sends a valid domain address, including an `@` symbol and a top-level domain (e.g., .com, .io, or .mx).
+
+## Phone number
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/phone.png'
+    alt='Phone question'
+  />
+</figure>
+
+Validates that the phone number is valid. Checks that the number contains 10+ digits and starts with a `+` symbol.
+
+You may set a default country code for the phone number. If the user sends a number without a country code, the system will add the default country code to the beginning of the number and check that it has 10 digits.
+
+## Image
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/image.png'
+    alt='Image option'
+  />
+</figure>
+
+Validates that the user sends an image (.jpg or .png)
+
+## Video
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/video.png'
+    alt='Video option'
+  />
+</figure>
+
+Validates that the user sends a video (.mp4)
+
+## Set a time window
+
+You can specify a time frame in which the timeout is active. If the user responds after the time frame has elapsed, the conversation will resume when the conversation window reopens.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/time-window.png'
+    alt='Time window option'
+  />
+</figure>
+
+## Limit attempts
+
+If a user gets stuck on a question step, you can limit the number of attempts they have to answer it. Once they reach the limit, the timeout branch will be triggered. This lets you redirect them to another step or send the conversation to an agent, if necessary.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/attempts.png'
+    alt='Attempts option'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/question-step/attempts-board.png'
+    alt='Attempts canvas view'
+  />
+</figure>
+
+## Using answers on the flow
+
+By default, each question step saves the contact's answer in a flow variable. This variable is deleted after the flow finishes. However, you can still use it later on in the flow by selecting it from the variable dropdown and clicking the one with the question step name. This is useful if you want to use the answer on a message step or a webhook step, but don't want to save it to the contact, and if you do want to save it on the contact, use the [Contact Update step](contact-update-step) to save information for this contact between flows.

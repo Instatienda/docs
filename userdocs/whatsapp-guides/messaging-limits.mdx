@@ -1,0 +1,41 @@
+---
+title: Whatsapp messaging limits
+icon: road-barrier
+---
+
+If you're using the WhatsApp Cloud API to communicate with your customers, it's important to understand WhatsApp messaging limits that apply. Here's what you need to know:
+
+## Messaging Limits
+
+Messaging limits determine the maximum number of business-initiated conversations you can initiate using each of your phone numbers in a rolling 24-hour period. A business-initiated conversation begins when the first template message is delivered to a customer and ends 24 hours later.
+
+Business phone numbers without a connected status and an approved display name are limited to 250 business-initiated conversations in a rolling 24-hour period.
+
+Business phone numbers with a connected status and approved display name can initiate conversations with the following number of unique customers in a rolling 24-hour period:
+
+1K unique customers
+10K unique customers
+100K unique customers
+An unlimited number of unique customers
+This amount starts at 1K unique customers and scales automatically based on phone number status, phone number quality rating, and how often the business initiates conversations with unique customers.
+
+<Note>
+Learn more about this on Meta's Documentation: [WhatsApp Cloud API Messaging Limits](https://developers.facebook.com/docs/whatsapp/messaging-limits)
+</Note>
+
+You can check your current messaging limits in the **WhatsApp Manager > Overview Dashboard > Insights** tab.
+
+## Increasing Your Limit
+
+Each time you initiate a new conversation with a unique customer, Meta will determine if your limit should be increased. This determination is based on the following criteria:
+
+Wether your phone number status is Connected.
+Wether your phone number quality rating is Medium or High.
+In the last 7 days, you have initiated X or more conversations with unique customers, where X is your current messaging limit divided by 2.
+If you meet all conditions, Meta will increase your messaging limit by one level in 24 hours.
+
+## Decreasing Your Limit
+
+Each time you initiate a new conversation with a unique customer, Meta will check your phone number quality rating. If the rating has been Low for the last 7 days, Meta will immediately decrease your messaging limit by one level.
+
+And that's it! With this information, you should be able to understand the messaging limits that apply to your WhatsApp Cloud API usage and how to increase or decrease your limit as needed.

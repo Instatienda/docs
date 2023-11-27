@@ -1,0 +1,126 @@
+---
+slug: /create-a-contact
+title: Creating a contact
+id: create-a-contact
+hide_title: true
+---
+
+import Banner from "@site/src/components/Banner/banner.jsx";
+
+<Banner
+  title='Create a contact'
+  gif='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/contacts/creating-a-contact/create-contact.gif'
+/>
+
+# How to create a contact on Hilos
+
+Contacts are the people you want to send messages to. They can be your customers, your employees, or anyone else you want to send messages to, they will also be the receivers of broadcasts so it is important to set them up correctly. There are two ways of doing it: manually or by importing a CSV file. We'll cover both methods in this guide.
+
+## Creating a contact manually
+
+Go to [your contacts](https://app.hilos.io/contact) and click on the **"New Contact"** button on the top right corner.
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/contacts/creating-a-contact/img1.png' />
+  <figcaption>Click on the "New Contact" button</figcaption>
+</figure>
+
+Then fill out the form with the contact's information, the only required field is the phone number, the rest are optional but recommended.
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/contacts/creating-a-contact/img2.png' />
+  <figcaption>Fill out the form with the contact's information</figcaption>
+</figure>
+
+<Note>
+Phone number **must be formated using E.164 format**, which is the international format for phone numbers. Its structure is **+{Country code} {contact number including area code}**. For example, the phone number +1 (650) 253-0000 in E.164 format is written as +16502530000.
+</Note>
+
+You can then add additional attributes by using the form below.
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/contacts/creating-a-contact/img3.png' />
+  <figcaption>Additional attributes</figcaption>
+</figure>
+
+Once you're happy click on **Create**.
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/contacts/creating-a-contact/img4.png' />
+  <figcaption>Click on "Create"</figcaption>
+</figure>
+
+## Creating a contact by importing a CSV file
+
+If you have a database of your contacts, they can be easily imported into Hilos by using a CSV file. For this go to [your contacts](https://app.hilos.io/contact) and click on **Upload CSV** button on the top right corner.
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/contacts/creating-a-contact/img5.png' />
+  <figcaption>Click on "Upload CSV"</figcaption>
+</figure>
+
+Then click on **Choose File** and select the CSV file you want to import. Once you've selected the file click on **Upload CSV**.
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/contacts/creating-a-contact/img6.png' />
+  <figcaption>Choose a file and click on "Upload CSV"</figcaption>
+</figure>
+
+### Formatting your CSV
+
+For this guide we'll assume you are using Microsoft Excel, but the process is similar in other spreadsheet software.
+
+To begin with open a new Excel Spreadsheet and add the following columns:
+
+<table>
+  <th>phone</th>
+  <th>first_name</th>
+  <th>last_name</th>
+  <th>email</th>
+  <th>external_url</th>
+</table>
+
+<Warning>
+Pay attention to the casing of the column names, they have to be exactly as shown above else the import will fail.
+</Warning>
+
+You can add any number of fields to the left, they will be taken as custom attributes.
+
+Here's an example of a CSV file with 3 contacts:
+
+<table>
+  <tr>
+    <th>phone</th>
+    <th>first_name</th>
+    <th>last_name</th>
+    <th>email</th>
+    <th>external_url</th>
+    <th>favorite cat</th>
+  </tr>
+  <tr>
+    <td>+16502530000</td>
+    <td>Bruce</td>
+    <td>Wayne</td>
+    <td>bat@hilos.com</td>
+    <td>https://hilos.com</td>
+    <td>Calico</td>
+  </tr>
+  <tr>
+    <td>+527102030498</td>
+    <td>Oliva</td>
+    <td>Cat</td>
+    <td>oliva@hilos.com</td>
+    <td>https://hilos.com</td>
+    <td>Panthers</td>
+  </tr>
+  <tr>
+    <td>+863142912345</td>
+    <td>Rick</td>
+    <td>Astley</td>
+    <td>rick@hilos.com</td>
+    <td>https://hilos.com</td>
+    <td>Orange cats</td>
+  </tr>
+</table>
+
+Once the table is filled out, clic on **File** > **Save As** and save the file as a CSV file and upload it using the steps shown above.

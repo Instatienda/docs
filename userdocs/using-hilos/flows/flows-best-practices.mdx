@@ -1,0 +1,39 @@
+---
+title: Flows best practices
+slug: /flows-best-practices
+id: flows-best-practices
+---
+
+# Flow Best Practices
+
+Flows are a powerful tool for creating complex, multi-step interactions. However, they require careful configuration to ensure customers receive the right messages. Here are some tips to help you get the most out of flows.
+
+## Set Maximum Attempts for Questions
+
+When you ask a question in a flow, set the maximum number of attempts a user can make to answer. This prevents users from getting stuck in a loop. For example, if you ask a user to select an option from a list, set the [maximum attempts](question-step) to 3. If the user fails to select an option after 3 attempts, send them to a different step in the flow, like an assignment step for a human agent to take over.
+
+## Allow Users to Cancel Flows
+
+Flows are great for automation, but not all customers want to answer questions. Always provide a way for customers to cancel the flow, such as a button. If a flow loops for a certain amount of time, it will automatically be cancelled with a recursion error but by then the customer may already be frustrated or may have marked the number as spam.
+
+## Use a Time Window
+
+When using flows to notify users with API calls, remember that you can't control when the API call will be made. To avoid sending notifications at inconvenient times, use the [time window feature](question-step) to limit when the flow will send a message. We also recommend using this in conjunction with [Business Hours](setting-up-hilos), so your team can take over if the user needs help.
+
+## Split Flows
+
+When flows become too complex, it's difficult to manage them. Split your flows into smaller flows and use the [`Trigger Flow` step](trigger-flow-step) to move between them. This makes it easier to manage and reuse flows in different places.
+
+For example, if you have a chatbot that asks the user how you can help them, split the logic of the options (e.g. sales, support, billing) into separate flows and trigger them from the chatbot. This makes it easier to manage and reuse the flows.
+
+## Provide an Opt Out Option
+
+When using flows to send marketing campaigns, provide a way for users to opt out. This prevents users from marking your messages as spam and having your number blocked. Read more about this on our [WhatsApp Number Quality Doc](whatsapp-number-quality).
+
+## Tag Conversations
+
+Flows are great for qualifying leads. Add a [Tag step](tag-step) to add conversation tags, contact tags or both. This allow you to filter conversations in the Inbox and create segments of contacts. It also helps agents save time by having the information already available.
+
+## Use the Team Step
+
+If you have a team of agents, use the [team step](assignment-steps) to assign conversations automatically. This automates processes and ensures conversations are assigned to the right agent. If the agent doesn't reply in time, the conversation is reassigned to another agent, improving response times.

@@ -1,0 +1,43 @@
+---
+slug: /create-a-broadcast
+title: Creating a Broadcast
+id: create-a-broadcast
+---
+
+To create a broadcast go to [your broadcast list](https://app.hilos.io/blasts) and click on the "New Broadcast" button at the top right.
+
+![New Broadcast](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/broadcasts/creating-a-broadccast/new-broadcast.png)
+
+Give your Broadcast a name, and select a template from one of your approved templates. If you have not yet created a template, you can learn how to do so [here](/user/create-a-template).
+
+![Broadcast details](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/broadcasts/creating-a-broadccast/broadcast-details.png)
+
+Upload a CSV containing the list of recipients you want to send your broadcast to. And the variables you want to use in your template.
+
+Your CSV be formatted like this:
+
+| | A | B | C | D | E | F | G |
+|---|---|---|---|---|---|---|---|
+| 1 | +525533424673 | | | | | | |
+| 2 | +525533424673 | | | | | | |
+| 3 | +525533424673 | | | | | | |
+
+The first column should contain the phone numbers of the recipients. The rest of the columns should contain the variables you want to use in your template. **Please note the single quote before the phone numbers, this is to prevent excel from treating the phone number as a formula.**
+
+<Tip>
+You may download a template CSV by clicking on `Download here a .csv template to see to how this .csv file should be formatted.` customize it and upload it to the broadcast.
+</Tip>
+
+![Broadcast csv](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/broadcasts/creating-a-broadccast/upload-csv.png)
+
+If you wish you can send your broadcast immediately by clicking on New Broadcast. If you want to schedule your broadcast for a later date or add tags to the conversation, click on **See advanced options** and select the date and time you want to send your broadcast and the tags to be added.
+
+<Note>
+By default we do not interrupt ongoing Inbox conversations (conversations that are not marked as closed) if you wish to send the broadcast even if the conversation is not closed on your Inbox enable the option under **See advanced options**.
+</Note>
+
+![Broadcast advanced options](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/broadcasts/creating-a-broadccast/review-and-send.png)
+
+If you configured to [approve broadcast before sending to X number of recipients](https://app.hilos.io/config/notifications), you will be able to review the broadcast before sending it. If you are ready to send the broadcast click on **Confirm**, if you wish to cancel the broadcast click on **Cancel**.
+
+![Confirm broadcast](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/broadcasts/creating-a-broadccast/confirm-broadcast.png)

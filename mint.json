@@ -1,59 +1,163 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Documentation Starter Kit",
+  "name": "Hilos Docs",
   "logo": {
     "dark": "/logo/dark.png",
     "light": "/logo/light.png"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0069ED",
-    "light": "#4D9CFF",
-    "dark": "#0050B4"
+    "primary": "#FE4465",
+    "light": "#FE4465",
+    "dark": "#FE4465"
   },
-  "topbarLinks": [
+  "tabs": [
     {
-      "name": "Documentation",
-      "url": "https://mintlify.com/docs"
+      "name": "Developer docs",
+      "url": "developer"
     }
   ],
+  "topbarLinks": [],
   "topbarCtaButton": {
-    "name": "Get Started",
-    "url": "https://github.com/mintlify/starter"
+    "name": "Go to app",
+    "url": "https://app.hilos.com/"
   },
-  "anchors": [
-    {
-      "name": "API Reference",
-      "icon": "rectangle-terminal",
-      "url": "api-reference"
-    },
-    {
-      "name": "Changelog",
-      "icon": "list",
-      "url": "https://mintlify.com"
-    },
-    {
-      "name": "Community",
-      "icon": "discord",
-      "url": "https://mintlify.com/community"
-    }
-  ],
   "navigation": [
     {
-      "group": "Home",
-      "pages": ["introduction", "features"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
+      "group": "Getting started",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "userdocs/getting-started/getting-started",
+        {
+          "group": "Connecting to Hilos",
+          "icon": "plug",
+          "pages": [
+            "userdocs/getting-started/connect-a-new-number",
+            "userdocs/getting-started/sending-your-first-message"
+          ]
+        },
+        "userdocs/getting-started/wa-profile"
+      ]
+    },
+    {
+      "group": "Using Hilos",
+      "pages": [
+        {
+          "group": "Settings & Setup",
+          "pages": [
+            "userdocs/using-hilos/settings/basic-setup",
+            "userdocs/using-hilos/settings/invite-users",
+            "userdocs/using-hilos/settings/inbox-conversations",
+            "userdocs/using-hilos/settings/teams",
+            "userdocs/using-hilos/settings/working-hours",
+            "userdocs/using-hilos/settings/whatsapp-accounts",
+            "userdocs/using-hilos/settings/billing-subscription",
+            {
+              "group": "Notifications",
+              "pages": [
+                "userdocs/using-hilos/notifications/windows",
+                "userdocs/using-hilos/notifications/macos",
+                "userdocs/using-hilos/notifications/android",
+                "userdocs/using-hilos/notifications/ios"
+              ],
+              "icon": "bell"
+            }
+          ],
+          "icon": "gear"
+        },
+        {
+          "group": "Templates",
+          "icon": "clipboard-list",
+          "pages": [
+            "userdocs/using-hilos/templates/templates",
+            "userdocs/using-hilos/templates/creating-a-template",
+            "userdocs/using-hilos/templates/editing-a-template",
+            "userdocs/using-hilos/templates/previewing-a-template",
+            "userdocs/using-hilos/templates/deleting-a-template"
+          ]
+        },
+        {
+          "group": "Inbox",
+          "icon": "inbox",
+          "pages": [
+            "userdocs/using-hilos/inbox/starting-a-conversation",
+            "userdocs/using-hilos/inbox/quick-replies",
+            "userdocs/using-hilos/inbox/searching-inside-a-conversation",
+            "userdocs/using-hilos/inbox/finding-a-conversation",
+            "userdocs/using-hilos/inbox/conversation-tab",
+            "userdocs/using-hilos/inbox/contact-tab",
+            "userdocs/using-hilos/inbox/archiving-a-conversation",
+            "userdocs/using-hilos/inbox/conversation-status",
+            "userdocs/using-hilos/inbox/inbox-views",
+            "userdocs/using-hilos/inbox/inbox-teams",
+            "userdocs/using-hilos/inbox/inbox-actions"
+          ]
+        },
+        {
+          "group": "Flows",
+          "icon": "share-nodes",
+          "pages": [
+            "userdocs/using-hilos/flows/what-are-flows",
+            "userdocs/using-hilos/flows/creating-a-flow",
+            "userdocs/using-hilos/flows/flow-reports",
+            {
+              "group": "Step types",
+              "pages": [
+                "userdocs/using-hilos/flows/steps/action-step",
+                "userdocs/using-hilos/flows/steps/contact-update",
+                "userdocs/using-hilos/flows/steps/go-to-step",
+                "userdocs/using-hilos/flows/steps/delay-step",
+                "userdocs/using-hilos/flows/steps/menu-steps",
+                "userdocs/using-hilos/flows/steps/assignation-steps"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Broadcasts",
+          "icon": "message-arrow-up-right",
+          "pages": [
+            "userdocs/using-hilos/broadcasts/creating-a-broadcast",
+            "userdocs/using-hilos/broadcasts/broadcast-reports",
+            "userdocs/using-hilos/broadcasts/deleting-a-broadcast",
+            "userdocs/using-hilos/broadcasts/best-practices"
+          ]
+        },
+        {
+          "group": "Reports",
+          "icon": "square-poll-vertical",
+          "pages": ["userdocs/using-hilos/reports/reports"]
+        },
+        {
+          "group": "Integrations",
+          "icon": "file-code",
+          "pages": [
+            "userdocs/using-hilos/integrations/ChatGPT",
+            "userdocs/using-hilos/integrations/HubSpot",
+            "userdocs/using-hilos/integrations/Zapier"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "WhatsApp FAQs",
+      "pages": [
+        "userdocs/whatsapp-guides/24h-window",
+        "userdocs/whatsapp-guides/messaging-limits",
+        "userdocs/whatsapp-guides/number-quality",
+        "userdocs/whatsapp-guides/unsupported-messages",
+        "userdocs/whatsapp-guides/wa-verification",
+        "userdocs/whatsapp-guides/wa-pricing",
+        "userdocs/whatsapp-guides/wa-vs-api",
+        "userdocs/whatsapp-guides/wa-widget"
+      ]
+    },
+    {
+      "group": "Useful links",
+      "pages": [
+        "userdocs/support/contact-support",
+        "userdocs/support/feature-requests",
+        "userdocs/support/download-android",
+        "userdocs/support/download-ios"
       ]
     }
   ],
@@ -61,5 +165,8 @@
     "twitter": "https://twitter.com/mintlify",
     "github": "https://github.com/mintlify",
     "linkedin": "https://www.linkedin.com/company/mintsearch"
+  },
+  "feedback": {
+    "thumbsRating": true
   }
 }

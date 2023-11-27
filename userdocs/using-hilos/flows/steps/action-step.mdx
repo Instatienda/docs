@@ -1,0 +1,61 @@
+---
+id: action-step
+title: Action step
+slug: /action-step
+---
+
+# Action Step
+
+Action steps are ideal for taking an action on an external API based on the answers from the previous steps. At its core, the Action step is an HTTP request that can be configured to send to or request data from an external API.
+
+## Configuration
+
+The Action step has the following configuration options:
+
+- **URL**: The URL to send the request to.
+- **Method**: The HTTP method to use for the request.
+- **Headers**: A list of headers to send with the request.
+- **Body**: The body of the request. This can be a JSON object or a string.
+- **Query parameters**: A list of query parameters to send with the request.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/action-step/action.png'
+    alt='Action step'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/action-step/headers.png'
+    alt='Action headers'
+  />
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/action-step/query.png'
+    alt='Action parameters'
+  />
+</figure>
+
+The body can be one of several types:
+
+- **JSON object**
+- **Form URL encoded**
+- **Multipart form**
+- **XML**
+- **YAML**
+- **Plain**
+- **None**
+
+The action step will create two branches on the canvas - one for successful execution and one to manage errors. The successful branch will be executed when the request is successful and the error branch will be executed when the request fails or if the server returns any status code other than 2XX. This allows users to retry the request or notify them of an error.
+
+<figure>
+  <img
+    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/action-step/canvas.png'
+    alt='Action canvas view'
+  />
+</figure>
+
+## Common Use Cases
+
+The action step is very useful for updating information with contact answers or getting information to use within the flow. The information returned by the Action step is available to use in later steps as a variable.
+
+A common use case is connecting a flow to a contact in Hubspot using the Hubspot API. A GET call can be used to retrieve a deal with a specific contact and use the details for the variables inside the flow.
+
+Another use case is updating contact details to a CRM that has no official integration with Hilos. A POST call with the user's answers can be sent to the CRM to update the contact details.
