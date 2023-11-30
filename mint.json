@@ -15,8 +15,17 @@
     {
       "name": "Developer docs",
       "url": "developer"
+    },
+    {
+      "name": "API reference",
+      "url": "api"
     }
   ],
+  "api": {
+    "auth": {
+      "method": "key"
+    }
+  },
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Go to app",
@@ -26,16 +35,16 @@
     {
       "group": "Getting started",
       "pages": [
-        "userdocs/getting-started/getting-started",
+        "user/getting-started/getting-started",
         {
           "group": "Connecting to Hilos",
           "icon": "plug",
           "pages": [
-            "userdocs/getting-started/connect-a-new-number",
-            "userdocs/getting-started/sending-your-first-message"
+            "user/getting-started/connect-a-new-number",
+            "user/getting-started/sending-your-first-message"
           ]
         },
-        "userdocs/getting-started/wa-profile"
+        "user/getting-started/wa-profile"
       ]
     },
     {
@@ -44,20 +53,20 @@
         {
           "group": "Settings & Setup",
           "pages": [
-            "userdocs/using-hilos/settings/basic-setup",
-            "userdocs/using-hilos/settings/invite-users",
-            "userdocs/using-hilos/settings/inbox-conversations",
-            "userdocs/using-hilos/settings/teams",
-            "userdocs/using-hilos/settings/working-hours",
-            "userdocs/using-hilos/settings/whatsapp-accounts",
-            "userdocs/using-hilos/settings/billing-subscription",
+            "user/using-hilos/settings/basic-setup",
+            "user/using-hilos/settings/invite-users",
+            "user/using-hilos/settings/inbox-conversations",
+            "user/using-hilos/settings/teams",
+            "user/using-hilos/settings/working-hours",
+            "user/using-hilos/settings/whatsapp-accounts",
+            "user/using-hilos/settings/billing-subscription",
             {
               "group": "Notifications",
               "pages": [
-                "userdocs/using-hilos/notifications/windows",
-                "userdocs/using-hilos/notifications/macos",
-                "userdocs/using-hilos/notifications/android",
-                "userdocs/using-hilos/notifications/ios"
+                "user/using-hilos/notifications/windows",
+                "user/using-hilos/notifications/macos",
+                "user/using-hilos/notifications/android",
+                "user/using-hilos/notifications/ios"
               ],
               "icon": "bell"
             }
@@ -68,46 +77,46 @@
           "group": "Templates",
           "icon": "clipboard-list",
           "pages": [
-            "userdocs/using-hilos/templates/templates",
-            "userdocs/using-hilos/templates/creating-a-template",
-            "userdocs/using-hilos/templates/editing-a-template",
-            "userdocs/using-hilos/templates/previewing-a-template",
-            "userdocs/using-hilos/templates/deleting-a-template"
+            "user/using-hilos/templates/templates",
+            "user/using-hilos/templates/creating-a-template",
+            "user/using-hilos/templates/editing-a-template",
+            "user/using-hilos/templates/previewing-a-template",
+            "user/using-hilos/templates/deleting-a-template"
           ]
         },
         {
           "group": "Inbox",
           "icon": "inbox",
           "pages": [
-            "userdocs/using-hilos/inbox/starting-a-conversation",
-            "userdocs/using-hilos/inbox/quick-replies",
-            "userdocs/using-hilos/inbox/searching-inside-a-conversation",
-            "userdocs/using-hilos/inbox/finding-a-conversation",
-            "userdocs/using-hilos/inbox/conversation-tab",
-            "userdocs/using-hilos/inbox/contact-tab",
-            "userdocs/using-hilos/inbox/archiving-a-conversation",
-            "userdocs/using-hilos/inbox/conversation-status",
-            "userdocs/using-hilos/inbox/inbox-views",
-            "userdocs/using-hilos/inbox/inbox-teams",
-            "userdocs/using-hilos/inbox/inbox-actions"
+            "user/using-hilos/inbox/starting-a-conversation",
+            "user/using-hilos/inbox/quick-replies",
+            "user/using-hilos/inbox/searching-inside-a-conversation",
+            "user/using-hilos/inbox/finding-a-conversation",
+            "user/using-hilos/inbox/conversation-tab",
+            "user/using-hilos/inbox/contact-tab",
+            "user/using-hilos/inbox/archiving-a-conversation",
+            "user/using-hilos/inbox/conversation-status",
+            "user/using-hilos/inbox/inbox-views",
+            "user/using-hilos/inbox/inbox-teams",
+            "user/using-hilos/inbox/inbox-actions"
           ]
         },
         {
           "group": "Flows",
           "icon": "share-nodes",
           "pages": [
-            "userdocs/using-hilos/flows/what-are-flows",
-            "userdocs/using-hilos/flows/creating-a-flow",
-            "userdocs/using-hilos/flows/flow-reports",
+            "user/using-hilos/flows/what-are-flows",
+            "user/using-hilos/flows/creating-a-flow",
+            "user/using-hilos/flows/flow-reports",
             {
               "group": "Step types",
               "pages": [
-                "userdocs/using-hilos/flows/steps/action-step",
-                "userdocs/using-hilos/flows/steps/contact-update",
-                "userdocs/using-hilos/flows/steps/go-to-step",
-                "userdocs/using-hilos/flows/steps/delay-step",
-                "userdocs/using-hilos/flows/steps/menu-steps",
-                "userdocs/using-hilos/flows/steps/assignation-steps"
+                "user/using-hilos/flows/steps/action-step",
+                "user/using-hilos/flows/steps/contact-update",
+                "user/using-hilos/flows/steps/go-to-step",
+                "user/using-hilos/flows/steps/delay-step",
+                "user/using-hilos/flows/steps/menu-steps",
+                "user/using-hilos/flows/steps/assignation-steps"
               ]
             }
           ]
@@ -116,24 +125,24 @@
           "group": "Broadcasts",
           "icon": "message-arrow-up-right",
           "pages": [
-            "userdocs/using-hilos/broadcasts/creating-a-broadcast",
-            "userdocs/using-hilos/broadcasts/broadcast-reports",
-            "userdocs/using-hilos/broadcasts/deleting-a-broadcast",
-            "userdocs/using-hilos/broadcasts/best-practices"
+            "user/using-hilos/broadcasts/creating-a-broadcast",
+            "user/using-hilos/broadcasts/broadcast-reports",
+            "user/using-hilos/broadcasts/deleting-a-broadcast",
+            "user/using-hilos/broadcasts/best-practices"
           ]
         },
         {
           "group": "Reports",
           "icon": "square-poll-vertical",
-          "pages": ["userdocs/using-hilos/reports/reports"]
+          "pages": ["user/using-hilos/reports/reports"]
         },
         {
           "group": "Integrations",
           "icon": "file-code",
           "pages": [
-            "userdocs/using-hilos/integrations/ChatGPT",
-            "userdocs/using-hilos/integrations/HubSpot",
-            "userdocs/using-hilos/integrations/Zapier"
+            "user/using-hilos/integrations/ChatGPT",
+            "user/using-hilos/integrations/HubSpot",
+            "user/using-hilos/integrations/Zapier"
           ]
         }
       ]
@@ -141,23 +150,44 @@
     {
       "group": "WhatsApp FAQs",
       "pages": [
-        "userdocs/whatsapp-guides/24h-window",
-        "userdocs/whatsapp-guides/messaging-limits",
-        "userdocs/whatsapp-guides/number-quality",
-        "userdocs/whatsapp-guides/unsupported-messages",
-        "userdocs/whatsapp-guides/wa-verification",
-        "userdocs/whatsapp-guides/wa-pricing",
-        "userdocs/whatsapp-guides/wa-vs-api",
-        "userdocs/whatsapp-guides/wa-widget"
+        "user/whatsapp-guides/24h-window",
+        "user/whatsapp-guides/messaging-limits",
+        "user/whatsapp-guides/number-quality",
+        "user/whatsapp-guides/unsupported-messages",
+        "user/whatsapp-guides/wa-verification",
+        "user/whatsapp-guides/wa-pricing",
+        "user/whatsapp-guides/wa-vs-api",
+        "user/whatsapp-guides/wa-widget"
       ]
     },
     {
       "group": "Useful links",
       "pages": [
-        "userdocs/support/contact-support",
-        "userdocs/support/feature-requests",
-        "userdocs/support/download-android",
-        "userdocs/support/download-ios"
+        "user/support/contact-support",
+        "user/support/feature-requests",
+        "user/support/download-android",
+        "user/support/download-ios"
+      ]
+    },
+    {
+      "group": "Getting started",
+      "pages": [
+        "developer/getting-started/auth",
+        "developer/getting-started/pagination",
+        "developer/getting-started/errors",
+        "developer/getting-started/test-request"
+      ]
+    },
+    {
+      "group": "Managing contacts",
+      "pages": ["developer/contacts/creating-a-contact"]
+    },
+    {
+      "group": "Messaging",
+      "pages": [
+        "developer/messaging/broadcasts",
+        "developer/messaging/flows",
+        "developer/messaging/template"
       ]
     }
   ],

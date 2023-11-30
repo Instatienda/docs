@@ -1,0 +1,194 @@
+---
+id: broadcasts
+slug: /broadcasts
+title: Broadcasts
+---
+
+This documentation covers how to use the Broadcasts API, including listing, creating, and retrieving broadcast details.
+
+## When to use this method
+
+Use Broadcasts when you want to send a one-time message to multiple recipients without expecting a response. This method is ideal for marketing campaigns, announcements, or updates that don't require user interaction but you wish to get analytics from messages, kind of like an email newsletter but for WhatsApp. Remember that Broadcasts require the use of WhatsApp approved templates from your Hilos account.
+
+## List Broadcasts in your Hilos account
+
+To list all the broadcasts in your Hilos account, use the following endpoint:
+
+:::info
+Check out the [API docs](https://hilos.io/docs/api#tag/Broadcast/operation/List%20Broadcasts) of this process.
+:::
+
+**`GET`** `/api/broadcast`
+
+`Authorization`: tokenAuth
+
+**Query parameters:**
+
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Data type</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <th>channel</th>
+    <td>
+      <pre>integer</pre>
+    </td>
+    <td>
+      <pre>1</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>page</th>
+    <td>
+      <pre>integer</pre>
+    </td>
+    <td>
+      <pre>1</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>page_size</th>
+    <td>
+      <pre>integer</pre>
+    </td>
+    <td>
+      <pre>6</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>search</th>
+    <td>
+      <pre>string</pre>
+    </td>
+    <td>
+      <pre>Pending</pre>
+    </td>
+  </tr>
+</table>
+
+**Example response**:
+
+```json
+{
+  "count": 123,
+  "next": "http://api.example.org/accounts/?page=4",
+  "previous": "http://api.example.org/accounts/?page=2",
+  "results": [
+    {
+      "name": "string",
+      ...
+    }
+  ]
+}
+```
+
+## Create Broadcasts on your account
+
+To create a broadcast on your account, use the following endpoint:
+
+:::info
+Check out the [API docs](https://hilos.io/docs/api#tag/Broadcast/operation/Create%20Broadcasts) of this process.
+:::
+
+**`POST`** `/api/broadcast`
+
+`Authorization`: tokenAuth
+
+Request parameters:
+
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Data type</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <th>name</th>
+    <td>
+      <pre>string</pre>
+    </td>
+    <td>
+      <pre>my_broadcast</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>start_on</th>
+    <td>
+      <pre>string</pre>
+    </td>
+    <td>
+      <pre>1</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>recipients</th>
+    <td>
+      <pre>array of objects</pre>
+    </td>
+    <td>
+      <pre>[{`{},{},{}`}]</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>whatsapp_template</th>
+    <td>
+      <pre>String</pre>
+    </td>
+    <td>
+      <pre>df03e2cd-bc88-41d0-b5ab-7543e6065e0f</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>contact_tags</th>
+    <td>
+      <pre>array of objects</pre>
+    </td>
+    <td>
+      <pre type='json'>{`[{
+        "tag1": "tag",
+        "tag2": "customer"
+      }]`}</pre>
+    </td>
+  </tr>
+  <tr>
+    <th>has_priority</th>
+    <td>
+      <pre>boolean</pre>
+    </td>
+    <td>
+      <pre>true</pre>
+    </td>
+  </tr>
+</table>
+
+:::info
+**has_priority**: Use this in order to send a broadcast even if the contact has an open conversation in the Inbox (NEW or IN PROGRESS)
+:::
+
+## Get Broadcast Detail
+
+To get the details of a specific broadcast, use the following endpoint:
+
+:::info
+Check out the [API docs](https://hilos.io/docs/api#tag/Broadcast/operation/Get%20Broadcast%20Detail) of this process.
+:::
+
+**`GET`** `/api/message-blast/{id}`
+
+`Authorization`: tokenAuth
+
+Path parameters:
+
+- **`id`**: `integer` **(required)**
+
+** Example response: **
+
+```json
+{
+  "name": "string",
+  "created_by": "string",
+  ...
+}
+```

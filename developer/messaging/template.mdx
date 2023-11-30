@@ -1,0 +1,72 @@
+---
+id: sending-a-message
+slug: /sending-a-message
+title: Sending a message
+---
+
+## When to use this method
+
+Use the Sending a Template method when you want to initiate a conversation with a specific user but do not expect/need to know when the user replies, or when you need to send a message after the 24-hour conversation window on your Inbox. This method is perfect for sending personalized messages, reminders, or follow-ups to individual users.
+
+Sending a single message using Hilos is incredibly simple. Call the following endpoint, where {uuid} is the id of the desired template:
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/devdocs/sending-messages/single-message/UUID.png' />
+  <figcaption>id example</figcaption>
+</figure>
+
+`https://api.hilos.io/api/channels/whatsapp/template/{uuid}/send`
+
+:::info
+For more details, check out our [API documentation](https://hilos.io/docs/api#tag/WhatsApp/operation/Send%20a%20WhatsApp%20Template%20Message) for this process.
+:::
+
+## Selecting and Using a Template
+
+Approved templates can be found in Hilos Templates. Only APPROVED templates can be sent. If you receive a 404 error, the specified template may not exist or has not been approved yet.
+
+<figure>
+  <img src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/devdocs/sending-messages/single-message/approved.png' />
+  <figcaption>id example</figcaption>
+</figure>
+
+Templates can be created using the Hilos [template builder](https://app.hilos.io/template).
+Approval typically takes a few minutes, but it may take up to 2 days. Hilos syncs your WhatsApp templates every 5 minutes; you can also sync them manually from the same page.
+
+:::warning
+Please bear in mind that template approval process is managed by Facebook (Meta) and Hilos does not have any control over it.
+:::
+
+Learn more about creating a template in our [user documentation](/user/create-a-template).
+
+## Sending a Single Message
+
+Call the endpoint with the following HTTP POST request:
+
+`HTTP POST` `https://api.hilos.io/api/channels/whatsapp/template/<uuid>/send`
+
+```json
+{
+  "phone": "+525577664433",
+  "variables": ["Alfonso", "John", "guide_es.pdf"]
+}
+```
+
+Ensure the correct number of variables are provided, and the phone number is in E.164 format. The contact will be saved automatically and we'll ensure that if a contact with that phone number already exists, it doesn't end up duplicated.
+
+Templates support as many variables as you need in the message body, and 1 variable for the header (for image, document, or video headers) and 1 variable in a URL type button.
+
+To preview the template and determine the required variables, click the template name on the template list.
+
+<figure>
+  <figcaption>Template Preview Example</figcaption>
+</figure>
+
+A successful response will include the message and conversation IDs:
+
+```json
+{
+  "id": "a513da3a-8b73-42aa-a938-0eb1e0141533",
+  "conversation": "ee49ab6c-dfd8-4cb6-a512-5880f4385622"
+}
+```

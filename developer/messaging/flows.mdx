@@ -1,0 +1,65 @@
+---
+id: flows
+slug: /flows
+title: Flows
+---
+
+This developer documentation will guide you through using the Flows API to manage and interact with your flow executions in the Hilos platform.
+
+## When to use this method
+
+Choose Flows when you want to send messages to multiple recipients and expect a response or interaction from them. Flows are similar to chatbots, allowing for dynamic, two-way communication. Use this method to engage your users in conversations, answer queries, or gather information.
+
+## Create Flow Execution
+
+Create a new flow execution.
+
+:::info
+Check out the [API docs](https://hilos.io/docs/api#tag/Flow-Execution/operation/Create%20a%20Flow%20Execution) of this process.
+:::
+
+**`POST`** `/api/flow/{flow id}/flow-execution`
+
+**Body Parameters:**
+| Name | Type | Description |
+| --- | --- | --- |
+| `execute_for` | `string` | The type of recipients to send the flow to. |
+| `has_priority` | `boolean` | Whether the flow should be executed even if the contact has an active conversation on the Inbox (NEW or IN PROGRESS). |
+| `contact_lists` | `array` | The list of contacts to send the flow to. |
+| `contact_lists.source` | `string` | The source of the contact list. |
+| `contact_lists.contact_list` | `array of objects` | The list of contacts to send the flow to. |
+
+**Sample Request:**
+
+```http
+POST /api/flow/b505b400-3b69-44ca-84ae-34b27822e998/flow-execution
+Content-Type: application/json
+
+{
+  "execute_for": "LIST",
+  "has_priority": true,
+  "contact_lists": [
+    {
+      "source": "LIST",
+      "contact_list": [
+        {
+          "phone": "+525534342525"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Sample Response:**
+
+```json
+{
+  "id": 2,
+  "flow": "a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1",
+  "status": "READY",
+  "created_by": "erik@hilos.io",
+  "created_on": "2023-03-15T11:00:00Z"
+  // Additional fields
+}
+```

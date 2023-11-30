@@ -1,0 +1,43 @@
+---
+id: test-request
+slug: /test-request
+title: Test request
+---
+
+On this doc we'll make a test request to the API by requesting the users list on our account.
+
+## Request
+
+```bash
+GET https://api.hilos.io/api/account-member
+Authorization: Token <your token>
+```
+
+if everything is ok, you'll get a response with an array of objects with your users' infomation as follows:
+
+```json
+[
+  {
+    "first_name": "string",
+    "last_name": "string",
+    "email": "user@example.com",
+    "id": 0,
+    "teams": [
+      {
+        "id": 0,
+        "name": "string",
+        "assignment_strategy": "string"
+      }
+    ],
+    "account": 0,
+    "groups": [
+      {
+        "id": 0,
+        "name": "string"
+      }
+    ],
+    "profile_image": "http://example.com",
+    "date_joined": "2019-08-24T14:15:22Z"
+  }
+]
+```
