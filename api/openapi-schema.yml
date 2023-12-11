@@ -1,0 +1,1229 @@
+openapi: 3.0.2
+info:
+  title: "Hilos.io API"
+  summary: "API Access for Hilos."
+  description: "All of the below API endpoints require API key authentication, get your token at https://app.hilos.io/dev/api-keys.\n\nTo use this token, send with every request an `Authorization: Token <your token>` header.\n\nProduction API server is located at api.hilos.io using HTTPS.\n\nNo versioning info is required for now."
+  contact:
+    name: "Hilos Support"
+    email: "hey@hilos.io"
+  version: "2021-12-01"
+server:
+  url: https://api.hilos.io/api/
+  description: Production server
+paths:
+  /api/contact:
+    get:
+      operationId: List Contact
+      description: "Lists contacts. You can search with the base `phone`, `first_name`, `last_name`, `email` fields using the `?seach=mysearch` query parameter."
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Contact"
+          description: ""
+      tags:
+        - Contact
+    post:
+      operationId: Create or Update Contact
+      description: "When you POST a new Contact, we'll first check if another contact exists with the same canonical phone. If it does, we'll overwrite the existing contact with these new information. We do this so you don't end up with duplicate contacts in your flows. \n\nYou can set arbitrary attributes for a contact in the meta object, using `meta={key1: value1, key2: value2, ...}`. We parse all these attributes as string for now."
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactEdit"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/ContactEdit"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ContactEdit"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+          description: ""
+      tags:
+        - Contact
+    delete:
+      operationId: Delete Contact
+      description: "Deleting a contact won't delete its history nor its sent messages."
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ""
+          schema:
+            type: string
+      responses:
+        "204":
+          description: ""
+      tags:
+        - Contact
+  /api/flow/{id}/flow-execution:
+    post:
+      operationId: Create FlowExecution
+      description: "Creates a new Flow Execution for a given Flow. Every minute our workers check for pending FlowExecutions and start running them if the criteria to start are met.\n\nFor `INBOUND` flows, the `execute_for` parameter is ignored and automatically set to `ALL`, meaning it will trigger for all messages that contain the trigger word or phrase, no matter the phone number of the sender.\n\nFor `OUTBOUND` flows there are two ways to create them: with a set of filters over existing contacts, or with a list of contacts, be it from a file or a provided list of `Contact` objects.\n\nIf you wish to create a flow using a set of filters, set `execute_for=FILTERS` and provide the `contact_filters` param. If you'd like to use a list of contacts, set `execute_for=LIST` and provide one or more `contact_lists`. You can use `FILE` and `LIST` as sources simultaneously. To use a `FILE` as source, first use the *Upload Contact .csv* endpoint and set `contact_list=[{source: 'FILE', contact_file: {upload_group_id: <uuid>}}, ...]`"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Flow id to start a flow execution for."
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlowExecutionCreate"
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExecution"
+          description: ""
+      tags:
+        - FlowExecution
+  /api/flow-execution:
+    get:
+      operationId: List FlowExecutions
+      description: "Lists all flow executions. You can get executions for a specific Flow using the `?flow=<uuid>` query parameter."
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - name: flow
+          required: false
+          in: query
+          description: An uuid referring to a Flow's ID to filter with.
+          schema:
+            type: uuid
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FlowExecution"
+          description: ""
+      tags:
+        - FlowExecution
+  /api/flow-execution/{id}:
+    get:
+      operationId: Get FlowExecution
+      description: "Gets a FlowExecution by Id."
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ""
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExecution"
+          description: ""
+      tags:
+        - FlowExecution
+  /api/flow-execution-contact:
+    get:
+      operationId: List FlowExecutionContacts
+      description: "Lists all flow execution contacts. You can get get execution contacts for a specific Flow using the `?flow=<uuid>` query parameter, or for a specific FlowExecution using the `?flow_execution=<uuid>` query parameter."
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - name: flow
+          required: false
+          in: query
+          description: An uuid referring to a Flow's ID to filter with.
+          schema:
+            type: uuid
+        - name: flow_execution
+          required: false
+          in: query
+          description: An uuid referring to a Flow Execution's ID to filter with.
+          schema:
+            type: uuid
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=4
+                  previous:
+                    type: string
+                    nullable: true
+                    format: uri
+                    example: http://api.example.org/accounts/?page=2
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FlowExecutionContact"
+          description: ""
+      tags:
+        - FlowExecutionContact
+  /api/flow-execution-contact/{id}:
+    get:
+      operationId: Get FlowExecutionContact.
+      description: ""
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ""
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExecutionContact"
+          description: ""
+      tags:
+        - FlowExecutionContact
+  flow_contact_execution.complete:
+    post:
+      operationId: flow_contact_execution.complete
+      description: "An event with this name will be created everytime a contact successfully finishes a FlowExecution. The response pictured here will be POST'ed to the Flow's `webhook_url`, defined when the Flow was created."
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExecutionContact"
+          description: ""
+      tags:
+        - Webhooks
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        phone:
+          type: string
+          maxLength: 30
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        external_url:
+          type: string
+          nullable: true
+          maxLength: 200
+        meta:
+          type: object
+        is_deleted:
+          type: boolean
+        created_by:
+          type: string
+          readOnly: true
+        id:
+          type: string
+          format: uuid
+        created_on:
+          type: string
+          format: date-time
+        last_updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+        source:
+          type: string
+          maxLength: 255
+        canonical_phone:
+          type: string
+          maxLength: 128
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 128
+      required:
+        - phone
+    ContactEdit:
+      type: object
+      properties:
+        phone:
+          type: string
+          maxLength: 30
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        external_url:
+          type: string
+          nullable: true
+          maxLength: 200
+        meta:
+          type: object
+        is_deleted:
+          type: boolean
+        created_by:
+          type: string
+          readOnly: true
+        id:
+          type: string
+          format: uuid
+        source:
+          type: string
+          default: website
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 128
+      required:
+        - phone
+    ContactCSV:
+      type: object
+      properties:
+        contacts:
+          type: file
+          format: binary
+          writeOnly: true
+    ContactCSVResult:
+      type: object
+      properties:
+        created:
+          type: int
+          readOnly: true
+        updated:
+          type: int
+          readOnly: true
+        upload_group_id:
+          type: uuid
+          readOnly: true
+    FlowExecutionCreate:
+      type: object
+      properties:
+        status:
+          type: string
+          readOnly: true
+        execute_for:
+          enum:
+            - FILTERS
+            - LIST
+            - ALL
+          type: string
+        inbound_start_message:
+          type: string
+          nullable: true
+        inbound_start_message_match_exact:
+          type: boolean
+        contact_filters:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              comparison:
+                enum:
+                  - exact
+                  - "!exact"
+                  - gte
+                  - gt
+                  - lte
+                  - lt
+                  - isnull
+                  - "!isnull"
+                  - icontains
+                  - "!icontains"
+                type: string
+              value:
+                type: string
+            required:
+              - field
+              - comparison
+              - value
+        contact_lists:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                enum:
+                  - LIST
+                  - FILE
+                type: string
+              contact_file:
+                type: object
+                properties:
+                  upload_group_id:
+                    type: uuid
+              contact_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    phone:
+                      type: string
+                      maxLength: 30
+                    first_name:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                    last_name:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                    email:
+                      type: string
+                      format: email
+                      nullable: true
+                      maxLength: 254
+                    external_url:
+                      type: string
+                      nullable: true
+                      maxLength: 200
+                    meta:
+                      type: object
+                    is_deleted:
+                      type: boolean
+                    created_by:
+                      type: string
+                      readOnly: true
+                    id:
+                      type: string
+                      format: uuid
+                    created_on:
+                      type: string
+                      format: date-time
+                    last_updated_on:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    source:
+                      type: string
+                      maxLength: 255
+                    canonical_phone:
+                      type: string
+                      maxLength: 128
+                  required:
+                    - phone
+                    - source
+                    - canonical_phone
+            required:
+              - source
+              - file_contacts
+              - list_contacts
+      required:
+        - execute_for
+        - execution_type
+    FlowExecution:
+      type: object
+      properties:
+        status:
+          type: string
+          readOnly: true
+        execute_for:
+          enum:
+            - FILTERS
+            - LIST
+            - ALL
+          type: string
+        execution_type:
+          enum:
+            - INBOUND
+            - OUTBOUND
+            - API
+          type: string
+        created_by:
+          type: object
+          properties:
+            first_name:
+              type: string
+              maxLength: 150
+            last_name:
+              type: string
+              maxLength: 150
+            email:
+              type: string
+              format: email
+              maxLength: 254
+        inbound_start_message:
+          type: string
+          nullable: true
+        inbound_start_message_match_exact:
+          type: boolean
+        contact_filters:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              comparison:
+                enum:
+                  - exact
+                  - "!exact"
+                  - gte
+                  - gt
+                  - lte
+                  - lt
+                  - isnull
+                  - "!isnull"
+                  - icontains
+                  - "!icontains"
+                type: string
+              value:
+                type: string
+              id:
+                type: string
+                format: uuid
+        contact_lists:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                enum:
+                  - LIST
+                  - FILE
+                type: string
+              file_contacts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    contact:
+                      type: object
+                      properties:
+                        phone:
+                          type: string
+                          maxLength: 30
+                        first_name:
+                          type: string
+                          nullable: true
+                          maxLength: 100
+                        last_name:
+                          type: string
+                          nullable: true
+                          maxLength: 100
+                        email:
+                          type: string
+                          format: email
+                          nullable: true
+                          maxLength: 254
+                        external_url:
+                          type: string
+                          nullable: true
+                          maxLength: 200
+                        meta:
+                          type: object
+                        is_deleted:
+                          type: boolean
+                        created_by:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: string
+                          format: uuid
+                        created_on:
+                          type: string
+                          format: date-time
+                        last_updated_on:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        source:
+                          type: string
+                          maxLength: 255
+                        canonical_phone:
+                          type: string
+                          maxLength: 128
+              list_contacts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    contact:
+                      type: object
+                      properties:
+                        phone:
+                          type: string
+                          maxLength: 30
+                        first_name:
+                          type: string
+                          nullable: true
+                          maxLength: 100
+                        last_name:
+                          type: string
+                          nullable: true
+                          maxLength: 100
+                        email:
+                          type: string
+                          format: email
+                          nullable: true
+                          maxLength: 254
+                        external_url:
+                          type: string
+                          nullable: true
+                          maxLength: 200
+                        meta:
+                          type: object
+                        is_deleted:
+                          type: boolean
+                        created_by:
+                          type: string
+                          readOnly: true
+                        id:
+                          type: string
+                          format: uuid
+                        created_on:
+                          type: string
+                          format: date-time
+                        last_updated_on:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        source:
+                          type: string
+                          maxLength: 255
+                        canonical_phone:
+                          type: string
+                          maxLength: 128
+        contact_executions:
+          type: array
+          items:
+            type: uuid
+        id:
+          type: string
+          format: uuid
+        flow:
+          type: object
+          properties:
+            name:
+              type: string
+              maxLength: 100
+            created_by:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  maxLength: 150
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+              readOnly: true
+            is_active:
+              type: boolean
+            flow_end_action:
+              enum:
+                - WEBHOOK
+                - NO_ACTION
+              type: string
+            flow_webhook_url:
+              type: string
+              format: uri
+              nullable: true
+              maxLength: 200
+              pattern:
+                "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\\\
+                d|[0-1]?\\d?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}|\\[[0-9a-f:.]+\\\
+                ]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF\
+                0-9])?(?:\\.(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1\
+                -\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\.?|localhost))(?::\\d{2,5})?(?:[/?#][^\\\
+                s]*)?\\z"
+            flow_webhook_retries:
+              type: integer
+              maximum: 32767
+              minimum: 0
+            execution_type:
+              enum:
+                - INBOUND
+                - OUTBOUND
+              type: string
+            steps:
+              type: string
+              readOnly: true
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+        created_on:
+          type: string
+          format: date-time
+    FlowExecutionContact:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        contact:
+          type: object
+          properties:
+            phone:
+              type: string
+              maxLength: 30
+            first_name:
+              type: string
+              nullable: true
+              maxLength: 100
+            last_name:
+              type: string
+              nullable: true
+              maxLength: 100
+            email:
+              type: string
+              format: email
+              nullable: true
+              maxLength: 254
+            external_url:
+              type: string
+              nullable: true
+              maxLength: 200
+            meta:
+              type: object
+            is_deleted:
+              type: boolean
+            created_by:
+              type: string
+              readOnly: true
+            id:
+              type: string
+              format: uuid
+            created_on:
+              type: string
+              format: date-time
+            last_updated_on:
+              type: string
+              format: date-time
+              readOnly: true
+            source:
+              type: string
+              maxLength: 255
+            canonical_phone:
+              type: string
+              maxLength: 128
+          required:
+            - phone
+            - source
+            - canonical_phone
+        status:
+          enum:
+            - READY
+            - RUNNING
+            - COMPLETED
+            - CANCELED
+            - STOPPED
+          type: string
+        execution_steps:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              step:
+                type: string
+                readOnly: true
+              last_error_detail:
+                type: string
+                nullable: true
+              has_error:
+                type: boolean
+              execution_result:
+                type: object
+                nullable: true
+              messages:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    message:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        to_number:
+                          type: string
+                          readOnly: true
+                        from_number:
+                          type: string
+                          readOnly: true
+                        body:
+                          type: string
+                          nullable: true
+                        direction:
+                          type: string
+                        seen:
+                          type: boolean
+                          readOnly: true
+                        timestamp:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                        media:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                readOnly: true
+                              content_type:
+                                type: string
+                                maxLength: 100
+                              url:
+                                type: string
+                                format: uri
+                                maxLength: 200
+                                pattern:
+                                  "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\\
+                                  s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\\
+                                  d)(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}|\\\
+                                  [[0-9a-f:.]+\\]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1\
+                                  -\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF0-9])?(?:\\.(?!-)[a-z\xA1\
+                                  -\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF\
+                                  -]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\.?|localhost))(?::\\\
+                                  d{2,5})?(?:[/?#][^\\s]*)?\\z"
+                              message:
+                                type: string
+                                readOnly: true
+                            required:
+                              - content_type
+                              - url
+                        raw_message_data:
+                          type: object
+                          nullable: true
+                        status:
+                          enum:
+                            - new
+                            - accepted
+                            - queued
+                            - sending
+                            - sent
+                            - receiving
+                            - received
+                            - delivered
+                            - undelivered
+                            - failed
+                            - read
+                          type: string
+                          readOnly: true
+                        extra_data:
+                          type: object
+                          nullable: true
+                      required:
+                        - direction
+                  required:
+                    - message
+              created_on:
+                type: string
+                format: date-time
+            required:
+              - messages
+        created_on:
+          type: string
+          format: date-time
+        flow_execution:
+          type: object
+          properties:
+            status:
+              type: string
+              readOnly: true
+            execute_for:
+              enum:
+                - FILTERS
+                - LIST
+                - ALL
+              type: string
+            execution_type:
+              enum:
+                - INBOUND
+                - OUTBOUND
+                - API
+              type: string
+            created_by:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  maxLength: 150
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+            inbound_start_message:
+              type: string
+              nullable: true
+            inbound_start_message_match_exact:
+              type: boolean
+            contact_filters:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  comparison:
+                    enum:
+                      - exact
+                      - "!exact"
+                      - gte
+                      - gt
+                      - lte
+                      - lt
+                      - isnull
+                      - "!isnull"
+                      - icontains
+                      - "!icontains"
+                    type: string
+                  value:
+                    type: string
+                  id:
+                    type: string
+                    format: uuid
+                required:
+                  - field
+                  - comparison
+                  - value
+            contact_lists:
+              type: array
+              items:
+                type: object
+                properties:
+                  source:
+                    enum:
+                      - LIST
+                      - FILE
+                    type: string
+                  file_contacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        contact:
+                          type: object
+                          properties:
+                            phone:
+                              type: string
+                              maxLength: 30
+                            first_name:
+                              type: string
+                              nullable: true
+                              maxLength: 100
+                            last_name:
+                              type: string
+                              nullable: true
+                              maxLength: 100
+                            email:
+                              type: string
+                              format: email
+                              nullable: true
+                              maxLength: 254
+                            external_url:
+                              type: string
+                              nullable: true
+                              maxLength: 200
+                            meta:
+                              type: object
+                            is_deleted:
+                              type: boolean
+                            created_by:
+                              type: string
+                              readOnly: true
+                            id:
+                              type: string
+                              format: uuid
+                            created_on:
+                              type: string
+                              format: date-time
+                            last_updated_on:
+                              type: string
+                              format: date-time
+                              readOnly: true
+                            source:
+                              type: string
+                              maxLength: 255
+                            canonical_phone:
+                              type: string
+                              maxLength: 128
+                          required:
+                            - phone
+                            - source
+                            - canonical_phone
+                      required:
+                        - contact
+                  list_contacts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        contact:
+                          type: object
+                          properties:
+                            phone:
+                              type: string
+                              maxLength: 30
+                            first_name:
+                              type: string
+                              nullable: true
+                              maxLength: 100
+                            last_name:
+                              type: string
+                              nullable: true
+                              maxLength: 100
+                            email:
+                              type: string
+                              format: email
+                              nullable: true
+                              maxLength: 254
+                            external_url:
+                              type: string
+                              nullable: true
+                              maxLength: 200
+                            meta:
+                              type: object
+                            is_deleted:
+                              type: boolean
+                            created_by:
+                              type: string
+                              readOnly: true
+                            id:
+                              type: string
+                              format: uuid
+                            created_on:
+                              type: string
+                              format: date-time
+                            last_updated_on:
+                              type: string
+                              format: date-time
+                              readOnly: true
+                            source:
+                              type: string
+                              maxLength: 255
+                            canonical_phone:
+                              type: string
+                              maxLength: 128
+                          required:
+                            - phone
+                            - source
+                            - canonical_phone
+                      required:
+                        - contact
+                required:
+                  - source
+                  - file_contacts
+                  - list_contacts
+            contact_executions:
+              type: array
+              items:
+                type: string
+            id:
+              type: string
+              format: uuid
+            flow:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                created_by:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                      maxLength: 150
+                    last_name:
+                      type: string
+                      maxLength: 150
+                    email:
+                      type: string
+                      format: email
+                      maxLength: 254
+                    account:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          maxLength: 100
+                      required:
+                        - name
+                      readOnly: true
+                  readOnly: true
+                is_active:
+                  type: boolean
+                flow_end_action:
+                  enum:
+                    - WEBHOOK
+                    - NO_ACTION
+                  type: string
+                flow_webhook_url:
+                  type: string
+                  format: uri
+                  nullable: true
+                  maxLength: 200
+                  pattern:
+                    "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\\\
+                    d|[0-1]?\\d?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}|\\\
+                    [[0-9a-f:.]+\\]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1\
+                    -\uFFFF0-9])?(?:\\.(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1\
+                    -\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\.?|localhost))(?::\\\
+                    d{2,5})?(?:[/?#][^\\s]*)?\\z"
+                flow_webhook_retries:
+                  type: integer
+                  maximum: 32767
+                  minimum: 0
+                execution_type:
+                  enum:
+                    - INBOUND
+                    - OUTBOUND
+                  type: string
+                steps:
+                  type: string
+                  readOnly: true
+                id:
+                  type: string
+                  format: uuid
+                  readOnly: true
+              required:
+                - name
+                - flow_end_action
+                - execution_type
+            created_on:
+              type: string
+              format: date-time
+          required:
+            - execute_for
+            - execution_type
+            - created_by
+            - contact_lists
+            - contact_executions
+            - flow
+      required:
+        - contact
+        - execution_steps
+        - flow_execution
+  securitySchemes:
+    - type: apiKey
+      name: Token
+      in: header
+tags:
+  - name: Contact
+    description: "Object describing a unique phone number. Think of it as a mini-CRM: you can add name, phone and email as base attributes, but also add however many extra attributes as you wish through the `meta` field."
+  - name: FlowExecution
+    description: "Once a flow starts running, this object encapsulates all contacts that go through this flow execution."
+  - name: FlowExecutionContact
+    description: "In an execution, this object encapsulates a contact interacting with the flow, sending and receiving messages, and going through the flow steps."
+  - name: Webhooks
+    description: "Here you'll find all the available events you can listen to, so you can extract data from hilos as it happens."

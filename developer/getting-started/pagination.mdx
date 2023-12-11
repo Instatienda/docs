@@ -1,12 +1,13 @@
 ---
-id: pagination
-slug: /pagination
 title: Pagination
 ---
 
 Pagination within Hilos API is done using the `page` and `page_size` query parameters. The `page` parameter is used to specify the page number, and the `page_size` parameter is used to specify the number of items per page.
 
-| Parameter | Type      | Description                   |
-| --------- | --------- | ----------------------------- |
-| page      | `integer` | The page number to retrieve.  |
-| page_size | `integer` | The number of items per page. |
+<ParamField body="page" type="integer">
+  The page number to retrieve.
+</ParamField>
+
+<ParamField body="page_size" type="integer">
+  The number of items per page.
+</ParamField>

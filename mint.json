@@ -24,8 +24,10 @@
   "api": {
     "auth": {
       "method": "key"
-    }
+    },
+    "baseUrl": "https://api.hilos.io/api/"
   },
+  "openapi": "api/openapi-schema.yml",
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Go to app",
@@ -180,7 +182,10 @@
     },
     {
       "group": "Managing contacts",
-      "pages": ["developer/contacts/creating-a-contact"]
+      "pages": [
+        "developer/contacts/creating-a-contact",
+        "developer/contacts/contact-information"
+      ]
     },
     {
       "group": "Messaging",

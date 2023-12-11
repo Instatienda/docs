@@ -1,78 +1,39 @@
 ---
-id: creating-a-contact
-slug: /creating-a-contact
 title: Creating a contact
+api: 'POST contact'
 ---
+
+# Header Parameters
+<ParamField header="Authorization" type="string" placeholder="Token <Your token>" required>The authorization token</ParamField>
+
+# Body Parameters
+<ParamField body="phone" type="string" placeholder="+525551234567" required>The phone number of the contact</ParamField>
+<ParamField body="first_name" type="string" placeholder="Jason">The first name of the contact</ParamField>
+<ParamField body="last_name" type="string" placeholder="Smith">The last name of the contact</ParamField>
+<ParamField body="email" type="string" placeholder="hey@hilos.io">The email address of the contact</ParamField>
+<ParamField body="meta" type="object" placeholder="{'key':'value'}">The additional attributes of the contact in a key-value pair format</ParamField>
+<ParamField body="external_url" type="string" placeholder="https://app.hilos.io">The website of the contact</ParamField>
+<ParamField body="is_deleted" type="boolean" placeholder="false" default="false">Active status of the contact inside Hilos</ParamField>
+<ParamField body="source" type="string" placeholder="Google search" >The source of the contact</ParamField>
+<ParamField body="created_on" type="string" placeholder="2019-08-24T14:15:22Z" >Creation date of the contact</ParamField>
+<ParamField body="tags" type="Array of Objects" placeholder="[{'name': 'Customer'}]" >An array of tags for the customer to have inside of the Inbox</ParamField>
+<ParamField body="external_id" type="string uuid" placeholder="8382c9b6-8a5b-4aec-b95d-a99a27bd65d7" >An external ID from a CRM like HubSpot</ParamField>
+<ParamField body="default_assignees" type="Array of Objects" placeholder="[{'id': 0}]" >Array of Objects with the id of the users the contact should be assigned to by default.</ParamField>
+<ParamField body="contact_import" type="string or null" placeholder="cd949ab0-4614-4dda-91ec-54566ef1ac43" >Name for the import</ParamField>
 
 ## Prepare the request
 
-To create a contact, you'll need to send a POST request to the following endpoint:
-
-```
-POST https://api.hilos.io/api/contact
-```
-
 The request body should be in JSON format, including the required and optional fields as needed. Here's a table describing each of the request data types and an example:
-
-| Field             | Data                                                | Type             | Example                                |
-| ----------------- | --------------------------------------------------- | ---------------- | -------------------------------------- |
-| phone             | required                                            | string           | "555-123-4567"                         |
-| first_name        |                                                     | string or null   | "John"                                 |
-| last_name         |                                                     | string or null   | "Doe"                                  |
-| email             |                                                     | string or null   | "john.doe@example.com"                 |
-| meta              | object with key value pairs where value is a string | object or null   | {key1: "string", key2: "string"}       |
-| external_url      |                                                     | string or null   | "http://example.com"                   |
-| is_deleted        |                                                     | boolean          | false                                  |
-| id                |                                                     | string uuid      | "497f6eca-6276-4993-bfeb-53cbbbba6f08" |
-| source            |                                                     | string           | "website"                              |
-| created_on        |                                                     | date-time        | "2019-08-24T14:15:22Z"                 |
-| tags              |                                                     | Array of objects | [{"name": "customer"}]                 |
-| external_id       |                                                     | string or null   | "ext-123"                              |
-| default_assignees |                                                     | Array of objects | [{"id": 0}]                            |
-| contact_import    |                                                     | string or null   | "cd949ab0-4614-4dda-91ec-54566ef1ac43" |
 
 ## Send the request
 
 Using your preferred method (e.g., curl, fetch, a REST client, or a programming language library), send the prepared POST request to the endpoint.
 
-Here's a sample request:
-
-```json
-{
-  "phone": "555-123-4567",
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "john.doe@example.com",
-  "meta": {
-    "property1": null,
-    "property2": null
-  },
-  "external_url": "http://example.com",
-  "is_deleted": false,
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-  "source": "website",
-  "created_on": "2019-08-24T14:15:22Z",
-  "tags": [
-    {
-      "name": "customer"
-    }
-  ],
-  "external_id": "ext-123",
-  "default_assignees": [
-    {
-      "id": 0
-    }
-  ],
-  "contact_import": "cd949ab0-4614-4dda-91ec-54566ef1ac43"
-}
-```
-
 ## Handle the response
 
 After sending the request, the API will return a response with the created contact's details. The response will be in JSON format, and you can parse it as needed for your application.
 
-Here's a sample `200` response:
-
+<ResponseExample>
 ```json
 {
   "first_name": "John",
@@ -125,5 +86,6 @@ Here's a sample `200` response:
   "contact_import": "cd949ab0-4614-4dda-91ec-54566ef1ac43"
 }
 ```
+</ResponseExample>
 
 That's it! You've successfully created a contact using the Hilos.io API.
