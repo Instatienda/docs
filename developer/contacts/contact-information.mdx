@@ -1,8 +1,13 @@
 ---
-id: contact-information
-slug: /contact-information
-title: Contact information
+title: Retrieving a Contact
+api: 'GET contact/{id}/'
 ---
+
+# Header Parameters
+<ParamField header="Authorization" type="string" placeholder="Token <Your token>" required>The authorization token</ParamField>
+
+# Path parameters
+<ParamField path="id" type="string" placeholder="eb68987f-3c3d-4093-9843-a963a18e9a86" required>The ID of the contact to retrieve</ParamField>
 
 ## Prepare the request
 
@@ -34,6 +39,7 @@ After sending the request, the API will return a response with the contact's det
 
 Here's a sample response:
 
+<ResponseExample>
 ```json
 {
   "first_name": "John",
@@ -86,3 +92,4 @@ Here's a sample response:
   "contact_import": "cd949ab0-4614-4dda-91ec-54566ef1ac43"
 }
 ```
+</ResponseExample>
