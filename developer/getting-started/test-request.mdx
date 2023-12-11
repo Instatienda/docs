@@ -1,20 +1,24 @@
 ---
-id: test-request
-slug: /test-request
 title: Test request
+api: 'GET account-member'
 ---
 
-On this doc we'll make a test request to the API by requesting the users list on our account.
+On this doc we'll make a test request to the API to the `account-member` endpoint to check if your Token works by requesting the users list on our account.
 
-## Request
+# Header parameters
+<ParamField header="Authorization" placeholder="Token <your token>" required>The authentication API token from your account</ParamField>
 
-```bash
-GET https://api.hilos.io/api/account-member
-Authorization: Token <your token>
-```
+# Body parameters
+<ParamField body="page" type="integer">
+  The page number to retrieve.
+</ParamField>
 
-if everything is ok, you'll get a response with an array of objects with your users' infomation as follows:
+<ParamField body="page_size" type="integer">
+  The number of items per page.
+</ParamField>
 
+
+<ResponseExample>
 ```json
 [
   {
@@ -41,3 +45,4 @@ if everything is ok, you'll get a response with an array of objects with your us
   }
 ]
 ```
+</ResponseExample>
