@@ -18,7 +18,7 @@
     },
     {
       "name": "API reference",
-      "url": "api"
+      "url": "apidocs"
     }
   ],
   "api": {
@@ -27,7 +27,7 @@
     },
     "baseUrl": "https://api.hilos.io/api/"
   },
-  "openapi": "api/openapi-schema.yml",
+  "openapi": "apidocs/schema.yml",
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Go to app",
