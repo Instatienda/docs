@@ -181,19 +181,49 @@
       ]
     },
     {
-      "group": "Managing contacts",
+      "group": "Contacts",
       "pages": [
-        "developer/contacts/creating-a-contact",
-        "developer/contacts/contact-information"
+        "apidocs/contact/delete-apicontact",
+        "apidocs/contact/get-apicontact-1",
+        "apidocs/contact/get-apicontact",
+        "apidocs/contact/patch-apicontact",
+        "apidocs/contact/post-apicontact",
+        "apidocs/contact/put-apicontact"
       ]
     },
     {
-      "group": "Messaging",
+      "group": "Conversations",
       "pages": [
-        "developer/messaging/broadcasts",
-        "developer/messaging/flows",
-        "developer/messaging/template"
+        "apidocs/conversation/get-apiinboxconversation",
+        "apidocs/conversation/patch-apiinboxconversation-update",
+        "apidocs/conversation/put-apiinboxconversation-update"
       ]
+    },
+    {
+      "group": "Flows",
+      "pages": [
+        {
+          "group": "Flow Execution",
+          "pages": [
+            "apidocs/flow-execution/get-apiflow-execution-1",
+            "apidocs/flow-execution/get-apiflow-execution",
+            "apidocs/flow-execution/patch-apiflow-execution",
+            "apidocs/flow-execution/post-apiflow-run",
+            "apidocs/flow-execution/put-apiflow-execution"
+          ]
+        },
+        {
+          "group": "Flow Execution Contacts",
+          "pages": [
+            "apidocs/flow-execution-contact/get-apiflow-execution-contact-1",
+            "apidocs/flow-execution-contact/get-apiflow-execution-contact"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Account management",
+      "pages": ["apidocs/user/get-apiaccount-member"]
     }
   ],
   "footerSocials": {
