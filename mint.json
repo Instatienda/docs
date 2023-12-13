@@ -76,6 +76,15 @@
           "icon": "gear"
         },
         {
+          "group": "Contacts",
+          "icon": "user",
+          "pages": [
+            "user/using-hilos/contacts/creating-a-contact",
+            "user/using-hilos/contacts/editing-a-contact",
+            "user/using-hilos/contacts/deleting-a-contact"
+          ]
+        },
+        {
           "group": "Templates",
           "icon": "clipboard-list",
           "pages": [
@@ -136,7 +145,10 @@
         {
           "group": "Reports",
           "icon": "square-poll-vertical",
-          "pages": ["user/using-hilos/reports/reports"]
+          "pages": [
+            "user/using-hilos/reports/flow-reports",
+            "user/using-hilos/reports/inbox-reports"
+          ]
         },
         {
           "group": "Integrations",
