@@ -37,7 +37,7 @@
     {
       "group": "Getting started",
       "pages": [
-        "docs/user/getting-started/getting-started",
+        "docs/user/getting-started/prerequisites",
         {
           "group": "Connecting to Hilos",
           "icon": "plug",
