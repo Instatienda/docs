@@ -14,11 +14,11 @@
   "tabs": [
     {
       "name": "Developer docs",
-      "url": "developer"
+      "url": "docs/developer"
     },
     {
       "name": "API reference",
-      "url": "apidocs"
+      "url": "docs/apidocs"
     }
   ],
   "api": {
@@ -27,7 +27,7 @@
     },
     "baseUrl": "https://api.hilos.io/api/"
   },
-  "openapi": "apidocs/schema.yml",
+  "openapi": "docs/apidocs/schema.yml",
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Go to app",
@@ -37,16 +37,16 @@
     {
       "group": "Getting started",
       "pages": [
-        "user/getting-started/getting-started",
+        "docs/user/getting-started/getting-started",
         {
           "group": "Connecting to Hilos",
           "icon": "plug",
           "pages": [
-            "user/getting-started/connect-a-new-number",
-            "user/getting-started/sending-your-first-message"
+            "docs/user/getting-started/connect-a-new-number",
+            "docs/user/getting-started/sending-your-first-message"
           ]
         },
-        "user/getting-started/wa-profile"
+        "docs/user/getting-started/wa-profile"
       ]
     },
     {
@@ -55,20 +55,20 @@
         {
           "group": "Settings & Setup",
           "pages": [
-            "user/using-hilos/settings/basic-setup",
-            "user/using-hilos/settings/invite-users",
-            "user/using-hilos/settings/inbox-conversations",
-            "user/using-hilos/settings/teams",
-            "user/using-hilos/settings/working-hours",
-            "user/using-hilos/settings/whatsapp-accounts",
-            "user/using-hilos/settings/billing-subscription",
+            "docs/user/using-hilos/settings/basic-setup",
+            "docs/user/using-hilos/settings/invite-users",
+            "docs/user/using-hilos/settings/inbox-conversations",
+            "docs/user/using-hilos/settings/teams",
+            "docs/user/using-hilos/settings/working-hours",
+            "docs/user/using-hilos/settings/whatsapp-accounts",
+            "docs/user/using-hilos/settings/billing-subscription",
             {
               "group": "Notifications",
               "pages": [
-                "user/using-hilos/notifications/windows",
-                "user/using-hilos/notifications/macos",
-                "user/using-hilos/notifications/android",
-                "user/using-hilos/notifications/ios"
+                "docs/user/using-hilos/notifications/windows",
+                "docs/user/using-hilos/notifications/macos",
+                "docs/user/using-hilos/notifications/android",
+                "docs/user/using-hilos/notifications/ios"
               ],
               "icon": "bell"
             }
@@ -79,55 +79,55 @@
           "group": "Contacts",
           "icon": "user",
           "pages": [
-            "user/using-hilos/contacts/creating-a-contact",
-            "user/using-hilos/contacts/editing-a-contact",
-            "user/using-hilos/contacts/deleting-a-contact"
+            "docs/user/using-hilos/contacts/creating-a-contact",
+            "docs/user/using-hilos/contacts/editing-a-contact",
+            "docs/user/using-hilos/contacts/deleting-a-contact"
           ]
         },
         {
           "group": "Templates",
           "icon": "clipboard-list",
           "pages": [
-            "user/using-hilos/templates/templates",
-            "user/using-hilos/templates/creating-a-template",
-            "user/using-hilos/templates/editing-a-template",
-            "user/using-hilos/templates/previewing-a-template",
-            "user/using-hilos/templates/deleting-a-template"
+            "docs/user/using-hilos/templates/templates",
+            "docs/user/using-hilos/templates/creating-a-template",
+            "docs/user/using-hilos/templates/editing-a-template",
+            "docs/user/using-hilos/templates/previewing-a-template",
+            "docs/user/using-hilos/templates/deleting-a-template"
           ]
         },
         {
           "group": "Inbox",
           "icon": "inbox",
           "pages": [
-            "user/using-hilos/inbox/starting-a-conversation",
-            "user/using-hilos/inbox/quick-replies",
-            "user/using-hilos/inbox/searching-inside-a-conversation",
-            "user/using-hilos/inbox/finding-a-conversation",
-            "user/using-hilos/inbox/conversation-tab",
-            "user/using-hilos/inbox/contact-tab",
-            "user/using-hilos/inbox/archiving-a-conversation",
-            "user/using-hilos/inbox/conversation-status",
-            "user/using-hilos/inbox/inbox-views",
-            "user/using-hilos/inbox/inbox-teams",
-            "user/using-hilos/inbox/inbox-actions"
+            "docs/user/using-hilos/inbox/starting-a-conversation",
+            "docs/user/using-hilos/inbox/quick-replies",
+            "docs/user/using-hilos/inbox/searching-inside-a-conversation",
+            "docs/user/using-hilos/inbox/finding-a-conversation",
+            "docs/user/using-hilos/inbox/conversation-tab",
+            "docs/user/using-hilos/inbox/contact-tab",
+            "docs/user/using-hilos/inbox/archiving-a-conversation",
+            "docs/user/using-hilos/inbox/conversation-status",
+            "docs/user/using-hilos/inbox/inbox-views",
+            "docs/user/using-hilos/inbox/inbox-teams",
+            "docs/user/using-hilos/inbox/inbox-actions"
           ]
         },
         {
           "group": "Flows",
           "icon": "share-nodes",
           "pages": [
-            "user/using-hilos/flows/what-are-flows",
-            "user/using-hilos/flows/creating-a-flow",
-            "user/using-hilos/flows/flow-reports",
+            "docs/user/using-hilos/flows/what-are-flows",
+            "docs/user/using-hilos/flows/creating-a-flow",
+            "docs/user/using-hilos/flows/flow-reports",
             {
               "group": "Step types",
               "pages": [
-                "user/using-hilos/flows/steps/action-step",
-                "user/using-hilos/flows/steps/contact-update",
-                "user/using-hilos/flows/steps/go-to-step",
-                "user/using-hilos/flows/steps/delay-step",
-                "user/using-hilos/flows/steps/menu-steps",
-                "user/using-hilos/flows/steps/assignation-steps"
+                "docs/user/using-hilos/flows/steps/action-step",
+                "docs/user/using-hilos/flows/steps/contact-update",
+                "docs/user/using-hilos/flows/steps/go-to-step",
+                "docs/user/using-hilos/flows/steps/delay-step",
+                "docs/user/using-hilos/flows/steps/menu-steps",
+                "docs/user/using-hilos/flows/steps/assignation-steps"
               ]
             }
           ]
@@ -136,27 +136,27 @@
           "group": "Broadcasts",
           "icon": "message-arrow-up-right",
           "pages": [
-            "user/using-hilos/broadcasts/creating-a-broadcast",
-            "user/using-hilos/broadcasts/broadcast-reports",
-            "user/using-hilos/broadcasts/deleting-a-broadcast",
-            "user/using-hilos/broadcasts/best-practices"
+            "docs/user/using-hilos/broadcasts/creating-a-broadcast",
+            "docs/user/using-hilos/broadcasts/broadcast-reports",
+            "docs/user/using-hilos/broadcasts/deleting-a-broadcast",
+            "docs/user/using-hilos/broadcasts/best-practices"
           ]
         },
         {
           "group": "Reports",
           "icon": "square-poll-vertical",
           "pages": [
-            "user/using-hilos/reports/flow-reports",
-            "user/using-hilos/reports/inbox-reports"
+            "docs/user/using-hilos/reports/flow-reports",
+            "docs/user/using-hilos/reports/inbox-reports"
           ]
         },
         {
           "group": "Integrations",
           "icon": "file-code",
           "pages": [
-            "user/using-hilos/integrations/ChatGPT",
-            "user/using-hilos/integrations/HubSpot",
-            "user/using-hilos/integrations/Zapier"
+            "docs/user/using-hilos/integrations/ChatGPT",
+            "docs/user/using-hilos/integrations/HubSpot",
+            "docs/user/using-hilos/integrations/Zapier"
           ]
         }
       ]
@@ -164,51 +164,51 @@
     {
       "group": "WhatsApp FAQs",
       "pages": [
-        "user/whatsapp-guides/24h-window",
-        "user/whatsapp-guides/messaging-limits",
-        "user/whatsapp-guides/number-quality",
-        "user/whatsapp-guides/unsupported-messages",
-        "user/whatsapp-guides/wa-verification",
-        "user/whatsapp-guides/wa-pricing",
-        "user/whatsapp-guides/wa-vs-api",
-        "user/whatsapp-guides/wa-widget"
+        "docs/user/whatsapp-guides/24h-window",
+        "docs/user/whatsapp-guides/messaging-limits",
+        "docs/user/whatsapp-guides/number-quality",
+        "docs/user/whatsapp-guides/unsupported-messages",
+        "docs/user/whatsapp-guides/wa-verification",
+        "docs/user/whatsapp-guides/wa-pricing",
+        "docs/user/whatsapp-guides/wa-vs-api",
+        "docs/user/whatsapp-guides/wa-widget"
       ]
     },
     {
       "group": "Useful links",
       "pages": [
-        "user/support/contact-support",
-        "user/support/feature-requests",
-        "user/support/download-android",
-        "user/support/download-ios"
+        "docs/user/support/contact-support",
+        "docs/user/support/feature-requests",
+        "docs/user/support/download-android",
+        "docs/user/support/download-ios"
       ]
     },
     {
       "group": "Getting started",
       "pages": [
-        "developer/getting-started/auth",
-        "developer/getting-started/pagination",
-        "developer/getting-started/errors",
-        "developer/getting-started/test-request"
+        "docs/developer/getting-started/auth",
+        "docs/developer/getting-started/pagination",
+        "docs/developer/getting-started/errors",
+        "docs/developer/getting-started/test-request"
       ]
     },
     {
       "group": "Contacts",
       "pages": [
-        "apidocs/contact/delete-apicontact",
-        "apidocs/contact/get-apicontact-1",
-        "apidocs/contact/get-apicontact",
-        "apidocs/contact/patch-apicontact",
-        "apidocs/contact/post-apicontact",
-        "apidocs/contact/put-apicontact"
+        "docs/apidocs/contact/delete-apicontact",
+        "docs/apidocs/contact/get-apicontact-1",
+        "docs/apidocs/contact/get-apicontact",
+        "docs/apidocs/contact/patch-apicontact",
+        "docs/apidocs/contact/post-apicontact",
+        "docs/apidocs/contact/put-apicontact"
       ]
     },
     {
       "group": "Conversations",
       "pages": [
-        "apidocs/conversation/get-apiinboxconversation",
-        "apidocs/conversation/patch-apiinboxconversation-update",
-        "apidocs/conversation/put-apiinboxconversation-update"
+        "docs/apidocs/conversation/get-apiinboxconversation",
+        "docs/apidocs/conversation/patch-apiinboxconversation-update",
+        "docs/apidocs/conversation/put-apiinboxconversation-update"
       ]
     },
     {
@@ -217,25 +217,25 @@
         {
           "group": "Flow Execution",
           "pages": [
-            "apidocs/flow-execution/get-apiflow-execution-1",
-            "apidocs/flow-execution/get-apiflow-execution",
-            "apidocs/flow-execution/patch-apiflow-execution",
-            "apidocs/flow-execution/post-apiflow-run",
-            "apidocs/flow-execution/put-apiflow-execution"
+            "docs/apidocs/flow-execution/get-apiflow-execution-1",
+            "docs/apidocs/flow-execution/get-apiflow-execution",
+            "docs/apidocs/flow-execution/patch-apiflow-execution",
+            "docs/apidocs/flow-execution/post-apiflow-run",
+            "docs/apidocs/flow-execution/put-apiflow-execution"
           ]
         },
         {
           "group": "Flow Execution Contacts",
           "pages": [
-            "apidocs/flow-execution-contact/get-apiflow-execution-contact-1",
-            "apidocs/flow-execution-contact/get-apiflow-execution-contact"
+            "docs/apidocs/flow-execution-contact/get-apiflow-execution-contact-1",
+            "docs/apidocs/flow-execution-contact/get-apiflow-execution-contact"
           ]
         }
       ]
     },
     {
       "group": "Account management",
-      "pages": ["apidocs/user/get-apiaccount-member"]
+      "pages": ["docs/apidocs/docs/user/get-apiaccount-member"]
     }
   ],
   "footerSocials": {
