@@ -1,0 +1,3259 @@
+openapi: 3.0.3
+info:
+  title: Hilos API
+  version: 1.0.0
+  description: |-
+    All of the below API endpoints require API key authentication, get your token at https://app.hilos.io/dev/api-keys.
+
+    To use this token, send with every request an `Authorization: Token <your token>` header.
+
+    Production API server is located at api.hilos.io using HTTPS.
+
+    No versioning info is required for now.
+paths:
+  /api/account-member:
+    get:
+      operationId: List Users
+      description: 'Lists Users. '
+      parameters:
+      - in: query
+        name: email__icontains
+        schema:
+          type: string
+      - in: query
+        name: email__iendswith
+        schema:
+          type: string
+      - in: query
+        name: email__iexact
+        schema:
+          type: string
+      - in: query
+        name: email__isnull
+        schema:
+          type: boolean
+      - in: query
+        name: email__istartswith
+        schema:
+          type: string
+      - in: query
+        name: first_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: first_name__iendswith
+        schema:
+          type: string
+      - in: query
+        name: first_name__iexact
+        schema:
+          type: string
+      - in: query
+        name: first_name__isnull
+        schema:
+          type: boolean
+      - in: query
+        name: first_name__istartswith
+        schema:
+          type: string
+      - in: query
+        name: last_name__icontains
+        schema:
+          type: string
+      - in: query
+        name: last_name__iendswith
+        schema:
+          type: string
+      - in: query
+        name: last_name__iexact
+        schema:
+          type: string
+      - in: query
+        name: last_name__isnull
+        schema:
+          type: boolean
+      - in: query
+        name: last_name__istartswith
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: You can search users with the `email`, `first_name` or `last_name`
+          fields.
+        examples:
+          CreatedByEmail:
+            value: erik@hilos.io
+            summary: created by email
+      tags:
+      - User
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountMemberUser'
+          description: ''
+  /api/channels/whatsapp/template:
+    get:
+      operationId: List WhatsApp Templates
+      description: Lists WhatsApp Templates. You can search with the `name` and `status`
+        fields using the `?seach=my-template-name` query parameter.
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+          enum:
+          - ACCOUNT_UPDATE
+          - ALERT_UPDATE
+          - APPOINTMENT_UPDATE
+          - AUTHENTICATION
+          - AUTO_REPLY
+          - ISSUE_RESOLUTION
+          - MARKETING
+          - OTP
+          - PAYMENT_UPDATE
+          - PERSONAL_FINANCE_UPDATE
+          - RESERVATION_UPDATE
+          - SHIPPING_UPDATE
+          - TICKET_UPDATE
+          - TRANSACTIONAL
+          - TRANSPORTATION_UPDATE
+          - UTILITY
+      - in: query
+        name: category__in
+        schema:
+          type: array
+          items:
+            type: string
+        description: Multiple values may be separated by commas.
+        explode: false
+        style: form
+      - in: query
+        name: channel
+        schema:
+          type: integer
+      - in: query
+        name: channel__in
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Multiple values may be separated by commas.
+        explode: false
+        style: form
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - approved
+          - deleted
+          - disabled
+          - draft
+          - in_appeal
+          - pending
+          - pending_deletion
+          - rejected
+          - submitted
+      - in: query
+        name: status__in
+        schema:
+          type: array
+          items:
+            type: string
+        description: Multiple values may be separated by commas.
+        explode: false
+        style: form
+      tags:
+      - WhatsApp
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWhatsAppTemplateSimpleReadList'
+          description: ''
+  /api/channels/whatsapp/template/{id}:
+    get:
+      operationId: Get WhatsApp Template
+      description: Gets a WhatsApp Template by Id.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - WhatsApp
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsAppTemplateRead'
+          description: ''
+    delete:
+      operationId: Delete WhatsApp Template
+      description: Deletes a WhatsApp Template by Id.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - WhatsApp
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/channels/whatsapp/template/{id}/send:
+    post:
+      operationId: Send a WhatsApp Template Message
+      description: 'Send a single WhatsApp message: select a template to use and call
+        our endpoint with the recipient phone number and the variables the template
+        needs. That''s it!'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Template Id
+        required: true
+        examples:
+          TheTemplateIdThatWeWantToSend:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: The Template Id that we want to send
+      tags:
+      - WhatsApp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WhatsAppTemplateSend'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WhatsAppTemplateSend'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WhatsAppTemplateSend'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhatsAppTemplateSendPublicResponse'
+              examples:
+                WhatsAppTemplateSendPublicResponse:
+                  value:
+                    id: a513da3a-8b73-42aa-a938-0eb1e0141533
+                    conversation: ee49ab6c-dfd8-4cb6-a512-5880f4385622
+                  description: Returns the Message Id and its Conversation Id.
+          description: ''
+  /api/contact:
+    get:
+      operationId: List Contacts
+      description: Lists contacts.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: You can search with the base `phone`, `first_name`, `last_name`,
+          `email` and `external_url` fields.
+        examples:
+          ByContactEmail:
+            value: erik@hilos.io
+            summary: by contact email
+          ByContactPhone:
+            value: '+525512345678'
+            summary: by contact phone
+          ByContactLastName:
+            value: Smith
+            summary: by contact last_name
+          ByContactFirstName:
+            value: Jonh
+            summary: by contact first_name
+      tags:
+      - Contact
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedContactListReadList'
+          description: ''
+    post:
+      operationId: Create or Update Contact
+      description: "When you POST a new Contact, we'll first check if another contact\
+        \ exists with the same canonical phone. If it does, we'll do a partial update\
+        \ to the existing contact with these new information. We do this so you don't\
+        \ end up with duplicate contacts in your flows. \n\nYou can set arbitrary\
+        \ attributes for a contact in the meta object, using `meta={key1: value1,\
+        \ key2: value2, ...}`. We parse all these attributes as strings for now. \n\
+        \n We append the received `meta` and `notes` properties with the contact current\
+        \ ones, if you want to delete some key inside the `meta` or a `note` you have\
+        \ to use the `PUT` method sending all the contact fields."
+      tags:
+      - Contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDetailRead'
+          description: ''
+  /api/contact/{id}:
+    get:
+      operationId: Get Contact
+      description: Gets a Contact by Id.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Contact
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDetailRead'
+          description: ''
+    put:
+      operationId: Update Contact
+      description: "Update a Contact. \n\n If you send a empty `meta` or `notes` the\
+        \ contact will have those properties removed."
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDetailRead'
+          description: ''
+    patch:
+      operationId: Partial Update Contact
+      description: "Update a Contact sending only the properties you want to update.\
+        \ \n\n If you send the `meta` or `notes` the contact will have those properties\
+        \ appended with the contact current ones.."
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedContactEdit'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDetailRead'
+          description: ''
+    delete:
+      operationId: Delete Contact
+      description: Deleting a contact won't delete its history nor its sent messages.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Contact
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/flow-execution:
+    get:
+      operationId: List Flow Execution
+      description: 'Lists Flow Executions. '
+      parameters:
+      - in: query
+        name: flow
+        schema:
+          type: string
+          format: uuid
+        description: A Flow Id to filter the Flow Executions and only get those from
+          that Flow.
+        examples:
+          OnlyReturnTheFlowExecutionsOfThisFlow:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Only return the Flow Executions of this Flow
+      - in: query
+        name: flow_version
+        schema:
+          type: string
+          format: uuid
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: You can search with the `status`, `created_by__email` fields.
+        examples:
+          CreatedByEmail:
+            value: erik@hilos.io
+            summary: created by email
+          With`PROCESSING`Status:
+            value: Processing
+            summary: with `PROCESSING` status
+          With`READY`Status:
+            value: Ready
+            summary: with `READY` status
+          With`AWAITINGCONFIRMATION`Status:
+            value: Awaiting Confirmation
+            summary: with `AWAITING_CONFIRMATION` status
+          With`CONFIRMED`Status:
+            value: Confirmed
+            summary: with `CONFIRMED` status
+          With`STARTING`Status:
+            value: Starting
+            summary: with `STARTING` status
+          With`RUNNING`Status:
+            value: Running
+            summary: with `RUNNING` status
+          With`COMPLETED`Status:
+            value: Completed
+            summary: with `COMPLETED` status
+          With`CANCELED`Status:
+            value: Canceled
+            summary: with `CANCELED` status
+          With`PAUSED`Status:
+            value: Paused
+            summary: with `PAUSED` status
+      tags:
+      - Flow Execution
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFlowExecutionListList'
+          description: ''
+  /api/flow-execution-contact:
+    get:
+      operationId: List Flow Execution Contact
+      description: Lists Flow Execution Contacts.
+      parameters:
+      - in: query
+        name: contact
+        schema:
+          type: string
+          format: uuid
+        description: A Contact Id to filter the Flow Execution Contacts and only get
+          those from that Contact.
+        examples:
+          OnlyReturnTheFlowExecutionsContactOfThisContact:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Only return the Flow Executions Contact of this Contact
+      - in: query
+        name: execution_steps__step_id
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: flow_execution
+        schema:
+          type: string
+          format: uuid
+        description: A Flow Execution Id to filter the Flow Execution Contacts and
+          only get those from that Flow Execution.
+        examples:
+          OnlyReturnTheFlowExecutionsContactOfThisFlowExecution:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Only return the Flow Executions Contact of this Flow Execution
+      - in: query
+        name: flow_execution__flow
+        schema:
+          type: string
+          format: uuid
+        description: A Flow Id to filter the Flow Execution Contacts and only get
+          those from that Flow.
+        examples:
+          OnlyReturnTheFlowExecutionsContactOfThisFlow:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Only return the Flow Executions Contact of this flow
+      - in: query
+        name: flow_execution__flow_version
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: id
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: |-
+          A boolean param to filter between active/in progress Flow Execution Contacs.
+
+           If the parameter is omitted it will respond with Flow Execution Contacts with any `status`.
+        examples:
+          OnlyReturnTheFlowExecutionsContactThatAreWithStatus`READY`,`RUNNING`Or`PAUSED`.:
+            value:
+            - 'true'
+            - any-truthy-value
+            - 1
+            summary: Only return the Flow Executions Contact that are with status
+              `READY`, `RUNNING` or `PAUSED`.
+          OnlyReturnTheFlowExecutionsContactThatAreWithStatus`CANCELED`Or`COMPLETED`.:
+            value:
+            - 'false'
+            - 0
+            summary: Only return the Flow Executions Contact that are with status
+              `CANCELED` or `COMPLETED`.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: You can search with the `contact__phone`, `contact__first_name`,
+          `contact__last_name`, `contact__email` fields.
+        examples:
+          ByContactEmail:
+            value: erik@hilos.io
+            summary: by contact email
+          ByContactPhone:
+            value: '+525512345678'
+            summary: by contact phone
+          ByContactLastName:
+            value: Smith
+            summary: by contact last_name
+          ByContactFirstName:
+            value: Jonh
+            summary: by contact first_name
+      tags:
+      - Flow Execution Contact
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFlowExecutionContactListSimpleList'
+          description: ''
+  /api/flow-execution-contact/{id}:
+    get:
+      operationId: Get Flow Execution Contact
+      description: Get Flow Execution Contact by Id.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A Flow Execution Contact Id to Retrive.
+        required: true
+        examples:
+          QueryById:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Query by Id
+      tags:
+      - Flow Execution Contact
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowExecutionContactReadDetail'
+          description: ''
+  /api/flow-execution/{id}:
+    get:
+      operationId: Get Flow Execution
+      description: Get Flow Execution by Id.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A Flow Execution Id to retrive.
+        required: true
+        examples:
+          QueryById:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Query by Id
+      tags:
+      - Flow Execution
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowExecutionReadDetail'
+          description: ''
+  /api/flow/{id}/run:
+    post:
+      operationId: Create a Flow Execution
+      description: Create a Flow Execution of a Flow.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A Flow Id to create a Flow Execution.
+        required: true
+        examples:
+          CreateByFlowId:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Create by Flow Id
+      tags:
+      - Flow Execution
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlowExecutionEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FlowExecutionEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FlowExecutionEdit'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowExecutionEdit'
+          description: ''
+  /api/inbox/conversation:
+    get:
+      operationId: List Conversations
+      description: 'Lists Conversations. '
+      parameters:
+      - in: query
+        name: contact
+        schema:
+          type: string
+          format: uuid
+        description: A Contact Id to filter the Conversations and only get those from
+          that Contact.
+        examples:
+          OnlyReturnTheConversationsOfThisContact:
+            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
+            summary: Only return the Conversations of this Contact
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Conversation
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedConversationList'
+          description: ''
+  /api/inbox/conversation/{id}/update:
+    put:
+      operationId: Update a Conversation
+      description: Update a Conversation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Conversation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Conversation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Conversation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Conversation'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+          description: ''
+    patch:
+      operationId: Partially update a Conversation
+      description: Partially update a Conversation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Conversation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedConversation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedConversation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedConversation'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+          description: ''
+components:
+  schemas:
+    AccountMemberUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          readOnly: true
+        last_name:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        id:
+          type: integer
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamSimple'
+        account:
+          type: integer
+          readOnly: true
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
+        profile_image:
+          type: string
+          format: uri
+          readOnly: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        user_permissions:
+          type: array
+          items:
+            type: string
+        available_channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimpleChannel'
+      required:
+      - account
+      - date_joined
+      - email
+      - first_name
+      - id
+      - last_name
+      - profile_image
+    AccountMemberUserBasic:
+      type: object
+      properties:
+        first_name:
+          type: string
+          readOnly: true
+        last_name:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        id:
+          type: integer
+        account:
+          type: integer
+          readOnly: true
+        profile_image:
+          type: string
+          format: uri
+          readOnly: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - account
+      - date_joined
+      - email
+      - first_name
+      - id
+      - last_name
+      - profile_image
+    ActionRequestMethodEnum:
+      enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      type: string
+    AnswerOptionsRenderEnum:
+      enum:
+      - BUTTONS
+      - LIST
+      - EMOJIS
+      - NUMBERS
+      type: string
+    AnswerPhoneDefaultCountryEnum:
+      enum:
+      - AF
+      - AX
+      - AL
+      - DZ
+      - AS
+      - AD
+      - AO
+      - AI
+      - AQ
+      - AG
+      - AR
+      - AM
+      - AW
+      - AU
+      - AT
+      - AZ
+      - BS
+      - BH
+      - BD
+      - BB
+      - BY
+      - BE
+      - BZ
+      - BJ
+      - BM
+      - BT
+      - BO
+      - BQ
+      - BA
+      - BW
+      - BV
+      - BR
+      - IO
+      - BN
+      - BG
+      - BF
+      - BI
+      - CV
+      - KH
+      - CM
+      - CA
+      - KY
+      - CF
+      - TD
+      - CL
+      - CN
+      - CX
+      - CC
+      - CO
+      - KM
+      - CG
+      - CD
+      - CK
+      - CR
+      - CI
+      - HR
+      - CU
+      - CW
+      - CY
+      - CZ
+      - DK
+      - DJ
+      - DM
+      - DO
+      - EC
+      - EG
+      - SV
+      - GQ
+      - ER
+      - EE
+      - SZ
+      - ET
+      - FK
+      - FO
+      - FJ
+      - FI
+      - FR
+      - GF
+      - PF
+      - TF
+      - GA
+      - GM
+      - GE
+      - DE
+      - GH
+      - GI
+      - GR
+      - GL
+      - GD
+      - GP
+      - GU
+      - GT
+      - GG
+      - GN
+      - GW
+      - GY
+      - HT
+      - HM
+      - VA
+      - HN
+      - HK
+      - HU
+      - IS
+      - IN
+      - ID
+      - IR
+      - IQ
+      - IE
+      - IM
+      - IL
+      - IT
+      - JM
+      - JP
+      - JE
+      - JO
+      - KZ
+      - KE
+      - KI
+      - KW
+      - KG
+      - LA
+      - LV
+      - LB
+      - LS
+      - LR
+      - LY
+      - LI
+      - LT
+      - LU
+      - MO
+      - MG
+      - MW
+      - MY
+      - MV
+      - ML
+      - MT
+      - MH
+      - MQ
+      - MR
+      - MU
+      - YT
+      - MX
+      - FM
+      - MD
+      - MC
+      - MN
+      - ME
+      - MS
+      - MA
+      - MZ
+      - MM
+      - NA
+      - NR
+      - NP
+      - NL
+      - NC
+      - NZ
+      - NI
+      - NE
+      - NG
+      - NU
+      - NF
+      - KP
+      - MK
+      - MP
+      - 'NO'
+      - OM
+      - PK
+      - PW
+      - PS
+      - PA
+      - PG
+      - PY
+      - PE
+      - PH
+      - PN
+      - PL
+      - PT
+      - PR
+      - QA
+      - RE
+      - RO
+      - RU
+      - RW
+      - BL
+      - SH
+      - KN
+      - LC
+      - MF
+      - PM
+      - VC
+      - WS
+      - SM
+      - ST
+      - SA
+      - SN
+      - RS
+      - SC
+      - SL
+      - SG
+      - SX
+      - SK
+      - SI
+      - SB
+      - SO
+      - ZA
+      - GS
+      - KR
+      - SS
+      - ES
+      - LK
+      - SD
+      - SR
+      - SJ
+      - SE
+      - CH
+      - SY
+      - TW
+      - TJ
+      - TZ
+      - TH
+      - TL
+      - TG
+      - TK
+      - TO
+      - TT
+      - TN
+      - TR
+      - TM
+      - TC
+      - TV
+      - UG
+      - UA
+      - AE
+      - GB
+      - UM
+      - US
+      - UY
+      - UZ
+      - VU
+      - VE
+      - VN
+      - VG
+      - VI
+      - WF
+      - EH
+      - YE
+      - ZM
+      - ZW
+      type: string
+    AnswerTypeEnum:
+      enum:
+      - ANY
+      - FREE_TEXT
+      - SINGLE_OPTION
+      - NUMBER
+      - URL
+      - EMAIL
+      - FILE
+      - DOCUMENT
+      - VIDEO
+      - IMAGE
+      - PHONE
+      - DATE
+      - TIME
+      - DATETIME
+      - BOOL
+      - LOCATION
+      type: string
+    BlankEnum:
+      enum:
+      - ''
+    BodyFileTypeEnum:
+      enum:
+      - URL
+      - UPLOAD
+      type: string
+    CategoryEnum:
+      enum:
+      - ACCOUNT_UPDATE
+      - PAYMENT_UPDATE
+      - PERSONAL_FINANCE_UPDATE
+      - SHIPPING_UPDATE
+      - RESERVATION_UPDATE
+      - ISSUE_RESOLUTION
+      - APPOINTMENT_UPDATE
+      - TRANSPORTATION_UPDATE
+      - TICKET_UPDATE
+      - ALERT_UPDATE
+      - AUTO_REPLY
+      - TRANSACTIONAL
+      - MARKETING
+      - OTP
+      - AUTHENTICATION
+      - UTILITY
+      type: string
+    ChannelProviderEnum:
+      enum:
+      - META_CLOUD_API
+      - D360_CLOUD_API
+      - 360DIALOG
+      type: string
+    ChannelStatusEnum:
+      enum:
+      - NEW
+      - ACTIVE
+      - INACTIVE
+      type: string
+    ChannelTypeEnum:
+      enum:
+      - WHATSAPP
+      - EMAIL
+      - INSTAGRAM
+      - FB_MESSENGER
+      - TELEGRAM
+      - SMS
+      - VOICE
+      type: string
+    ComparisonEnum:
+      enum:
+      - exact
+      - '!exact'
+      - gte
+      - gt
+      - lte
+      - lt
+      - isnull
+      - '!isnull'
+      - icontains
+      - '!icontains'
+      type: string
+    ContactDetailRead:
+      type: object
+      properties:
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        meta:
+          type: object
+          additionalProperties: {}
+        external_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        canonical_phone:
+          type: string
+          maxLength: 30
+        is_deleted:
+          type: boolean
+        created_by:
+          type: integer
+          readOnly: true
+        phone:
+          type: string
+        id:
+          type: string
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        last_updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Última actualización el
+        source:
+          type: string
+          maxLength: 255
+        notes:
+          type: string
+          readOnly: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactTag'
+        default_assignees:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountMemberUserBasic'
+        contact_import:
+          type: string
+          format: uuid
+          nullable: true
+        inbox_contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboxContactURL'
+        default_channel:
+          type: integer
+          nullable: true
+        default_conversation_url:
+          type: string
+          readOnly: true
+      required:
+      - canonical_phone
+      - created_by
+      - default_assignees
+      - default_conversation_url
+      - id
+      - inbox_contacts
+      - last_updated_on
+      - notes
+      - phone
+      - source
+      - tags
+    ContactListRead:
+      type: object
+      properties:
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        meta:
+          type: object
+          additionalProperties: {}
+        external_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        canonical_phone:
+          type: string
+          maxLength: 30
+        is_deleted:
+          type: boolean
+        created_by:
+          type: integer
+          readOnly: true
+        phone:
+          type: string
+        id:
+          type: string
+          title: Contact ID
+          description: UUID representing the contact ID
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        last_updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Última actualización el
+        source:
+          type: string
+          maxLength: 255
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactTag'
+        contact_import:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - canonical_phone
+      - created_by
+      - id
+      - last_updated_on
+      - phone
+      - source
+      - tags
+    ContactMessage:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+              nullable: true
+        emails:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+              nullable: true
+        ims:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+              nullable: true
+        urls:
+          type: array
+          items:
+            type: string
+            format: uri
+            maxLength: 200
+        name:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+        phones:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+              nullable: true
+        org:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+    ContactNote:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        notes:
+          type: string
+        contact:
+          type: string
+          format: uuid
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Creado el
+        created_by:
+          $ref: '#/components/schemas/SimpleUser'
+      required:
+      - contact
+      - created_on
+      - id
+      - notes
+    ContactReadSimple:
+      type: object
+      properties:
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        meta:
+          type: object
+          additionalProperties: {}
+        canonical_phone:
+          type: string
+          maxLength: 30
+        is_deleted:
+          type: boolean
+        phone:
+          type: string
+        id:
+          type: string
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        last_updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Última actualización el
+        source:
+          type: string
+          maxLength: 255
+        external_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+      required:
+      - canonical_phone
+      - id
+      - last_updated_on
+      - phone
+      - source
+    ContactTag:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - id
+      - name
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: string
+        contact:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/ConversationStatusEnum'
+        assigned:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountMemberUserBasic'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationTag'
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Creado el
+        source:
+          allOf:
+          - $ref: '#/components/schemas/ConversationSourceEnum'
+          readOnly: true
+        assigned_team:
+          type: integer
+        channel:
+          type: integer
+          nullable: true
+      required:
+      - assigned
+      - contact
+      - created_on
+      - id
+      - source
+    ConversationSourceEnum:
+      enum:
+      - INBOX
+      - AUTO_RESPONSE
+      - API
+      - BROADCAST
+      - FLOW
+      - UNKNOWN
+      type: string
+    ConversationStatusEnum:
+      enum:
+      - CREATED
+      - FLOW
+      - FLOW_PAUSED
+      - NEW
+      - IN_PROGRESS
+      - RESOLVED
+      - CLOSED
+      type: string
+    ConversationTag:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - id
+      - name
+    ExecuteForEnum:
+      enum:
+      - FILTERS
+      - LIST
+      - ALL
+      type: string
+    FlowExecutionContactFilterEdit:
+      type: object
+      properties:
+        field:
+          type: string
+        comparison:
+          $ref: '#/components/schemas/ComparisonEnum'
+        value:
+          type: string
+        id:
+          type: string
+          format: uuid
+      required:
+      - comparison
+      - field
+      - value
+    FlowExecutionContactListSimple:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        contact:
+          $ref: '#/components/schemas/ContactReadSimple'
+        status:
+          $ref: '#/components/schemas/FlowExecutionContactStatusEnum'
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        reason:
+          type: string
+          nullable: true
+        flow_name:
+          type: string
+          readOnly: true
+        is_chatbot_execution:
+          type: boolean
+          readOnly: true
+      required:
+      - contact
+      - flow_name
+      - is_chatbot_execution
+    FlowExecutionContactReadDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        contact:
+          $ref: '#/components/schemas/ContactReadSimple'
+        status:
+          $ref: '#/components/schemas/FlowExecutionContactStatusEnum'
+        execution_steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowExecutionStepReadDetail'
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        flow_execution:
+          $ref: '#/components/schemas/FlowExecutionReadDetail'
+        reason:
+          type: string
+          nullable: true
+      required:
+      - contact
+      - execution_steps
+      - flow_execution
+    FlowExecutionContactStatusEnum:
+      enum:
+      - READY
+      - RUNNING
+      - COMPLETED
+      - CANCELED
+      - PAUSED
+      - EXPIRED
+      - FAILED
+      type: string
+    FlowExecutionEdit:
+      type: object
+      properties:
+        status:
+          type: string
+          readOnly: true
+        execute_for:
+          $ref: '#/components/schemas/ExecuteForEnum'
+        inbound_trigger_with:
+          $ref: '#/components/schemas/InboundTriggerWithEnum'
+        inbound_start_message:
+          type: string
+          nullable: true
+        inbound_start_message_match_exact:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        has_priority:
+          type: boolean
+        flow_execution_variables:
+          type: object
+          additionalProperties: {}
+        start_on:
+          type: string
+          format: date-time
+          nullable: true
+        num_contacts:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        expired:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        running:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        completed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        canceled:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        failed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        avg_completion_time:
+          type: string
+        contact_filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowExecutionContactFilterEdit'
+        contact_list:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        source:
+          $ref: '#/components/schemas/FlowExecutionEditSourceEnum'
+        is_hidden:
+          type: boolean
+      required:
+      - execute_for
+      - status
+    FlowExecutionEditSourceEnum:
+      enum:
+      - HUBSPOT
+      - API
+      - FRONTEND
+      type: string
+    FlowExecutionExecutionTypeEnum:
+      enum:
+      - INBOUND
+      - OUTBOUND
+      - API
+      - FROM_FLOW
+      type: string
+    FlowExecutionList:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FlowExecutionStatusEnum'
+        execute_for:
+          $ref: '#/components/schemas/ExecuteForEnum'
+        inbound_trigger_with:
+          $ref: '#/components/schemas/InboundTriggerWithEnum'
+        inbound_start_message:
+          type: string
+          nullable: true
+        inbound_start_message_match_exact:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        has_priority:
+          type: boolean
+        flow_execution_variables:
+          type: object
+          additionalProperties: {}
+        start_on:
+          type: string
+          format: date-time
+          nullable: true
+        num_contacts:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        expired:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        running:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        completed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        canceled:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        failed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        avg_completion_time:
+          type: string
+        created_by:
+          $ref: '#/components/schemas/SimpleUser'
+        execution_type:
+          $ref: '#/components/schemas/FlowExecutionExecutionTypeEnum'
+      required:
+      - created_by
+      - execute_for
+      - execution_type
+    FlowExecutionReadDetail:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/FlowExecutionStatusEnum'
+          readOnly: true
+        execute_for:
+          $ref: '#/components/schemas/ExecuteForEnum'
+        inbound_trigger_with:
+          $ref: '#/components/schemas/InboundTriggerWithEnum'
+        inbound_start_message:
+          type: string
+          nullable: true
+        inbound_start_message_match_exact:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        has_priority:
+          type: boolean
+        flow_execution_variables:
+          type: object
+          additionalProperties: {}
+        start_on:
+          type: string
+          format: date-time
+          nullable: true
+        num_contacts:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        expired:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        running:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        completed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        canceled:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        failed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        avg_completion_time:
+          type: string
+        created_by:
+          $ref: '#/components/schemas/SimpleUser'
+        contact_filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowExecutionContactFilterEdit'
+        contact_import:
+          type: string
+          format: uuid
+          nullable: true
+        flow:
+          $ref: '#/components/schemas/FlowSimpleRead'
+        flow_version:
+          $ref: '#/components/schemas/FlowVersionSimpleRead'
+        execution_type:
+          $ref: '#/components/schemas/FlowExecutionExecutionTypeEnum'
+        last_run_on:
+          type: string
+          readOnly: true
+      required:
+      - created_by
+      - execute_for
+      - execution_type
+      - flow
+      - flow_version
+      - last_run_on
+      - status
+    FlowExecutionStatusEnum:
+      enum:
+      - PROCESSING
+      - READY
+      - AWAITING_CONFIRMATION
+      - CONFIRMED
+      - STARTING
+      - RUNNING
+      - COMPLETED
+      - CANCELED
+      - PAUSED
+      type: string
+    FlowExecutionStepReadDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        step:
+          allOf:
+          - $ref: '#/components/schemas/FlowStepEdit'
+          readOnly: true
+        last_error_detail:
+          type: string
+          nullable: true
+        has_error:
+          type: boolean
+        expire_on:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          $ref: '#/components/schemas/FlowExecutionStepReadDetailStatusEnum'
+        validation_failed_attempts:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        execution_result:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        request_data:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowExecutionStepWhatsAppMessage'
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+      required:
+      - messages
+      - step
+    FlowExecutionStepReadDetailStatusEnum:
+      enum:
+      - WAITING_TO_START
+      - NOT_EXECUTED
+      - RUNNING
+      - COMPLETED
+      - CANCELED
+      - FAILED
+      - EXPIRED
+      type: string
+    FlowExecutionStepWhatsAppMessage:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/WhatsAppMessage'
+      required:
+      - message
+    FlowExecutionTypeEnum:
+      enum:
+      - INBOUND
+      - OUTBOUND
+      type: string
+    FlowSimpleRead:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/SimpleUser'
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        is_active:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/FlowStatusEnum'
+        is_legacy:
+          type: boolean
+        channel:
+          allOf:
+          - $ref: '#/components/schemas/SimpleChannel'
+          readOnly: true
+        flow_execution_variables:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+          nullable: true
+      required:
+      - channel
+      - created_by
+      - id
+      - name
+    FlowStatusEnum:
+      enum:
+      - DRAFT
+      - PUBLISHED
+      type: string
+    FlowStepContactUpdateCustomProperty:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      required:
+      - key
+      - value
+    FlowStepEdit:
+      type: object
+      description: This class is not useful other than for the OpenAPI Schema.
+      properties:
+        flow_version:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 100
+        step_type:
+          type: string
+          maxLength: 100
+        next_step_default_idx:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        id:
+          type: string
+          format: uuid
+        next_step_default:
+          type: string
+          format: uuid
+        next_step_alternate:
+          type: string
+          format: uuid
+        answer_failed_next_step:
+          type: string
+          format: uuid
+          nullable: true
+        next_steps_for_options:
+          type: array
+          items:
+            type: string
+            format: uuid
+        answer_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/AnswerTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        body:
+          type: string
+          nullable: true
+        body_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/MessageTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        body_file_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        body_file_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/BodyFileTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        body_file:
+          allOf:
+          - $ref: '#/components/schemas/UploadedAccountFile'
+          readOnly: true
+        answer_validation_message:
+          type: string
+          nullable: true
+        answer_instructions:
+          type: string
+          nullable: true
+        answer_options:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+          nullable: true
+        answer_phone_default_country:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/AnswerPhoneDefaultCountryEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        next_step_alternate_idx:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StepConditionalCondition'
+        delay_type:
+          type: string
+          nullable: true
+          maxLength: 20
+        delay_until:
+          type: string
+          format: date-time
+          nullable: true
+        action_request_method:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/ActionRequestMethodEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        action_request_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        action_request_headers:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+        action_request_params:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+        action_request_body:
+          type: string
+          nullable: true
+        action_test_response_data:
+          type: string
+          format: uuid
+          nullable: true
+        answer_allow_decimals:
+          type: boolean
+        answer_range_min:
+          type: string
+          nullable: true
+          maxLength: 50
+        answer_range_max:
+          type: string
+          nullable: true
+          maxLength: 50
+        answer_has_range:
+          type: boolean
+        assign_to_users:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        ordering_idx:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        has_options_from_variable:
+          type: boolean
+        option_from_variable_value:
+          type: string
+          nullable: true
+        options_from_variable:
+          type: string
+          nullable: true
+        option_from_variable_title:
+          type: string
+          nullable: true
+        missing_options_message:
+          type: string
+          nullable: true
+        answer_options_render:
+          $ref: '#/components/schemas/AnswerOptionsRenderEnum'
+        answer_options_render_list_button_title:
+          type: string
+          nullable: true
+          maxLength: 20
+        answer_options_render_list_section_title:
+          type: string
+          nullable: true
+          maxLength: 24
+        next_steps_for_options_idx:
+          type: array
+          items:
+            type: integer
+            maximum: 2147483647
+            minimum: -2147483648
+            nullable: true
+          nullable: true
+        contact_tags:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+          nullable: true
+        conversation_tags:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+          nullable: true
+        append_tags:
+          type: boolean
+        max_wait_time_amount:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        max_wait_time_unit:
+          $ref: '#/components/schemas/MaxWaitTimeUnitEnum'
+        time_windows:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowStepTimeWindow'
+        has_max_wait_time:
+          type: boolean
+        set_time_window:
+          type: boolean
+        assign_to_teams:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        time_window_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/TimeWindowTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        has_max_answer_attempts:
+          type: boolean
+        max_answer_attempts:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        answer_failed_next_step_idx:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        whatsapp_template:
+          type: string
+          format: uuid
+          readOnly: true
+        whatsapp_template_variables:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        save_contact_answer:
+          type: boolean
+          default: false
+        validate_answer_with_buttons:
+          type: boolean
+          default: false
+        contact_custom_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowStepContactUpdateCustomProperty'
+        contact_first_name:
+          type: string
+        contact_last_name:
+          type: string
+        contact_email:
+          type: string
+        contact_external_url:
+          type: string
+        next_flow:
+          type: string
+      required:
+      - assign_to_teams
+      - assign_to_users
+      - body_file
+      - conditions
+      - flow_version
+      - name
+      - next_steps_for_options
+      - step_type
+      - time_windows
+      - whatsapp_template
+      - whatsapp_template_variables
+    FlowStepTimeWindow:
+      type: object
+      properties:
+        weekday:
+          allOf:
+          - $ref: '#/components/schemas/WeekdayEnum'
+          minimum: 0
+          maximum: 32767
+        is_available:
+          type: boolean
+        start_at:
+          type: string
+          format: time
+          nullable: true
+        end_at:
+          type: string
+          format: time
+          nullable: true
+      required:
+      - weekday
+    FlowVersionSimpleRead:
+      type: object
+      properties:
+        execution_type:
+          $ref: '#/components/schemas/FlowExecutionTypeEnum'
+        id:
+          type: string
+          format: uuid
+        flow:
+          $ref: '#/components/schemas/FlowSimpleRead'
+        is_current_version:
+          type: boolean
+          readOnly: true
+        version_name:
+          type: string
+          maxLength: 255
+        version_description:
+          type: string
+          nullable: true
+        published_by:
+          allOf:
+          - $ref: '#/components/schemas/SimpleUser'
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        last_updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Última actualización el
+        num_contacts:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        completed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        expired:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        running:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        canceled:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        failed:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        avg_completion_time:
+          type: string
+      required:
+      - execution_type
+      - flow
+      - is_current_version
+      - last_updated_on
+      - published_by
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 150
+      required:
+      - id
+      - name
+    InboundTriggerWithEnum:
+      enum:
+      - ANY_MESSAGE
+      - TEXT
+      - IMAGE
+      - FILE
+      type: string
+    InboxContactURL:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          readOnly: true
+        channel:
+          type: integer
+      required:
+      - channel
+      - url
+    LanguageEnum:
+      enum:
+      - af
+      - sq
+      - ar
+      - az
+      - bn
+      - bg
+      - ca
+      - zh_CN
+      - zh_HK
+      - zh_TW
+      - hr
+      - cs
+      - da
+      - nl
+      - en
+      - en_GB
+      - en_US
+      - et
+      - fil
+      - fi
+      - fr
+      - ka
+      - de
+      - el
+      - gu
+      - ha
+      - he
+      - hi
+      - hu
+      - id
+      - ga
+      - it
+      - ja
+      - kn
+      - kk
+      - rw_RW
+      - ko
+      - ky_KG
+      - lo
+      - lv
+      - lt
+      - mk
+      - ms
+      - ml
+      - mr
+      - nb
+      - fa
+      - pl
+      - pt_BR
+      - pt_PT
+      - pa
+      - ro
+      - ru
+      - sr
+      - sk
+      - sl
+      - es
+      - es_AR
+      - es_ES
+      - es_MX
+      - sw
+      - sv
+      - ta
+      - te
+      - th
+      - tr
+      - uk
+      - ur
+      - uz
+      - vi
+      - zu
+      type: string
+    LocationMessage:
+      type: object
+      properties:
+        address:
+          type: string
+          maxLength: 500
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        place_name:
+          type: string
+          nullable: true
+          maxLength: 500
+        place_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        map_screenshot_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+      required:
+      - address
+      - latitude
+      - longitude
+    MaxWaitTimeUnitEnum:
+      enum:
+      - SECOND
+      - MINUTE
+      - HOUR
+      - DAY
+      type: string
+    MessageSourceEnum:
+      enum:
+      - INBOUND
+      - INBOX
+      - AUTO_RESPONSE
+      - API
+      - BROADCAST
+      - FLOW
+      type: string
+    MessageStatusEnum:
+      enum:
+      - new
+      - retry
+      - accepted
+      - sending
+      - sent
+      - receiving
+      - received
+      - delivered
+      - undelivered
+      - failed
+      - read
+      - deleted
+      type: string
+    MessageTypeEnum:
+      enum:
+      - audio
+      - voice
+      - button
+      - document
+      - text
+      - image
+      - interactive
+      - order
+      - sticker
+      - system
+      - unknown
+      - video
+      - unsupported
+      - location
+      - contacts
+      - template
+      - reaction
+      - ephemeral
+      type: string
+    NullEnum:
+      enum:
+      - null
+    PaginatedContactListReadList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactListRead'
+    PaginatedConversationList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conversation'
+    PaginatedFlowExecutionContactListSimpleList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowExecutionContactListSimple'
+    PaginatedFlowExecutionListList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowExecutionList'
+    PaginatedWhatsAppTemplateSimpleReadList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WhatsAppTemplateSimpleRead'
+    PatchedContactEdit:
+      type: object
+      properties:
+        phone:
+          type: string
+          maxLength: 30
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        meta:
+          type: object
+          additionalProperties: {}
+        external_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        is_deleted:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        source:
+          type: string
+          default: website
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactNote'
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactTag'
+        external_id:
+          type: string
+          nullable: true
+        native_id:
+          type: string
+          nullable: true
+        default_assignees:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountMemberUserBasic'
+        contact_import:
+          type: string
+          format: uuid
+          nullable: true
+        default_channel:
+          type: integer
+          nullable: true
+        wa_id:
+          type: string
+          nullable: true
+        skip_existing:
+          type: boolean
+          default: false
+    PatchedConversation:
+      type: object
+      properties:
+        id:
+          type: string
+        contact:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/ConversationStatusEnum'
+        assigned:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountMemberUserBasic'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationTag'
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Creado el
+        source:
+          allOf:
+          - $ref: '#/components/schemas/ConversationSourceEnum'
+          readOnly: true
+        assigned_team:
+          type: integer
+        channel:
+          type: integer
+          nullable: true
+    SimpleChannel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        channel_type:
+          $ref: '#/components/schemas/ChannelTypeEnum'
+        name:
+          type: string
+          maxLength: 100
+        channel_id:
+          type: string
+          maxLength: 100
+        status:
+          $ref: '#/components/schemas/ChannelStatusEnum'
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        channel_provider:
+          $ref: '#/components/schemas/ChannelProviderEnum'
+        is_sandbox:
+          type: boolean
+      required:
+      - channel_id
+      - id
+    SimpleUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        id:
+          type: integer
+          readOnly: true
+        profile_image:
+          type: string
+          format: uri
+          nullable: true
+      required:
+      - id
+    StepConditionalCondition:
+      type: object
+      properties:
+        field:
+          type: string
+          maxLength: 255
+        comparison:
+          $ref: '#/components/schemas/ComparisonEnum'
+        value:
+          type: string
+          maxLength: 255
+        id:
+          type: integer
+          readOnly: true
+      required:
+      - comparison
+      - field
+      - id
+      - value
+    TeamSimple:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        assignment_strategy:
+          type: string
+          maxLength: 15
+      required:
+      - assignment_strategy
+      - id
+      - name
+    TimeWindowTypeEnum:
+      enum:
+      - IN_WORKING_HOURS
+      - CUSTOM
+      type: string
+    UploadedAccountFile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        url:
+          type: string
+          format: uri
+          readOnly: true
+        uploaded_file:
+          type: string
+          format: uri
+        content_type:
+          type: string
+        original_name:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - id
+      - uploaded_file
+      - url
+    WeekdayEnum:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      type: integer
+    WhatsAppMessage:
+      type: object
+      properties:
+        id:
+          type: string
+        to_number:
+          type: string
+          readOnly: true
+        from_number:
+          type: string
+          readOnly: true
+        body:
+          type: string
+          nullable: true
+        direction:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        contact:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/MessageStatusEnum'
+          readOnly: true
+        queued_on:
+          type: string
+          format: date-time
+          readOnly: true
+        accepted_on:
+          type: string
+          format: date-time
+          readOnly: true
+        sent_on:
+          type: string
+          format: date-time
+          readOnly: true
+        delivered_on:
+          type: string
+          format: date-time
+          readOnly: true
+        read_on:
+          type: string
+          format: date-time
+          readOnly: true
+        failed_on:
+          type: string
+          format: date-time
+          readOnly: true
+        provider_id:
+          type: string
+          readOnly: true
+        provider_error_code:
+          type: string
+          readOnly: true
+        provider_error_message:
+          type: string
+          readOnly: true
+        sent_by:
+          $ref: '#/components/schemas/SimpleUser'
+        is_deleted:
+          type: boolean
+          readOnly: true
+        content:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        whatsapp_template:
+          $ref: '#/components/schemas/WhatsAppTemplateSimpleRead'
+        content_type:
+          type: string
+          readOnly: true
+        content_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        msg_type:
+          $ref: '#/components/schemas/MessageTypeEnum'
+        location:
+          $ref: '#/components/schemas/LocationMessage'
+        failed_attempts:
+          type: integer
+          readOnly: true
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMessage'
+        source:
+          allOf:
+          - $ref: '#/components/schemas/MessageSourceEnum'
+          readOnly: true
+        context_message:
+          type: string
+          readOnly: true
+      required:
+      - accepted_on
+      - contact
+      - contacts
+      - content
+      - content_type
+      - context_message
+      - delivered_on
+      - direction
+      - failed_attempts
+      - failed_on
+      - from_number
+      - id
+      - is_deleted
+      - location
+      - provider_error_code
+      - provider_error_message
+      - provider_id
+      - queued_on
+      - read_on
+      - sent_by
+      - sent_on
+      - source
+      - status
+      - timestamp
+      - to_number
+      - whatsapp_template
+    WhatsAppTemplateRead:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 120
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        components:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        status:
+          $ref: '#/components/schemas/WhatsAppTemplateStatusEnum'
+        rejected_reason:
+          type: string
+          nullable: true
+        is_deleted:
+          type: boolean
+        channel:
+          allOf:
+          - $ref: '#/components/schemas/SimpleChannel'
+          readOnly: true
+        is_sample:
+          type: boolean
+      required:
+      - category
+      - channel
+      - id
+      - language
+      - name
+    WhatsAppTemplateSend:
+      type: object
+      properties:
+        variables:
+          type: array
+          items:
+            type: string
+        phone:
+          type: string
+          maxLength: 20
+      required:
+      - phone
+    WhatsAppTemplateSendPublicResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Message Id
+        conversation:
+          type: string
+          format: uuid
+          description: Message Conversation Id
+      required:
+      - conversation
+      - id
+    WhatsAppTemplateSimpleRead:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 120
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        components:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        status:
+          $ref: '#/components/schemas/WhatsAppTemplateStatusEnum'
+        rejected_reason:
+          type: string
+          nullable: true
+        is_deleted:
+          type: boolean
+        channel:
+          $ref: '#/components/schemas/SimpleChannel'
+      required:
+      - category
+      - channel
+      - id
+      - language
+      - name
+    WhatsAppTemplateStatusEnum:
+      enum:
+      - draft
+      - approved
+      - in_appeal
+      - pending
+      - rejected
+      - pending_deletion
+      - deleted
+      - disabled
+      - submitted
+      type: string
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
+x-tagGroups:
+- name: Users
+  tags:
+  - User
+- name: Channels
+  tags:
+  - WhatsApp
+  - Broadcast
+- name: Flows
+  tags:
+  - Flow Execution
+  - Flow Execution Contact
+- name: CRM
+  tags:
+  - Contact
+  - Conversation
+- name: Integrations
+  tags:
+  - Webhook Subscription
+servers:
+- url: https://api.hilos.io
+  description: Production Server

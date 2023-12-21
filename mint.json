@@ -27,7 +27,7 @@
     },
     "baseUrl": "https://api.hilos.io/api/"
   },
-  "openapi": "docs/apidocs/schema.yml",
+  "openapi": "",
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Go to app",
@@ -201,6 +201,15 @@
         "docs/apidocs/contact/patch-apicontact",
         "docs/apidocs/contact/post-apicontact",
         "docs/apidocs/contact/put-apicontact"
+      ]
+    },
+    {
+      "group": "WhatsApp Templates",
+      "pages": [
+        "docs/apidocs/whatsapp/get-apichannelswhatsapptemplate",
+        "docs/apidocs/whatsapp/get-apichannelswhatsapptemplate-1",
+        "docs/apidocs/whatsapp/post-apichannelswhatsapptemplate-send",
+        "docs/apidocs/whatsapp/delete-apichannelswhatsapptemplate"
       ]
     },
     {
