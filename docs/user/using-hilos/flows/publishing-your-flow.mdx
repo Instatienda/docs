@@ -1,36 +1,22 @@
 ---
-id: publishing-a-flow
 title: Publishing a flow
-slug: /publishing-a-flow
 ---
-
-# Publishing a Flow
 
 Once your flow is ready, you can publish it to begin using it in your application. To do so, click the **Publish** button in the top right corner of the flow editor.
 
 Depending on the type of execution configured, the flow will provide a way to start sending it:
 
-## Inbound Flows
+# Inbound Flows
 
 Inbound flows may be triggered by providing a specific message. When the user sends this message to the configured channel, the flow will start executing. You can configure whether the text must match exactly or if it just needs to contain the string provided.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/publish-flow/inbound-trigger.png'
-    alt='Inbound flow triggers'
-  />
-</figure>
+![Inbound flow triggers](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/publish-flow/inbound-trigger.png)
 
-## Outbound Flows
+# Outbound Flows
 
 Outbound flow executions can be triggered manually by filtering contacts, uploading a CSV, triggered by an integration (like [Zapier](/user/integrations/zapier) or [Hubspot](/user/integrations/hubspot)), or by [making an API call to our servers](https://hilos.io/docs/api#tag/Flow-Execution/operation/Create%20a%20Flow%20Execution).
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/publish-flow/outbound-trigger.png'
-    alt='Outbound flow triggers'
-  />
-</figure>
+![Outbound flow triggers](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/publish-flow/outbound-trigger.png)
 
 The difference mainly lies in the fact that outbound flows are not triggered by a message sent by a contact, but by an external event.
 

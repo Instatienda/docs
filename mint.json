@@ -25,9 +25,9 @@
     "auth": {
       "method": "key"
     },
-    "baseUrl": "https://api.hilos.io/api/"
+    "baseUrl": "https://api.hilos.io"
   },
-  "openapi": "",
+  "openapi": "docs/apidocs/schema.yml",
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Go to app",
@@ -108,8 +108,7 @@
             "docs/user/using-hilos/inbox/archiving-a-conversation",
             "docs/user/using-hilos/inbox/conversation-status",
             "docs/user/using-hilos/inbox/inbox-views",
-            "docs/user/using-hilos/inbox/inbox-teams",
-            "docs/user/using-hilos/inbox/inbox-actions"
+            "docs/user/using-hilos/inbox/inbox-teams"
           ]
         },
         {
@@ -118,7 +117,6 @@
           "pages": [
             "docs/user/using-hilos/flows/what-are-flows",
             "docs/user/using-hilos/flows/creating-a-flow",
-            "docs/user/using-hilos/flows/flow-reports",
             {
               "group": "Step types",
               "pages": [
@@ -126,7 +124,7 @@
                 "docs/user/using-hilos/flows/steps/contact-update",
                 "docs/user/using-hilos/flows/steps/go-to-step",
                 "docs/user/using-hilos/flows/steps/delay-step",
-                "docs/user/using-hilos/flows/steps/menu-steps",
+                "docs/user/using-hilos/flows/steps/menu-step",
                 "docs/user/using-hilos/flows/steps/assignation-steps"
               ]
             }
@@ -228,9 +226,7 @@
           "pages": [
             "docs/apidocs/flow-execution/get-apiflow-execution-1",
             "docs/apidocs/flow-execution/get-apiflow-execution",
-            "docs/apidocs/flow-execution/patch-apiflow-execution",
-            "docs/apidocs/flow-execution/post-apiflow-run",
-            "docs/apidocs/flow-execution/put-apiflow-execution"
+            "docs/apidocs/flow-execution/post-apiflow-run"
           ]
         },
         {
@@ -241,10 +237,6 @@
           ]
         }
       ]
-    },
-    {
-      "group": "Account management",
-      "pages": ["docs/apidocs/docs/user/get-apiaccount-member"]
     }
   ],
   "footerSocials": {

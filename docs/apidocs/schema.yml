@@ -105,91 +105,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/AccountMemberUser'
           description: ''
-  /api/broadcast:
-    get:
-      operationId: List Broadcasts
-      description: Lists Broadcasts
-      parameters:
-      - in: query
-        name: channel
-        schema:
-          type: integer
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: page_size
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - in: query
-        name: search
-        schema:
-          type: string
-        description: You can search by `name`, `status` fields.
-        examples:
-          NameIs:
-            value: July%20promotion%20v1
-            summary: name is
-          With`PENDING`Status:
-            value: Pending
-            summary: with `PENDING` status
-          With`AWAITINGCONFIRMATION`Status:
-            value: Awaiting%20Confirmation
-            summary: with `AWAITING_CONFIRMATION` status
-          With`CONFIRMED`Status:
-            value: Confirmed
-            summary: with `CONFIRMED` status
-          With`RUNNING`Status:
-            value: En%20curso
-            summary: with `RUNNING` status
-          With`COMPLETED`Status:
-            value: Completado
-            summary: with `COMPLETED` status
-          With`CANCELED`Status:
-            value: Cancelado
-            summary: with `CANCELED` status
-      tags:
-      - Broadcast
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedMessageBlastReadList'
-          description: ''
-    post:
-      operationId: Create Broadcasts
-      description: Create Broadcasts
-      tags:
-      - Broadcast
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MessageBlastPublicEdit'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/MessageBlastPublicEdit'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/MessageBlastPublicEdit'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MessageBlastRead'
-          description: ''
   /api/channels/whatsapp/template:
     get:
       operationId: List WhatsApp Templates
@@ -553,8 +468,9 @@ paths:
                 $ref: '#/components/schemas/ContactDetailRead'
           description: ''
     delete:
-      operationId: Delete Contact
+      operationId: Delete Contact Operation ID
       description: Deleting a contact won't delete its history nor its sent messages.
+      summary: Delete Contact Summary
       parameters:
       - in: path
         name: id
@@ -569,30 +485,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/contact/csv:
-    post:
-      operationId: Upload contacts .csv
-      description: Use this endpoint to upload a .csv programmatically. If you want
-        to use the contacts created through this .csv in a flow execution, save the
-        returned `upload_group_id`. For more information, check the Create FlowExecution
-        method.
-      tags:
-      - Contact
-      requestBody:
-        content:
-          text/csv:
-            schema:
-              type: string
-              format: binary
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContactCSVCreateUploadGroupResponse'
-          description: ''
   /api/flow-execution:
     get:
       operationId: List Flow Execution
@@ -641,6 +533,9 @@ paths:
           With`CONFIRMED`Status:
             value: Confirmed
             summary: with `CONFIRMED` status
+          With`STARTING`Status:
+            value: Starting
+            summary: with `STARTING` status
           With`RUNNING`Status:
             value: Running
             summary: with `RUNNING` status
@@ -835,82 +730,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/FlowExecutionReadDetail'
           description: ''
-    put:
-      operationId: Update Flow Execution
-      description: Update a Flow Execution.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: The Flow Execution Id to Update.
-        required: true
-        examples:
-          UpdateFlowExecutionWithId:
-            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
-            summary: Update Flow Execution with Id
-      tags:
-      - Flow Execution
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FlowExecutionEdit'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/FlowExecutionEdit'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/FlowExecutionEdit'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FlowExecutionEdit'
-          description: ''
-    patch:
-      operationId: Partial Update Flow Execution
-      description: Update a Flow Execution sending only the properties you want to
-        update.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: The Flow Execution Id to Update.
-        required: true
-        examples:
-          UpdateFlowExecutionWithId:
-            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
-            summary: Update Flow Execution with Id
-      tags:
-      - Flow Execution
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedFlowExecutionEdit'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedFlowExecutionEdit'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedFlowExecutionEdit'
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FlowExecutionEdit'
-          description: ''
   /api/flow/{id}/run:
     post:
       operationId: Create a Flow Execution
@@ -1061,287 +880,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Conversation'
           description: ''
-  /api/message-blast/{id}:
-    get:
-      operationId: Get Broadcast Detail
-      description: Get Broadcast Detail
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - Broadcast
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MessageBlastRead'
-          description: ''
-    put:
-      operationId: message_blast_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - message-blast
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MessageBlastRead'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/MessageBlastRead'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/MessageBlastRead'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MessageBlastRead'
-          description: ''
-    patch:
-      operationId: message_blast_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - message-blast
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMessageBlastRead'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMessageBlastRead'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMessageBlastRead'
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MessageBlastRead'
-          description: ''
-    delete:
-      operationId: message_blast_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - message-blast
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/webhook_subscription:
-    get:
-      operationId: List Webhook Subscriptions
-      description: Lists Webhook Subscriptions.
-      parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: page_size
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - in: query
-        name: search
-        schema:
-          type: string
-        description: You can search with the `id` and `target` fields.
-        examples:
-          SomeSiteWebhooks:
-            value: example.com
-            summary: some site webhooks
-      tags:
-      - Webhook Subscription
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedWebhookSubscriptionList'
-          description: ''
-    post:
-      operationId: Create Webhook Subscription
-      description: Creates a new Webhook Subscritption.
-      tags:
-      - Webhook Subscription
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WebhookSubscription'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/WebhookSubscription'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/WebhookSubscription'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebhookSubscription'
-          description: ''
-  /api/webhook_subscription/{id}:
-    get:
-      operationId: Get Webhook Subscription
-      description: Gets a Webhook Subscription by Id.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: The Webhook Subscription Id.
-        required: true
-        examples:
-          WebhookSubscriptionId:
-            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
-            summary: Webhook Subscription Id
-      tags:
-      - Webhook Subscription
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebhookSubscription'
-          description: ''
-    put:
-      operationId: Update Webhook Subscription
-      description: Update a Webhook Subscription.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: The Webhook Subscription Id.
-        required: true
-        examples:
-          WebhookSubscriptionId:
-            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
-            summary: Webhook Subscription Id
-      tags:
-      - Webhook Subscription
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WebhookSubscription'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/WebhookSubscription'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/WebhookSubscription'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebhookSubscription'
-          description: ''
-    patch:
-      operationId: Partial Update Webhook Subscription
-      description: "Update a Webhook Subscription sending only the properties you\
-        \ want to update. \n\n If you send the `meta` or `notes` the contact will\
-        \ have those properties appended with the contact current ones.."
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: The Webhook Subscription Id.
-        required: true
-        examples:
-          WebhookSubscriptionId:
-            value: a3ff7ee5-0c11-49e2-a0d6-7e316626f7b1
-            summary: Webhook Subscription Id
-      tags:
-      - Webhook Subscription
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedWebhookSubscription'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedWebhookSubscription'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedWebhookSubscription'
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebhookSubscription'
-          description: ''
-    delete:
-      operationId: Delete Webhook Subscription
-      description: Delete a Webhook Subscription to stop receiving the webhooks.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        required: true
-      tags:
-      - Webhook Subscription
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
 components:
   schemas:
     AccountMemberUser:
@@ -1724,15 +1262,6 @@ components:
       - URL
       - UPLOAD
       type: string
-    BroadcastStatusEnum:
-      enum:
-      - PENDING
-      - AWAITING_CONFIRMATION
-      - CONFIRMED
-      - RUNNING
-      - COMPLETED
-      - CANCELED
-      type: string
     CategoryEnum:
       enum:
       - ACCOUNT_UPDATE
@@ -1787,22 +1316,6 @@ components:
       - icontains
       - '!icontains'
       type: string
-    ContactCSVCreateUploadGroupResponse:
-      type: object
-      properties:
-        upload_group_id:
-          type: string
-          format: uuid
-        contact_variables_to_save:
-          type: array
-          items:
-            type: string
-        contacts_to_process:
-          type: integer
-      required:
-      - contact_variables_to_save
-      - contacts_to_process
-      - upload_group_id
     ContactDetailRead:
       type: object
       properties:
@@ -1835,10 +1348,13 @@ components:
         created_by:
           type: integer
           readOnly: true
+          description: User ID of the user who created the contact
         phone:
           type: string
+          description: Phone number of the contact
         id:
           type: string
+          description: UUID representing the contact ID
         created_on:
           type: string
           format: date-time
@@ -1854,14 +1370,17 @@ components:
         notes:
           type: string
           readOnly: true
+          description: Notes associated with the contact
         tags:
           type: array
           items:
             $ref: '#/components/schemas/ContactTag'
+          description: Tags associated with the contact
         default_assignees:
           type: array
           items:
             $ref: '#/components/schemas/AccountMemberUserBasic'
+          description: ID of the default assignees for the contact
         contact_import:
           type: string
           format: uuid
@@ -1870,6 +1389,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InboxContactURL'
+          description: URL of the inbox conversation associated with the contact
         default_channel:
           type: integer
           nullable: true
@@ -1920,10 +1440,14 @@ components:
         created_by:
           type: integer
           readOnly: true
+          description: User ID of the user who created the contact
         phone:
           type: string
+          description: Phone number of the contact
         id:
           type: string
+          title: Contact ID
+          description: UUID representing the contact ID
         created_on:
           type: string
           format: date-time
@@ -1940,6 +1464,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ContactTag'
+          description: Tags associated with the contact
         contact_import:
           type: string
           format: uuid
@@ -2091,6 +1616,7 @@ components:
       properties:
         id:
           type: string
+          description: The UUID of the Conversation.
         contact:
           type: string
           format: uuid
@@ -2100,10 +1626,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AccountMemberUserBasic'
+          description: The Users assigned to the Conversation.
         tags:
           type: array
           items:
             $ref: '#/components/schemas/ConversationTag'
+          description: The Tags assigned to the Conversation.
         created_on:
           type: string
           format: date-time
@@ -2115,6 +1643,7 @@ components:
           readOnly: true
         assigned_team:
           type: integer
+          description: The ID of the Team assigned to the Conversation.
         channel:
           type: integer
           nullable: true
@@ -2155,15 +1684,6 @@ components:
       required:
       - id
       - name
-    EventsEnum:
-      enum:
-      - contact.created
-      - contact.updated
-      - contact.deleted
-      - message.received
-      - flow_execution_contact.completed
-      - flow_execution_contact.running_inbound
-      type: string
     ExecuteForEnum:
       enum:
       - FILTERS
@@ -2193,7 +1713,9 @@ components:
           type: string
           format: uuid
         contact:
-          $ref: '#/components/schemas/ContactReadSimple'
+          allOf:
+          - $ref: '#/components/schemas/ContactReadSimple'
+          description: The Contact that the Flow Execution Contact is for.
         status:
           $ref: '#/components/schemas/FlowExecutionContactStatusEnum'
         created_on:
@@ -2206,9 +1728,12 @@ components:
         flow_name:
           type: string
           readOnly: true
+          description: The name of the Flow that the Flow Execution Contact is for.
         is_chatbot_execution:
           type: boolean
           readOnly: true
+          description: Boolean indicating wether the Flow Execution Contact is for
+            a Chatbot Flow Execution.
       required:
       - contact
       - flow_name
@@ -2220,19 +1745,24 @@ components:
           type: string
           format: uuid
         contact:
-          $ref: '#/components/schemas/ContactReadSimple'
+          allOf:
+          - $ref: '#/components/schemas/ContactReadSimple'
+          description: The Contact that the Flow Execution Contact is for.
         status:
           $ref: '#/components/schemas/FlowExecutionContactStatusEnum'
         execution_steps:
           type: array
           items:
             $ref: '#/components/schemas/FlowExecutionStepReadDetail'
+          description: The Flow Execution Steps that the Flow Execution Contact has.
         created_on:
           type: string
           format: date-time
           title: Creado el
         flow_execution:
-          $ref: '#/components/schemas/FlowExecutionReadDetail'
+          allOf:
+          - $ref: '#/components/schemas/FlowExecutionReadDetail'
+          description: Details for the Flow Execution
         reason:
           type: string
           nullable: true
@@ -2256,6 +1786,7 @@ components:
         status:
           type: string
           readOnly: true
+          description: The status of the Flow Execution.
         execute_for:
           $ref: '#/components/schemas/ExecuteForEnum'
         inbound_trigger_with:
@@ -2311,11 +1842,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FlowExecutionContactFilterEdit'
+          description: The filters to use to get the Contacts that the Flow Execution
+            will run for.
         contact_list:
           type: array
           items:
-            type: object
-            additionalProperties: {}
+            $ref: '#/components/schemas/PatchedContactEdit'
+          description: The list of Contacts that the Flow Execution will run for.
         source:
           $ref: '#/components/schemas/FlowExecutionEditSourceEnum'
         is_hidden:
@@ -2393,7 +1926,9 @@ components:
         avg_completion_time:
           type: string
         created_by:
-          $ref: '#/components/schemas/SimpleUser'
+          allOf:
+          - $ref: '#/components/schemas/SimpleUser'
+          description: The User that created the Flow Execution.
         execution_type:
           $ref: '#/components/schemas/FlowExecutionExecutionTypeEnum'
       required:
@@ -2407,6 +1942,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/FlowExecutionStatusEnum'
           readOnly: true
+          description: The status of the Flow Execution.
         execute_for:
           $ref: '#/components/schemas/ExecuteForEnum'
         inbound_trigger_with:
@@ -2459,24 +1995,33 @@ components:
         avg_completion_time:
           type: string
         created_by:
-          $ref: '#/components/schemas/SimpleUser'
+          allOf:
+          - $ref: '#/components/schemas/SimpleUser'
+          description: The User that created the Flow Execution.
         contact_filters:
           type: array
           items:
             $ref: '#/components/schemas/FlowExecutionContactFilterEdit'
+          description: The filters to use to get the Contacts that the Flow Execution
+            will run for.
         contact_import:
           type: string
           format: uuid
           nullable: true
         flow:
-          $ref: '#/components/schemas/FlowSimpleRead'
+          allOf:
+          - $ref: '#/components/schemas/FlowSimpleRead'
+          description: The Flow that the Flow Execution is running.
         flow_version:
-          $ref: '#/components/schemas/FlowVersionSimpleRead'
+          allOf:
+          - $ref: '#/components/schemas/FlowVersionSimpleRead'
+          description: The Flow Version that the Flow Execution is running.
         execution_type:
           $ref: '#/components/schemas/FlowExecutionExecutionTypeEnum'
         last_run_on:
           type: string
           readOnly: true
+          description: The last time that the Flow Execution was run.
       required:
       - created_by
       - execute_for
@@ -2491,6 +2036,7 @@ components:
       - READY
       - AWAITING_CONFIRMATION
       - CONFIRMED
+      - STARTING
       - RUNNING
       - COMPLETED
       - CANCELED
@@ -2626,7 +2172,8 @@ components:
           type: string
           maxLength: 100
         step_type:
-          $ref: '#/components/schemas/StepTypeEnum'
+          type: string
+          maxLength: 100
         next_step_default_idx:
           type: integer
           maximum: 32767
@@ -3111,133 +2658,11 @@ components:
       - longitude
     MaxWaitTimeUnitEnum:
       enum:
+      - SECOND
       - MINUTE
       - HOUR
       - DAY
       type: string
-    MessageBlastPublicEdit:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 100
-        created_by:
-          type: string
-          readOnly: true
-        start_on:
-          type: string
-          format: date-time
-          nullable: true
-        recipients:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageBlastPublicRecipientLenient'
-        whatsapp_template:
-          type: string
-          format: uuid
-          nullable: true
-        contact_tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactTag'
-        has_priority:
-          type: boolean
-        channel:
-          type: integer
-      required:
-      - created_by
-      - id
-      - name
-      - recipients
-    MessageBlastPublicRecipientLenient:
-      type: object
-      description: |-
-        This serializer allows clients to pass any kind of incorrect contacts to
-        the broadcast creation and to allow them to send the broadcast to the
-        contacts that did have the valid info.
-
-        And also used to allow the correct type inference by Spectacular/OpenAPI schema
-      properties:
-        phone:
-          type: string
-        data:
-          type: array
-          items:
-            type: string
-    MessageBlastRead:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 100
-        created_by:
-          type: string
-          readOnly: true
-        is_active:
-          type: boolean
-        start_on:
-          type: string
-          format: date-time
-          nullable: true
-        status:
-          $ref: '#/components/schemas/BroadcastStatusEnum'
-        recipients:
-          type: array
-          items:
-            type: integer
-        created_on:
-          type: string
-          format: date-time
-          title: Creado el
-        id:
-          type: integer
-          readOnly: true
-        channel:
-          allOf:
-          - $ref: '#/components/schemas/SimpleChannel'
-          readOnly: true
-        sent:
-          type: integer
-          readOnly: true
-        delivered:
-          type: integer
-          readOnly: true
-        read:
-          type: integer
-          readOnly: true
-        answered:
-          type: integer
-          readOnly: true
-        failed:
-          type: integer
-          readOnly: true
-        pending:
-          type: integer
-          readOnly: true
-        whatsapp_template:
-          $ref: '#/components/schemas/WhatsAppTemplateSimpleRead'
-        contact_tags:
-          type: array
-          items:
-            type: integer
-        has_priority:
-          type: boolean
-      required:
-      - answered
-      - channel
-      - created_by
-      - delivered
-      - failed
-      - id
-      - name
-      - pending
-      - read
-      - recipients
-      - sent
-      - whatsapp_template
     MessageSourceEnum:
       enum:
       - INBOUND
@@ -3366,46 +2791,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FlowExecutionList'
-    PaginatedMessageBlastReadList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageBlastRead'
-    PaginatedWebhookSubscriptionList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookSubscription'
     PaginatedWhatsAppTemplateSimpleReadList:
       type: object
       properties:
@@ -3431,6 +2816,7 @@ components:
       properties:
         phone:
           type: string
+          maxLength: 30
         first_name:
           type: string
           nullable: true
@@ -3501,6 +2887,7 @@ components:
       properties:
         id:
           type: string
+          description: The UUID of the Conversation.
         contact:
           type: string
           format: uuid
@@ -3510,10 +2897,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AccountMemberUserBasic'
+          description: The Users assigned to the Conversation.
         tags:
           type: array
           items:
             $ref: '#/components/schemas/ConversationTag'
+          description: The Tags assigned to the Conversation.
         created_on:
           type: string
           format: date-time
@@ -3525,154 +2914,10 @@ components:
           readOnly: true
         assigned_team:
           type: integer
+          description: The ID of the Team assigned to the Conversation.
         channel:
           type: integer
           nullable: true
-    PatchedFlowExecutionEdit:
-      type: object
-      properties:
-        status:
-          type: string
-          readOnly: true
-        execute_for:
-          $ref: '#/components/schemas/ExecuteForEnum'
-        inbound_trigger_with:
-          $ref: '#/components/schemas/InboundTriggerWithEnum'
-        inbound_start_message:
-          type: string
-          nullable: true
-        inbound_start_message_match_exact:
-          type: boolean
-        id:
-          type: string
-          format: uuid
-        has_priority:
-          type: boolean
-        flow_execution_variables:
-          type: object
-          additionalProperties: {}
-        start_on:
-          type: string
-          format: date-time
-          nullable: true
-        num_contacts:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-        expired:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-        running:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-        completed:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-        canceled:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-        failed:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-        created_on:
-          type: string
-          format: date-time
-          title: Creado el
-        avg_completion_time:
-          type: string
-        contact_filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowExecutionContactFilterEdit'
-        contact_list:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
-        source:
-          $ref: '#/components/schemas/FlowExecutionEditSourceEnum'
-        is_hidden:
-          type: boolean
-    PatchedMessageBlastRead:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 100
-        created_by:
-          type: string
-          readOnly: true
-        is_active:
-          type: boolean
-        start_on:
-          type: string
-          format: date-time
-          nullable: true
-        status:
-          $ref: '#/components/schemas/BroadcastStatusEnum'
-        recipients:
-          type: array
-          items:
-            type: integer
-        created_on:
-          type: string
-          format: date-time
-          title: Creado el
-        id:
-          type: integer
-          readOnly: true
-        channel:
-          allOf:
-          - $ref: '#/components/schemas/SimpleChannel'
-          readOnly: true
-        sent:
-          type: integer
-          readOnly: true
-        delivered:
-          type: integer
-          readOnly: true
-        read:
-          type: integer
-          readOnly: true
-        answered:
-          type: integer
-          readOnly: true
-        failed:
-          type: integer
-          readOnly: true
-        pending:
-          type: integer
-          readOnly: true
-        whatsapp_template:
-          $ref: '#/components/schemas/WhatsAppTemplateSimpleRead'
-        contact_tags:
-          type: array
-          items:
-            type: integer
-        has_priority:
-          type: boolean
-    PatchedWebhookSubscription:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        is_active:
-          type: boolean
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventsEnum'
-        target:
-          type: string
-          format: uri
-          title: Target URL
-          maxLength: 255
     SimpleChannel:
       type: object
       properties:
@@ -3742,23 +2987,6 @@ components:
       - field
       - id
       - value
-    StepTypeEnum:
-      enum:
-      - CONDITIONAL
-      - MESSAGE
-      - QUESTION
-      - ACTION
-      - DELAY
-      - ASSIGNMENT
-      - CONVERSATION
-      - TEAM
-      - TAG
-      - MENU
-      - TEMPLATE
-      - CONTACT_UPDATE
-      - GO_TO
-      - TRIGGER_FLOW
-      type: string
     TeamSimple:
       type: object
       properties:
@@ -3804,26 +3032,6 @@ components:
       - id
       - uploaded_file
       - url
-    WebhookSubscription:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        is_active:
-          type: boolean
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventsEnum'
-        target:
-          type: string
-          format: uri
-          title: Target URL
-          maxLength: 255
-      required:
-      - events
-      - target
     WeekdayEnum:
       enum:
       - 0
@@ -3973,6 +3181,7 @@ components:
           type: string
           format: uuid
           readOnly: true
+          description: The UUID of the WhatsApp Template to be sent.
         category:
           $ref: '#/components/schemas/CategoryEnum'
         status:
@@ -3986,6 +3195,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/SimpleChannel'
           readOnly: true
+          description: The ID of the WhatsApp Channel that the WhatsApp Template is
+            for.
         is_sample:
           type: boolean
       required:
@@ -4036,6 +3247,7 @@ components:
           type: string
           format: uuid
           readOnly: true
+          description: The UUID of the WhatsApp Template to be sent.
         category:
           $ref: '#/components/schemas/CategoryEnum'
         status:
@@ -4046,7 +3258,10 @@ components:
         is_deleted:
           type: boolean
         channel:
-          $ref: '#/components/schemas/SimpleChannel'
+          allOf:
+          - $ref: '#/components/schemas/SimpleChannel'
+          description: The ID of the WhatsApp Channel that the WhatsApp Template is
+            for.
       required:
       - category
       - channel

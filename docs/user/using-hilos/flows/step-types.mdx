@@ -1,16 +1,12 @@
 ---
-id: step-types
 title: Step types
-slug: /step-types
 ---
-
-# Step Types
 
 Steps are the building blocks of a flow. They are the individual tasks that are executed in it. Steps come in different types, each with its own configuration and behavior. The following step types are available:
 
 - [Template](#template) - Sends a WhatsApp template
 - [Message](#message) - Sends a single message
-- [Question](#question) - Asks a question, validates and saves the response
+- [Question](#question-step) - Asks a question, validates and saves the response
 - [Menu](#menu) - Present a menu with choices
 - [Go to](#go-to) - Go to a previous step or to a different path
 - [Conditional](#conditional) - Selects next step based on a condition
@@ -22,234 +18,124 @@ Steps are the building blocks of a flow. They are the individual tasks that are 
 - [Trigger flow](#trigger-flow) - Connect a flow to another one
 - [Team](#team) - End the flow and assign the conversation to a user from a team
 
-## Template
+# Template
 
 The template step allows you to send a template from your [approved templates](/user/create-a-template) list. Select the template you want to send and use the template variables to personalize it. You may also validate the contact answer if the template has a question, and use the answer in the flow.
 
 If you choose to save the contact's answer the execution will be paused until the contact answers one of the template's options, for example, if you have two template steps, the second one will only be executed after the contact answers the first one if it has the save answer option active. This option treats the template as a question step, adding both timeout and failed attempts option. [Learn more about question steps here](/user/question-step).
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/template-step.png'
-    alt='Template step'
-  />
-</figure>
+![Template step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/template-step.png)
 
-## Message
+# Message
 
 Send a message with text, image, video or a document. Use the contact, global or step variables to customize the message. To use it, simply write your message on the text box. You may add variables by clicking **Add variable** and selecting the variable you want to use from the dropdown
 
-### Text Messages
+## Text Messages
 
 Text messages are the most common type of message. You can customize them using contact, global, or step variables. To use them, just type your message in the text box. To add variables, click **Add variable** and select the variable you want from the dropdown.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/text-message.png'
-    alt='Message step'
-  />
-</figure>
+![Message step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/text-message.png)
 
-### Image Messages
+## Image Messages
 
 You can send an image message by selecting the **Image** message type from the dropdown. It supports both PNG and JPEG images from a public URL. If you want, you can use the "Upload a file" tab.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/upload-image.png'
-    alt='Upload an image'
-  />
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/url-image.png'
-    alt='Image message'
-  />
-</figure>
+![Upload an image](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/upload-image.png)
+![Image message](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/url-image.png)
 
-### Video Messages
+## Video Messages
 
 Video messages follow the same logic as image messages. You can send a video message by selecting the **Video** message type from the dropdown. It supports MP4 videos from a public URL. If you want, you can use the "Upload a file" tab.
 
-<Warning>
-To use a video, use its direct download link, not the link to the video page. For example, https://www.youtube.com/watch?v=VIDEO_ID won't work.
-</Warning>
+> To use a video, use its direct download link, not the link to the video page. For example, https://www.youtube.com/watch?v=VIDEO_ID won't work.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/upload-video.png'
-    alt='Upload a video'
-  />
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/url-video.png'
-    alt='Video message'
-  />
-</figure>
+![Upload a video](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/upload-video.png)
+![Video message](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/url-video.png)
 
-### Document Messages
+## Document Messages
 
 Document messages follow the same logic as image and video messages. You can send a document message by selecting the **Document** message type from the dropdown. It supports PDF documents from a public URL. If you want, you can use the "Upload a file" tab. After uploading the document, the URL will be added to the step automatically.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/upload-document.png'
-    alt='Upload a document'
-  />
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/url-document.png'
-    alt='Document message'
-  />
-</figure>
+![Upload a document](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/upload-document.png)
+![Document message](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/url-document.png)
 
-### Question Steps
+# Question Steps
 
 Question steps allow you to ask a question to the user, wait for and validate its answer, and use it in the flow or save it as a contact property. You can also set a maximum number of attempts and a timeout. There are several types of question types: free text, single option, number, location, URL, email, file, document, image, video, phone, date, yes/no (coming soon), time (coming soon), and date/time (coming soon).
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/question-step.png'
-    alt='Question step'
-  />
-</figure>
+![Question step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/question-step.png)
 
 For more detailed instructions on how to use each type, see the [Questions](/user/question-step) section.
 
-## Menu
+# Menu
 
 Menu steps provide a menu with either buttons, a list, emojis, or numbers. It creates a new branch on the flow based on the option selected by the user.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/menu+step.png'
-    alt='Menu step'
-  />
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/menu-step-board.png'
-    alt='Menu step canvas'
-  />
-</figure>
+![Menu step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/menu+step.png)
+![Menu step canvas](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/menu-step-board.png)
 
-### Buttons
+## Buttons
 
 You can add up to three buttons to a message. Each button can have a different label, which will be displayed on the canvas as a branch. Further steps can then be added to each branch.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/buttons.png'
-    alt='Buttons menu'
-  />
-</figure>
+![Buttons menu](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/buttons.png)
 
-### List
+## List
 
 You can add up to 10 options to the message. Each option can have its own label. When the user clicks on the "open list" button, the options and their labels will appear. You can also customize the label of the list and the title of the options.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/list.png'
-    alt='List menu'
-  />
-</figure>
+![List menu](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/list.png)
 
-### Emojis or numbers
+## Emojis or numbers
 
 Appends emojis or numbers to the options provided, there are no limits on how many options you can add, If you plan on having more than 10 options, you'll need to use this type.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/emoji.png'
-    alt='Emoji menu'
-  />
-</figure>
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/numbers.png'
-    alt='Numbers menu'
-  />
-</figure>
+![Emoji menu](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/emoji.png)
 
-## Go to
+![Numbers menu](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/numbers.png)
+
+# Go to
 
 You can send the user to a different step in the future or past by selecting it from the dropdown. This is useful when using conditionals and timeouts.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/go-to-step.png'
-    alt='Go to step'
-  />
-</figure>
+![Go to step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/go-to-step.png)
 
-<Tip>
-One use case for this step is to create a FAQ menu that sends the answers to the user depending on the option selected. Once the answer has been provided, redirect the user back to the FAQ menu.
-</Tip>
+> One use case for this step is to create a FAQ menu that sends the answers to the user depending on the option selected. Once the answer has been provided, redirect the user back to the FAQ menu.
 
-## Conditional
+# Conditional
 
 Verify that all the requirements are met and create a `then` (true) and `otherwise` (false) branch in the canvas. The flow will proceed based on the result of the condition. You can learn more about the available conditions in the [Conditional Step Guide](/user/conditional-step).
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/conditional-step.png'
-    alt='Conditional step'
-  />
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/conditional-step-board.png'
-    alt='Conditional step canvas view'
-  />
-</figure>
+![Conditional step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/conditional-step.png)
 
-## Action
+![Conditional step canvas view](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/conditional-step-board.png)
+
+# Action
 
 This action step enables you to perform an HTTP action, set a body, headers, query and an HTTP method. You can also customize the message using template variables. It is useful for updating a remote database or retrieving information from an API.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/action.png'
-    alt='Action step'
-  />
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/action-board.png'
-    alt='Action step canvas view'
-  />
-</figure>
+![Action step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/action.png)
 
-Furthermore, if the request fails, the action step will create an additional branch on the canvas. You can use this branch to retry the request or send a message to the user.
+![Action step canvas view](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/action-board.png)
 
-<Tip>
-Combining this step with external API's is particularly useful. For example, you can use it to retrieve information from a Hubspot deal and then personalize the messages sent to the user.
-</Tip>
+> Combining this step with external API's is particularly useful. For example, you can use it to retrieve information from a Hubspot deal and then personalize the messages sent to the user.
 
-## Conversation
+# Conversation
 
 This step ends the flow, assigns the conversation to someone on the Inbox, and sets the status to "NEW". It also marks the conversation as unread and notifies the assignee via notification. You can also append or replace tags to the conversation or contact to filter inside your Inbox.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/assign-step.png'
-    alt='Conversation step'
-  />
-</figure>
+![Conversation step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/assign-step.png)
 
-## Tag
+# Tag
 
 The Tag step lets you add or replace conversation or contact tags at any point in the flow. It's useful for filtering conversations or contacts in the Inbox.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/tag-step.png'
-    alt='Tag step'
-  />
-</figure>
+![Tag step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/tag-step.png)
 
-## Contact update
+# Contact update
 
 The "Update Contact" step lets you change a contact property at any point in the flow. It's useful for updating properties such as first name, last name, email address, etc. You can also [create or update a custom attribute](/user/create-a-contact) from here.
 
-<figure>
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/contact-step.png'
-    alt='Contact update step'
-  />
-  <img
-    src='https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/contact-custom-attributes.png'
-    alt='Contact update custom properties'
-  />
-</figure>
+![Contact update step](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/contact-step.png)
+
+![Contact update custom properties](https://hilos-media.s3.us-east-2.amazonaws.com/documentation/userdocs/using-hilos/reference/flows/step-types/contact-custom-attributes.png)
