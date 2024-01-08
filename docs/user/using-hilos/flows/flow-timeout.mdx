@@ -1,0 +1,7 @@
+---
+title: Flow Timeout
+---
+
+By default Flows have a lifetime of 24-hours, this means that if a user does not answer a question or menu in 24 hours the flow will automatically expire and any responses received afterwards will be ignored. This behaviour however can be changed by setting a timeout on question or menu steps.
+
+To do so just enable the option `Go to another step if the user doesn't answer the question within a certain period of time` and set the desired timeout, this will create a new branch in the flow that will be executed if the user does not answer the question or menu in the specified time, if left empty the flow will expire after the set amount of time.

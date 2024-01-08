@@ -31,7 +31,7 @@
   "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Go to app",
-    "url": "https://app.hilos.com/"
+    "url": "https://app.hilos.io/"
   },
   "navigation": [
     {
@@ -127,7 +127,8 @@
                 "docs/user/using-hilos/flows/steps/menu-step",
                 "docs/user/using-hilos/flows/steps/assignation-steps"
               ]
-            }
+            },
+            "docs/user/using-hilos/flows/flow-timeout"
           ]
         },
         {
