@@ -121,11 +121,15 @@
               "group": "Step types",
               "pages": [
                 "docs/user/using-hilos/flows/steps/action-step",
+                "docs/user/using-hilos/flows/steps/assignation-steps",
+                "docs/user/using-hilos/flows/steps/conditional-step",
                 "docs/user/using-hilos/flows/steps/contact-update",
-                "docs/user/using-hilos/flows/steps/go-to-step",
                 "docs/user/using-hilos/flows/steps/delay-step",
+                "docs/user/using-hilos/flows/steps/go-to-step",
                 "docs/user/using-hilos/flows/steps/menu-step",
-                "docs/user/using-hilos/flows/steps/assignation-steps"
+                "docs/user/using-hilos/flows/steps/question-step",
+                "docs/user/using-hilos/flows/steps/tag-step",
+                "docs/user/using-hilos/flows/steps/trigger-flow-step"
               ]
             },
             "docs/user/using-hilos/flows/flow-timeout"
