@@ -187,6 +187,23 @@
       ]
     },
     {
+      "group": "Advanced guides",
+      "pages": [
+        {
+          "group": "FAQs",
+          "pages": ["docs/user/advanced/business-verification"]
+        },
+        {
+          "group": "Flows",
+          "icon": "share-nodes",
+          "pages": [
+            "docs/user/advanced/wh-flow",
+            "docs/user/advanced/chatgpt-flow"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Getting started",
       "pages": [
         "docs/developer/getting-started/auth",
