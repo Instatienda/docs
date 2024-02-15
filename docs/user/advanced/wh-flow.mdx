@@ -1,3 +1,23 @@
 ---
 title: Adding working hours to your chatbot
 ---
+
+Working hours are an effective way to manage your team's availability and ensure that customers are connected to agents only when they are available. However, when you enable a chatbot, your account's working hours are no longer used because the chatbot is always available 24/7. Nevertheless, you can still incorporate working hours into your chatbot flow by creating a working hours conditional.
+
+To add working hours to your chatbot, navigate to your chatbot's flow and click on the "+" button to add a new [conditional step](/docs/user/using-hilos/flows/steps/conditional-step). You can place it anywhere in the flow, depending on your preference. Some customers prefer placing it at the beginning, while others prefer placing it after a question step. The choice is yours, as long as it makes sense for your chatbot's flow.
+
+![Adding a conditional step](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/WH-flow/add-a-conditional.png)
+
+Once you have decided where to check for your team's availability, add a conditional step. In the conditional step, select "Is in working hours?" from the dropdown menu and choose either "Yes" or "No." If you choose "Yes," the true branch will be executed during working hours. If you choose "No," the false branch will be executed. It depends on how you want to handle the situation.
+
+![Conditional working hours condition](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/WH-flow/WH-conditional.png)
+
+In the respective branch, you can add a working hours message that will be sent to the user. After this step, you have two options. The first option is to send the conversation to the inbox to be handled by a human agent when they are available. You can use any of the [assignation steps](/docs/user/using-hilos/flows/steps/assignation-steps) for this.
+
+![Assigning the conversation to the inbox](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/WH-flow/assign.png)
+
+The second option is to use a combination of the [delay step](/docs/user/using-hilos/flows/steps/delay-step) and a working hours conditional to continue the conversation at a later time, but only during working hours. It is important to note that if more than 24 hours have passed since the last message from the user, [the conversation will be closed](docs/user/whatsapp-guides/24h-window.mdx). In that case, the only way to continue the conversation with the user is by sending a template.
+
+![Delay and working hours conditional](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/WH-flow/WH+loop.png)
+
+By using this approach, you can ensure that the conversation will resume at a later time, within working hours, and the user will not be left hanging.
