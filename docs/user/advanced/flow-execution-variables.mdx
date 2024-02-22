@@ -1,0 +1,40 @@
+---
+title: Adding temporary variables to a flow
+---
+
+This is an ideal scenario for using Flow Execution Variables. These variables are user-defined and can be included in the flow builder, sent via the API call body under the key `flow_execution_variables`. Note that these variables are global to a flow execution, not tied to a specific contact. If a flow execution involves multiple contacts, these variables will apply to all of them.
+
+### Adding a Flow Execution Variable
+
+To utilize flow execution variables, ensure your account has the feature flag enabled. Request activation through our support channel. Once activated, a new field will appear in the flow configuration. Here, you can input the desired variables within the API call. Enter the name and type, then save them.
+
+![Flow execution variables filled](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/flow-execution-variables/create-vars.png)
+
+Now, you can select these variables within the flow.
+
+![Using flow execution variables](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/flow-execution-variables/use-vars.png)
+
+### Formatting Your API Call
+
+The API call for flow execution variables differs slightly from a standard API call. You must include a new key `flow_execution_variables` with an object containing the expected variable keys for the flow. Remember, these variables are not contact-specific. To assign different variables to various contacts, create multiple flow executions using separate API calls.
+
+The API call should resemble:
+
+```
+POST https://api.hilos.io/api/flow
+```
+
+```json
+{
+  "execute_for": "LIST",
+  "contact_list": [
+    {
+      "phone": "+525544443333"
+    }
+  ],
+  "flow_execution_variables": {
+    "key": "value"
+  },
+  "has_priority": true
+}
+```

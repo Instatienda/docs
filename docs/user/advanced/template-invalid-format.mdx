@@ -1,0 +1,9 @@
+---
+title: Template Rejected invalid format
+---
+
+WhatsApp provides this error when your sent template does not comply with the WhatsApp template policies, this can be due to several reasons, some of the most common ones include:
+
+- A variable which does not have any surrounding text, for example if you add a variable in a new line that does not have any text or context around it, will result in the template rejection, this is because the variable is ambiguous and could be used to send any type of message which defeats the purpose of the templates in the API.
+- You've deleted a variable and did not update the other variables. Variables must be sequential, meaning that if you have variables \{\{1\}\}, \{\{2\}\}, \{\{3\}\}, you cannot delete \{\{2\}\} and send a message with \{\{1\}\} and \{\{3\}\}. This will result in the template rejection. If you delete a variable, you must update the other variables to be sequential.
+- Variable parameters must be sequential numbers without any characters inside, if you send a template with a variable like \{\{1a\}\} will result in the template rejection.
