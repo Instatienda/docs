@@ -141,8 +141,6 @@
                 "docs/user/using-hilos/flows/flow-timeout",
                 "docs/user/advanced/wh-flow",
                 "docs/user/advanced/flow-file-names",
-                "docs/user/advanced/get-list-of-flows",
-                "docs/user/advanced/inbox-action",
                 "docs/user/advanced/sending-a-flow-to-all-contacts",
                 "docs/user/advanced/chatgpt-flow"
               ]
