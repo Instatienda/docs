@@ -1,4 +1,58 @@
 ---
-title: Zapier
+title: Zapier Integration
 icon: bolt
 ---
+
+Zapier is a well-known automation tool with over 2,000 apps in their catalog, allowing you to set up automated workflows that integrate your favorite tools without needing to code. Hilos' integration with Zapier empowers you to connect your WhatsApp number and Hilos account with any app on Zapier, unlocking limitless possibilities for automation.
+
+## Hilos Triggers on Zapier
+
+Hilos provides several triggers on Zapier, enabling you to start your workflows based on specific events within Hilos:
+
+### Contact Completed a Flow
+
+Activates when a contact finishes any flow, inbound or outbound. This trigger supplies details of the completed flow and the contact's information, perfect for monitoring contact engagement across your chatbots and flows.
+
+### Contact Joined Inbound Flow
+
+This trigger fires upon a contact's entry into an inbound flow, providing data about the flow and the contact, aiding in tracking engagement and flow participation.
+
+### New Contact
+
+Each time a new contact is added to Hilos, this trigger activates, returning the new contact's details, ensuring your database is always current.
+
+### Updated Contact
+
+Activates when a contact's details are altered, either manually by your team or automatically through a flow step. This trigger provides the updated contact information, helping you keep track of changes.
+
+### Deleted a Contact
+
+When a contact is deleted, this trigger activates and offers information about the deleted contact, useful for maintaining up-to-date records.
+
+## Hilos Actions on Zapier
+
+Hilos and Zapier integration also includes actions allowing automated tasks between Hilos and other platforms, it is important to note that any of this steps can only accept one contact at a time, if you want to pass multiple contacts to a step you will need to use a Looping by Zapier step that iterates over the contacts and passes them and their corresponding data to the action.
+
+### Create or Update Contact
+
+This action enables you to add a new contact to Hilos or update an existing one, using the phone number as a unique identifier to avoid duplicates.
+
+This action allows you to add or update a contact in Hilos, ensuring your contact database is always up-to-date. The only field required is the phone number, but you may also include additional fields such as first name, last name, email, source, external url and custom fields. If you wish to add custom properties the first field will be the name of the property and the second field will be the value of the property. Please bear in mind that custom properties are case sensitive, if you are using an existing custom property you will need to use the same case as the one in Hilos, otherwise a new custom property will be created. You may also add Contact Tags using the Tags field.
+
+### Send a WhatsApp Message
+
+Allows you to dispatch a WhatsApp message to a specified contact using a predefined template, facilitating timely and relevant communications. This action requires 2 fields, the first is the phone number of the contact and second is the template you wish to use. The phone number must be in E.164 format, for example `+1234567890`. The template must be a valid approved template that you have created in your WhatsApp Business account. As mentioned before if you want to iterate over a list of contacts you'll need to use a Looping by Zapier step.
+
+### Start a Flow for a Phone Number
+
+Initiates an outbound flow for a contact based on their phone number, enabling personalized engagement directly from your workflows.
+
+The fields that are required for this step is the WhatsApp phone number in E.164 format and the flow to execute, only Outbound flows are available for this action, you may also add fields like first name, last name, email, external URL and custom properties, bear in mind that we will also update the contacts using this information.
+
+### Search for a WhatsApp Template
+
+Helps you locate a specific WhatsApp message template from your collection, helpful for finding the correct template to use in the Send a WhatsApp Message action. The only field is the name of the template you are looking for and wether or not the step should be considered a success if the template is not found.
+
+<Info>
+  Extend your automation capabilities by linking flows to Zapier webhooks, empowering you to trigger automations directly from a flow. This could include forwarding lead details to a Slack channel or logging information in a Google Sheet.
+</Info>

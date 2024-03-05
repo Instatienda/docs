@@ -1,3 +1,64 @@
 ---
 title: Creating a ChatGPT Flow
 ---
+
+ChatGPT can be a great tool to help your team answer most of the common questions that come up in your business and leave the important and complex questions to your team. It also helps you provide a customer information about your product or service 24/7, even if your team isn't currently online. In this guide, we will show you how to create a ChatGPT flow that can be used to answer common questions.
+
+## Prerequisites
+
+To complete this guide you will need an OpenAPI key which will be used for authentication. If you don't have an OpenAI account, you can sign up for one [here](https://platform.openai.com/signup). You also need to already have created an assistant in OpenAI, you can follow the guide on how to do it here, we recommend using the playground if you're not quite familiar with the API yet. Take note of your `assistant_id` as you will need it later.
+
+We will be guiding in you in creating a simple flow that will answer questions from your customers with a handoff condition to send the conversation to a human agent if the question is too complex for the AI to answer. 
+
+## Basic flow structure
+
+A ChatGPT flow will have an specific structure, we hope to improve this in the future but for now you'll need to follow the following structure:
+
+![ChatGPT flow structure](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/ChatGPT+Flow/structure.png)
+
+The flow begins with a basic question step, this step will be used to welcome the user and ask them what they need help with. After this we will use a contact update step to save the user's answer inside a custom contact attribute which we'll call `gpt_response` but you can call it whatever you want.
+
+The next step is where we will begin to use OpenAPI, we'll use the API step to send a `POST` request to `https://api.openai.com/v1/threads` with an empty JSON body and with the headers:
+
+```
+OpenAI-Beta: assistants=v1
+Content-Type: application/json
+Authorization: Bearer XXXXX
+```
+
+This headers will be used in all the API steps we'll use in this flow, keep it in mind.
+
+OpenAI will respond with a JSON object that might look as follows:
+
+```json
+{
+  "id": "thread_lzwQkTr8MvwpV8nwuzbFzRwV",
+  "object": "thread",
+  "metadata": {},
+  "created_at": 1702322388
+}
+```
+
+We will then add another API step to send a `POST` request to `https://api.openai.com/v1/threads/\{\{step.Start GPT thread.response.id\}\}/messages` with the following JSON body using the contact variable we saved earlier.
+
+```json
+{
+  "role": "user",
+  "content": "{{contact.last_chatgpt_response}}"
+}
+```
+
+Following this we will add another API step to send a `POST` request to `https://api.openai.com/v1/threads/\{\{step.Start GPT thread.response.id\}\}/runs` with the body where `assistant_id` is the id of the assistant you've created.
+
+```json
+{
+  "assistant_id": "<assistant_id>"
+}
+```
+
+Now we need to check if the is a response from OpenAI, and if there's not delay the flow for a few seconds and check again, to achieve this we will add an API step making a `GET` request to `https://api.openai.com/v1/threads/\{\{step.Start GPT thread.response.id\}\}/messages` with an empty JSON body. We will then add a condition step with the following conditions:
+
+`step.Get generated GPT response` is (equals) `assistant` and `step.Get generated GPT response` is empty `No`
+
+Now on the branch `false` we will add a delay step of 10 seconds and then a Go to step which will go back to the API step that checks for the OpenAI response. On the branch `true` we will check to see if the response from OpenAI is a handoff which a predetermined message you should've specified in the assistant response, if it is we will show a message with the handoff response followed by an assign step, if it isn't we will send another question step with the response from the OpenAI bot, we will add another contact update step to save the response from the user on the same custom attribute we used before and we will use the Go to step to go back to the API step that sends the user's response to OpenAI. Rinse and repeat and you're done.
+

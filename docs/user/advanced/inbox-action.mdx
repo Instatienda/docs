@@ -1,0 +1,26 @@
+---
+title: Initiating a Flow from the Inbox
+---
+
+To trigger a flow from the Inbox UI, start by setting up an Inbox HTTP action. This feature is enabled upon request through the support channel. You'll need:
+
+- API Key from the account containing the flow
+- The flow must be Outbound for triggering
+- The UUID of the desired flow (found in the flow's URL)
+- Button text for the sidebar
+
+When creating an HTTP action, the default body includes:
+
+```json
+{
+  "execute_for": "LIST",
+  "contact_list": [
+    {
+      "phone": "{{contact.phone}}"
+    }
+  ],
+  "has_priority": true
+}
+```
+
+Ensure any required variables are added to the contact properties before executing the flow to avoid execution failures. Mention any necessary `flow_execution_variables` during creation.

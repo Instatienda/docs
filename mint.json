@@ -117,6 +117,7 @@
           "pages": [
             "docs/user/using-hilos/flows/what-are-flows",
             "docs/user/using-hilos/flows/creating-a-flow",
+            "docs/user/using-hilos/flows/flow-variables",
             {
               "group": "Step types",
               "pages": [
@@ -132,7 +133,18 @@
                 "docs/user/using-hilos/flows/steps/trigger-flow-step"
               ]
             },
-            "docs/user/using-hilos/flows/flow-timeout"
+            "docs/user/using-hilos/flows/flow-reports",
+            {
+              "group": "FAQs and advanced usage",
+              "pages": [
+                "docs/user/advanced/flow-execution-variables",
+                "docs/user/using-hilos/flows/flow-timeout",
+                "docs/user/advanced/wh-flow",
+                "docs/user/advanced/flow-file-names",
+                "docs/user/advanced/sending-a-flow-to-all-contacts",
+                "docs/user/advanced/chatgpt-flow"
+              ]
+            }
           ]
         },
         {
@@ -189,16 +201,16 @@
     {
       "group": "Advanced guides",
       "pages": [
+        "docs/user/advanced/business-verification",
         {
           "group": "FAQs",
-          "pages": ["docs/user/advanced/business-verification"]
-        },
-        {
-          "group": "Flows",
-          "icon": "share-nodes",
           "pages": [
-            "docs/user/advanced/wh-flow",
-            "docs/user/advanced/chatgpt-flow"
+            "docs/user/advanced/bussiness-elegibility-payment-issue",
+            "docs/user/advanced/fb-marketing-experiment",
+            "docs/user/advanced/formatting-text",
+            "docs/user/advanced/spam-rate-limit-hit",
+            "docs/user/advanced/template-invalid-format",
+            "docs/user/advanced/know-if-a-number-blocked"
           ]
         }
       ]

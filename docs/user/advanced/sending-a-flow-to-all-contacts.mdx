@@ -1,0 +1,14 @@
+---
+title: Sending a flow to all your contacts
+---
+
+You can send a message to all your contacts in Hilos through the Flow execution option inside Hilos, however there are certain things to keep in mind:
+
+1. Your contact list size and your [phone number limits](/docs/user/whatsapp-guides/messaging-limits): keep in mind that usually phone numbers are capped to [1,000 CAMs each month](/docs/user/whatsapp-guides/wa-pricing), if you send a message to all your contacts there is a chance that you overshoot that limit and your messages will start to fail with the error `Spam rate: limit hit`.
+2. The cost, as you’ll be sending a template to all your contacts this will charge you for all the templates used in the flow execution, also take into account that the base plan for Hilos includes 1,000 conversations, if you send a message to more contacts you’ll be charged for any additional contacts used.
+
+With that out of the way, the process is relatively simple. Create an outgoing message flow and add a template step (you can add more steps if you'd like, but this is the minimum needed for mass sending) and set up the necessary variables. Once you're satisfied, click publish and select the option to run with the contact list. In the window that appears, select the option to execute by filtering existing contacts and configure the filter:
+
+![Filter configuration](https://hilos-media.s3.us-east-2.amazonaws.com/mintlify/advanced/flows/send-to-all-contacts/all-contacts-filter.png)
+
+This will bring up your entire contact base in Hilos, and selecting run flow will execute it for everyone. Be careful because once you select run flow, the message will be sent, so make sure you're ready to send.
