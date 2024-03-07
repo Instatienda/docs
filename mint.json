@@ -271,6 +271,10 @@
           ]
         }
       ]
+    },
+    {
+      "group": "Account management",
+      "pages": ["docs/apidocs/user/get-apiaccount-member"]
     }
   ],
   "footerSocials": {
