@@ -15,6 +15,7 @@ paths:
     get:
       operationId: List Users
       description: 'Lists Users. '
+      summary: List Users
       parameters:
       - in: query
         name: email__icontains
@@ -110,6 +111,7 @@ paths:
       operationId: List WhatsApp Templates
       description: Lists WhatsApp Templates. You can search with the `name` and `status`
         fields using the `?seach=my-template-name` query parameter.
+      summary: List WhatsApp Templates
       parameters:
       - in: query
         name: category
@@ -216,6 +218,7 @@ paths:
     get:
       operationId: Get WhatsApp Template
       description: Gets a WhatsApp Template by Id.
+      summary: Get WhatsApp Template
       parameters:
       - in: path
         name: id
@@ -237,6 +240,7 @@ paths:
     delete:
       operationId: Delete WhatsApp Template
       description: Deletes a WhatsApp Template by Id.
+      summary: Delete WhatsApp Template
       parameters:
       - in: path
         name: id
@@ -257,6 +261,7 @@ paths:
       description: 'Send a single WhatsApp message: select a template to use and call
         our endpoint with the recipient phone number and the variables the template
         needs. That''s it!'
+      summary: Send a WhatsApp Template
       parameters:
       - in: path
         name: id
@@ -302,6 +307,7 @@ paths:
     get:
       operationId: List Contacts
       description: Lists contacts.
+      summary: List contacts
       parameters:
       - name: page
         required: false
@@ -343,32 +349,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedContactListReadList'
+                $ref: '#/components/schemas/PaginatedContactListReadPublicList'
           description: ''
     post:
       operationId: Create or Update Contact
       description: "When you POST a new Contact, we'll first check if another contact\
-        \ exists with the same canonical phone. If it does, we'll do a partial update\
-        \ to the existing contact with these new information. We do this so you don't\
-        \ end up with duplicate contacts in your flows. \n\nYou can set arbitrary\
-        \ attributes for a contact in the meta object, using `meta={key1: value1,\
-        \ key2: value2, ...}`. We parse all these attributes as strings for now. \n\
-        \n We append the received `meta` and `notes` properties with the contact current\
-        \ ones, if you want to delete some key inside the `meta` or a `note` you have\
-        \ to use the `PUT` method sending all the contact fields."
+        \ exists with the same phone. If it does, we'll do a partial update to the\
+        \ existing contact with this new information. We do this so you don't end\
+        \ up with duplicate contacts in your account. \n\nYou can set arbitrary attributes\
+        \ for a contact in the meta object, using `meta={custom_property_1: 'some\
+        \ value', another_property: 'another value ...', ...}`. We parse all these\
+        \ attributes as strings for now. \n\n We append the received `meta`, `tags`\
+        \ and `default_assignees` properties with the contact current ones, if you\
+        \ want to delete some key inside the `meta` or a `tags` you have to use the\
+        \ `overwrite_meta` or `overwrite_tags` attributes in the request body."
+      summary: Create a contact
       tags:
       - Contact
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
       security:
       - tokenAuth: []
       responses:
@@ -376,12 +384,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactDetailRead'
+                $ref: '#/components/schemas/ContactDetailReadPublic'
           description: ''
   /api/contact/{id}:
     get:
       operationId: Get Contact
       description: Gets a Contact by Id.
+      summary: Get Contact
       parameters:
       - in: path
         name: id
@@ -402,8 +411,9 @@ paths:
           description: ''
     put:
       operationId: Update Contact
-      description: "Update a Contact. \n\n If you send a empty `meta` or `notes` the\
+      description: "Update a Contact. \n\n If you send a empty `meta` or `tags` the\
         \ contact will have those properties removed."
+      summary: Update Contact
       parameters:
       - in: path
         name: id
@@ -417,13 +427,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
       security:
       - tokenAuth: []
       responses:
@@ -431,13 +441,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactDetailRead'
+                $ref: '#/components/schemas/ContactDetailReadPublic'
           description: ''
     patch:
       operationId: Partial Update Contact
       description: "Update a Contact sending only the properties you want to update.\
-        \ \n\n If you send the `meta` or `notes` the contact will have those properties\
-        \ appended with the contact current ones.."
+        \ \n\n If you send the `meta` or `tags` the contact will have those properties\
+        \ appended with the contact current ones."
+      summary: Partially Update Contact
       parameters:
       - in: path
         name: id
@@ -451,13 +462,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedContactEdit'
+              $ref: '#/components/schemas/PatchedContactEditPublic'
       security:
       - tokenAuth: []
       responses:
@@ -465,12 +476,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactDetailRead'
+                $ref: '#/components/schemas/ContactDetailReadPublic'
           description: ''
     delete:
       operationId: Delete Contact Operation ID
       description: Deleting a contact won't delete its history nor its sent messages.
-      summary: Delete Contact Summary
+      summary: Delete Contact
       parameters:
       - in: path
         name: id
@@ -489,6 +500,7 @@ paths:
     get:
       operationId: List Flow Execution
       description: 'Lists Flow Executions. '
+      summary: List Flow Executions
       parameters:
       - in: query
         name: flow
@@ -563,6 +575,7 @@ paths:
     get:
       operationId: List Flow Execution Contact
       description: Lists Flow Execution Contacts.
+      summary: List Flow Execution Contacts
       parameters:
       - in: query
         name: contact
@@ -680,6 +693,7 @@ paths:
     get:
       operationId: Get Flow Execution Contact
       description: Get Flow Execution Contact by Id.
+      summary: Get Flow Execution Contact by Id
       parameters:
       - in: path
         name: id
@@ -707,6 +721,7 @@ paths:
     get:
       operationId: Get Flow Execution
       description: Get Flow Execution by Id.
+      summary: Get Flow Execution
       parameters:
       - in: path
         name: id
@@ -734,6 +749,7 @@ paths:
     post:
       operationId: Create a Flow Execution
       description: Create a Flow Execution of a Flow.
+      summary: Create a Flow Execution
       parameters:
       - in: path
         name: id
@@ -752,13 +768,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FlowExecutionEdit'
+              $ref: '#/components/schemas/FlowExecutionCreateRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/FlowExecutionEdit'
+              $ref: '#/components/schemas/FlowExecutionCreateRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/FlowExecutionEdit'
+              $ref: '#/components/schemas/FlowExecutionCreateRequest'
         required: true
       security:
       - tokenAuth: []
@@ -773,6 +789,7 @@ paths:
     get:
       operationId: List Conversations
       description: 'Lists Conversations. '
+      summary: List Conversations
       parameters:
       - in: query
         name: contact
@@ -812,12 +829,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedConversationList'
+                $ref: '#/components/schemas/PaginatedConversationReadSimpleList'
           description: ''
   /api/inbox/conversation/{id}/update:
     put:
       operationId: Update a Conversation
       description: Update a Conversation
+      summary: Update a conversation
       parameters:
       - in: path
         name: id
@@ -831,13 +849,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Conversation'
+              $ref: '#/components/schemas/ConversationEdit'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Conversation'
+              $ref: '#/components/schemas/ConversationEdit'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Conversation'
+              $ref: '#/components/schemas/ConversationEdit'
         required: true
       security:
       - tokenAuth: []
@@ -846,11 +864,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Conversation'
+                $ref: '#/components/schemas/ConversationEdit'
           description: ''
     patch:
       operationId: Partially update a Conversation
       description: Partially update a Conversation
+      summary: Partially Update a Conversation
       parameters:
       - in: path
         name: id
@@ -864,13 +883,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedConversation'
+              $ref: '#/components/schemas/PatchedConversationEdit'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedConversation'
+              $ref: '#/components/schemas/PatchedConversationEdit'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedConversation'
+              $ref: '#/components/schemas/PatchedConversationEdit'
       security:
       - tokenAuth: []
       responses:
@@ -878,7 +897,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Conversation'
+                $ref: '#/components/schemas/ConversationEdit'
           description: ''
 components:
   schemas:
@@ -905,10 +924,6 @@ components:
         account:
           type: integer
           readOnly: true
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/Group'
         profile_image:
           type: string
           format: uri
@@ -925,6 +940,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SimpleChannel'
+        role:
+          $ref: '#/components/schemas/UserRoleEnum'
       required:
       - account
       - date_joined
@@ -933,9 +950,18 @@ components:
       - id
       - last_name
       - profile_image
-    AccountMemberUserBasic:
+    AccountMemberUserBasicEdit:
       type: object
       properties:
+        id:
+          type: integer
+      required:
+      - id
+    AccountMemberUserBasicRead:
+      type: object
+      properties:
+        id:
+          type: integer
         first_name:
           type: string
           readOnly: true
@@ -947,8 +973,6 @@ components:
           format: email
           readOnly: true
           title: Email address
-        id:
-          type: integer
         account:
           type: integer
           readOnly: true
@@ -1284,6 +1308,7 @@ components:
     ChannelProviderEnum:
       enum:
       - META_CLOUD_API
+      - TECH_PROVIDER_CLOUD_API
       - D360_CLOUD_API
       - 360DIALOG
       type: string
@@ -1368,7 +1393,9 @@ components:
           type: string
           maxLength: 255
         notes:
-          type: string
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactNoteRead'
           readOnly: true
           description: Notes associated with the contact
         tags:
@@ -1379,7 +1406,7 @@ components:
         default_assignees:
           type: array
           items:
-            $ref: '#/components/schemas/AccountMemberUserBasic'
+            $ref: '#/components/schemas/AccountMemberUserBasicRead'
           description: ID of the default assignees for the contact
         contact_import:
           type: string
@@ -1408,7 +1435,7 @@ components:
       - phone
       - source
       - tags
-    ContactListRead:
+    ContactDetailReadPublic:
       type: object
       properties:
         first_name:
@@ -1435,8 +1462,6 @@ components:
         canonical_phone:
           type: string
           maxLength: 30
-        is_deleted:
-          type: boolean
         created_by:
           type: integer
           readOnly: true
@@ -1446,7 +1471,6 @@ components:
           description: Phone number of the contact
         id:
           type: string
-          title: Contact ID
           description: UUID representing the contact ID
         created_on:
           type: string
@@ -1465,13 +1489,91 @@ components:
           items:
             $ref: '#/components/schemas/ContactTag'
           description: Tags associated with the contact
-        contact_import:
+        default_assignees:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountMemberUserBasicRead'
+          description: ID of the default assignees for the contact
+        inbox_contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboxContactURL'
+          description: URL of the inbox conversation associated with the contact
+        default_conversation_url:
           type: string
-          format: uuid
-          nullable: true
+          readOnly: true
       required:
       - canonical_phone
       - created_by
+      - default_assignees
+      - default_conversation_url
+      - id
+      - inbox_contacts
+      - last_updated_on
+      - phone
+      - source
+      - tags
+    ContactListReadPublic:
+      type: object
+      properties:
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        meta:
+          type: object
+          additionalProperties: {}
+        external_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        canonical_phone:
+          type: string
+          maxLength: 30
+        created_by:
+          type: integer
+          readOnly: true
+          description: User ID of the user who created the contact
+        phone:
+          type: string
+          description: Phone number of the contact
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Creado el
+        last_updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Última actualización el
+        source:
+          type: string
+          maxLength: 255
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactTag'
+          description: Tags associated with the contact
+        id:
+          type: string
+          readOnly: true
+          title: Contact ID
+          description: UUID representing the contact ID
+      required:
+      - canonical_phone
+      - created_by
+      - created_on
       - id
       - last_updated_on
       - phone
@@ -1525,6 +1627,30 @@ components:
             type: string
             nullable: true
     ContactNote:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        notes:
+          type: string
+        contact:
+          type: string
+          format: uuid
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Creado el
+        created_by:
+          $ref: '#/components/schemas/SimpleUser'
+      required:
+      - contact
+      - created_on
+      - id
+      - notes
+    ContactNoteRead:
       type: object
       properties:
         id:
@@ -1611,7 +1737,7 @@ components:
       required:
       - id
       - name
-    Conversation:
+    ConversationEdit:
       type: object
       properties:
         id:
@@ -1625,7 +1751,7 @@ components:
         assigned:
           type: array
           items:
-            $ref: '#/components/schemas/AccountMemberUserBasic'
+            $ref: '#/components/schemas/AccountMemberUserBasicEdit'
           description: The Users assigned to the Conversation.
         tags:
           type: array
@@ -1653,6 +1779,56 @@ components:
       - created_on
       - id
       - source
+    ConversationReadSimple:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The UUID of the Conversation.
+        contact:
+          type: string
+          format: uuid
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ConversationStatusEnum'
+          readOnly: true
+        first_message:
+          allOf:
+          - $ref: '#/components/schemas/WhatsAppMessageSimple'
+          description: The first Message of the Conversation.
+        assigned:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountMemberUserBasicRead'
+          description: The Users assigned to the Conversation.
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationTag'
+          description: The Tags assigned to the Conversation.
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Creado el
+        source:
+          allOf:
+          - $ref: '#/components/schemas/ConversationSourceEnum'
+          readOnly: true
+        assigned_team:
+          type: integer
+          description: The ID of the Team assigned to the Conversation.
+        channel:
+          type: integer
+          nullable: true
+      required:
+      - assigned
+      - contact
+      - created_on
+      - first_message
+      - id
+      - source
+      - status
     ConversationSourceEnum:
       enum:
       - INBOX
@@ -1684,12 +1860,6 @@ components:
       required:
       - id
       - name
-    ExecuteForEnum:
-      enum:
-      - FILTERS
-      - LIST
-      - ALL
-      type: string
     FlowExecutionContactFilterEdit:
       type: object
       properties:
@@ -1780,6 +1950,27 @@ components:
       - EXPIRED
       - FAILED
       type: string
+    FlowExecutionCreateRequest:
+      type: object
+      properties:
+        execute_for:
+          $ref: '#/components/schemas/FlowExecutionCreateRequestExecuteForEnum'
+        has_priority:
+          type: boolean
+          default: false
+          description: Specify as True if you want this execution to                 close
+            any other running flows or conversations.
+        contact_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PatchedContactEdit'
+      required:
+      - contact_list
+      - execute_for
+    FlowExecutionCreateRequestExecuteForEnum:
+      enum:
+      - LIST
+      type: string
     FlowExecutionEdit:
       type: object
       properties:
@@ -1788,7 +1979,7 @@ components:
           readOnly: true
           description: The status of the Flow Execution.
         execute_for:
-          $ref: '#/components/schemas/ExecuteForEnum'
+          $ref: '#/components/schemas/FlowExecutionExecuteForEnum'
         inbound_trigger_with:
           $ref: '#/components/schemas/InboundTriggerWithEnum'
         inbound_start_message:
@@ -1862,6 +2053,12 @@ components:
       - API
       - FRONTEND
       type: string
+    FlowExecutionExecuteForEnum:
+      enum:
+      - FILTERS
+      - LIST
+      - ALL
+      type: string
     FlowExecutionExecutionTypeEnum:
       enum:
       - INBOUND
@@ -1875,7 +2072,7 @@ components:
         status:
           $ref: '#/components/schemas/FlowExecutionStatusEnum'
         execute_for:
-          $ref: '#/components/schemas/ExecuteForEnum'
+          $ref: '#/components/schemas/FlowExecutionExecuteForEnum'
         inbound_trigger_with:
           $ref: '#/components/schemas/InboundTriggerWithEnum'
         inbound_start_message:
@@ -1944,7 +2141,7 @@ components:
           readOnly: true
           description: The status of the Flow Execution.
         execute_for:
-          $ref: '#/components/schemas/ExecuteForEnum'
+          $ref: '#/components/schemas/FlowExecutionExecuteForEnum'
         inbound_trigger_with:
           $ref: '#/components/schemas/InboundTriggerWithEnum'
         inbound_start_message:
@@ -2003,7 +2200,8 @@ components:
           items:
             $ref: '#/components/schemas/FlowExecutionContactFilterEdit'
           description: The filters to use to get the Contacts that the Flow Execution
-            will run for.
+            will run for. This field isn't required if executing the flow for a Contact
+            List
         contact_import:
           type: string
           format: uuid
@@ -2272,7 +2470,7 @@ components:
           type: string
           format: uri
           nullable: true
-          maxLength: 200
+          maxLength: 2000
         action_request_headers:
           type: object
           additionalProperties:
@@ -2423,6 +2621,10 @@ components:
           type: string
         next_flow:
           type: string
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/StepConditionalMultilpePath'
       required:
       - assign_to_teams
       - assign_to_users
@@ -2519,18 +2721,6 @@ components:
       - is_current_version
       - last_updated_on
       - published_by
-    Group:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 150
-      required:
-      - id
-      - name
     InboundTriggerWithEnum:
       enum:
       - ANY_MESSAGE
@@ -2711,7 +2901,7 @@ components:
     NullEnum:
       enum:
       - null
-    PaginatedContactListReadList:
+    PaginatedContactListReadPublicList:
       type: object
       properties:
         count:
@@ -2730,8 +2920,8 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ContactListRead'
-    PaginatedConversationList:
+            $ref: '#/components/schemas/ContactListReadPublic'
+    PaginatedConversationReadSimpleList:
       type: object
       properties:
         count:
@@ -2750,7 +2940,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Conversation'
+            $ref: '#/components/schemas/ConversationReadSimple'
     PaginatedFlowExecutionContactListSimpleList:
       type: object
       properties:
@@ -2868,7 +3058,7 @@ components:
         default_assignees:
           type: array
           items:
-            $ref: '#/components/schemas/AccountMemberUserBasic'
+            type: integer
         contact_import:
           type: string
           format: uuid
@@ -2879,10 +3069,88 @@ components:
         wa_id:
           type: string
           nullable: true
-        skip_existing:
+        overwrite_tags:
           type: boolean
           default: false
-    PatchedConversation:
+          description: If true, the `tags` will be overwritten with the new value.
+            If false, the new value will be merged with the existing value. Default
+            is false.
+        overwrite_default_assignees:
+          type: boolean
+          default: false
+          description: If true, the `default_assignees` will be overwritten with the
+            new value. If false, the new value will be merged with the existing value.
+            Default is false.
+        overwrite_meta:
+          type: boolean
+          default: false
+          description: If true, the `meta` field will be overwritten with the new
+            value. If false, the new value will be merged with the existing value.
+            Default is false.
+    PatchedContactEditPublic:
+      type: object
+      properties:
+        phone:
+          type: string
+          maxLength: 30
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        meta:
+          type: object
+          additionalProperties: {}
+        external_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        id:
+          type: string
+          format: uuid
+        source:
+          type: string
+          default: website
+        created_on:
+          type: string
+          format: date-time
+          title: Creado el
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactTag'
+        default_assignees:
+          type: array
+          items:
+            type: integer
+        overwrite_tags:
+          type: boolean
+          default: false
+          description: If true, the `tags` will be overwritten with the new value.
+            If false, the new value will be merged with the existing value. Default
+            is false.
+        overwrite_default_assignees:
+          type: boolean
+          default: false
+          description: If true, the `default_assignees` will be overwritten with the
+            new value. If false, the new value will be merged with the existing value.
+            Default is false.
+        overwrite_meta:
+          type: boolean
+          default: false
+          description: If true, the `meta` field will be overwritten with the new
+            value. If false, the new value will be merged with the existing value.
+            Default is false.
+    PatchedConversationEdit:
       type: object
       properties:
         id:
@@ -2896,7 +3164,7 @@ components:
         assigned:
           type: array
           items:
-            $ref: '#/components/schemas/AccountMemberUserBasic'
+            $ref: '#/components/schemas/AccountMemberUserBasicEdit'
           description: The Users assigned to the Conversation.
         tags:
           type: array
@@ -2966,6 +3234,8 @@ components:
           type: string
           format: uri
           nullable: true
+        role:
+          $ref: '#/components/schemas/UserRoleEnum'
       required:
       - id
     StepConditionalCondition:
@@ -2987,6 +3257,15 @@ components:
       - field
       - id
       - value
+    StepConditionalMultilpePath:
+      type: object
+      properties:
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StepConditionalCondition'
+      required:
+      - conditions
     TeamSimple:
       type: object
       properties:
@@ -3032,6 +3311,13 @@ components:
       - id
       - uploaded_file
       - url
+    UserRoleEnum:
+      enum:
+      - AGENT
+      - MANAGER
+      - ADMIN
+      - FINANCE
+      type: string
     WeekdayEnum:
       enum:
       - 0
@@ -3118,10 +3404,11 @@ components:
         content_url:
           type: string
           format: uri
-          nullable: true
-          maxLength: 200
+          readOnly: true
         msg_type:
-          $ref: '#/components/schemas/MessageTypeEnum'
+          allOf:
+          - $ref: '#/components/schemas/MessageTypeEnum'
+          readOnly: true
         location:
           $ref: '#/components/schemas/LocationMessage'
         failed_attempts:
@@ -3144,6 +3431,7 @@ components:
       - contacts
       - content
       - content_type
+      - content_url
       - context_message
       - delivered_on
       - direction
@@ -3153,6 +3441,120 @@ components:
       - id
       - is_deleted
       - location
+      - msg_type
+      - provider_error_code
+      - provider_error_message
+      - provider_id
+      - queued_on
+      - read_on
+      - sent_by
+      - sent_on
+      - source
+      - status
+      - timestamp
+      - to_number
+      - whatsapp_template
+    WhatsAppMessageSimple:
+      type: object
+      properties:
+        id:
+          type: string
+        to_number:
+          type: string
+          readOnly: true
+        from_number:
+          type: string
+          readOnly: true
+        body:
+          type: string
+          nullable: true
+        direction:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        contact:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/MessageStatusEnum'
+          readOnly: true
+        queued_on:
+          type: string
+          format: date-time
+          readOnly: true
+        accepted_on:
+          type: string
+          format: date-time
+          readOnly: true
+        sent_on:
+          type: string
+          format: date-time
+          readOnly: true
+        delivered_on:
+          type: string
+          format: date-time
+          readOnly: true
+        read_on:
+          type: string
+          format: date-time
+          readOnly: true
+        failed_on:
+          type: string
+          format: date-time
+          readOnly: true
+        provider_id:
+          type: string
+          readOnly: true
+        provider_error_code:
+          type: string
+          readOnly: true
+        provider_error_message:
+          type: string
+          readOnly: true
+        sent_by:
+          $ref: '#/components/schemas/SimpleUser'
+        is_deleted:
+          type: boolean
+          readOnly: true
+        content:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        whatsapp_template:
+          type: string
+          format: uuid
+          readOnly: true
+        content_type:
+          type: string
+          readOnly: true
+        content_url:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        msg_type:
+          $ref: '#/components/schemas/MessageTypeEnum'
+        failed_attempts:
+          type: integer
+          readOnly: true
+        source:
+          allOf:
+          - $ref: '#/components/schemas/MessageSourceEnum'
+          readOnly: true
+      required:
+      - accepted_on
+      - contact
+      - content
+      - content_type
+      - delivered_on
+      - direction
+      - failed_attempts
+      - failed_on
+      - from_number
+      - id
+      - is_deleted
       - provider_error_code
       - provider_error_message
       - provider_id
@@ -3212,8 +3614,13 @@ components:
           type: array
           items:
             type: string
+          description: An array of variables to be used in the WhatsApp Template.
+            Variables are taken in order HEADER, BODY and BUTTONs. (e.g. position
+            0 corresponds to the HEADER (if it exists) or variable {{1}}, position
+            1 to variable {{2}} and so on.
         phone:
           type: string
+          description: The phone number to send the WhatsApp Template to.
           maxLength: 20
       required:
       - phone
