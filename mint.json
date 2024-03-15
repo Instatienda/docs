@@ -19,6 +19,10 @@
     {
       "name": "API reference",
       "url": "docs/apidocs"
+    },
+    {
+      "name": "Start here guides",
+      "url": "docs/guides"
     }
   ],
   "api": {
