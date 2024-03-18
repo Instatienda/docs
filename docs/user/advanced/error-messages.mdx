@@ -1,0 +1,53 @@
+---
+title: Error messages
+---
+
+## Media upload error
+
+This error occurs for several reasons, the most common one is that even though the file is, for example, an mp4 extiension video the encoding is not supported by WhatsApp, the solution to this is to convert the video to mp4 using an online converter or a software like Handbrake.
+
+## Pair rate limit hit
+
+This error occurs when you send several messages to the same recipient in a short period of time, the solution to this is to wait a few seconds before sending the message again. Often occurs whenn you chain several message steps on a flow without adding a delay step between them.
+
+## Unable to deliver message: Recipient phone number is not a WhatsApp phone number
+
+This error occurs either because the recipient's phone number is not a valid WhatsApp number or because the recipients whatsapp is not updated to a version that supports the WhatsApp Business API. Please check that you can send a message to the recipient from your personal WhatsApp account, if so try asking the recipient to update their WhatsApp app. If this does not solve the issue please [contact support](https://api.whatsapp.com/send?phone=+525592257050&text=Hi!%20I%20need%20help%20with%20Hilos.).
+
+## User is not valid - Recipient is not a valid WhatsApp user
+
+This error occurs when the recipient's phone number is not a valid WhatsApp number, please check that you can send a message to the recipient from your personal WhatsApp account, if so please [contact support](https://api.whatsapp.com/send?phone=+525592257050&text=Hi!%20I%20need%20help%20with%20Hilos.).
+
+## Your account is not active. Please go to https://app.hilos.io/config/subscription to start your Hilos subscription.
+
+This error occurs when the payment method associated with your account failed to process the payment for your Hilos' subscription, please go to the link provided in the error message to update your payment method. If you believe this is an error please [contact support](https://api.whatsapp.com/send?phone=+525592257050&text=Hi!%20I%20need%20help%20with%20Hilos.).
+
+## Message failed to send because there were one or more errors related to your WhatsApp payment method.
+
+The error occurs when the payment method configured on your Meta WhatsApp Business Account is not valid or if there are pending payments to be made. Please go to your [Meta Business Manager](https://business.facebook.com/settings) > WhatsApp Accounts > Select your WhatsApp Account > Payment Settings to update your payment method or to make the pending payments. Once you update your payment method or make the pending payments, please wait 5 minutes before trying to send the message again.
+
+## Spam Rate limit hit
+
+This error occurs when you exceed the allowed number of messages for your number. Unverified businesses are limited to 250 conversations in a rolling 24-hour period. Verified businesses are limited to 1000 conversations in a rolling 24-hour period. If you exceed this limit, you will receive this error. Please wait 24 hours before trying to send the message again. You can check your current limit by going to your [WhatsApp manager](https://business.facebook.com/wa/manage/phone-numbers).
+
+## Message was not sent as part of a WhatsApp internal experiment.
+
+WhatsApp is currently running an experiment with a certain amount of their users. This experiment is unfortunately not optional and is not compatible with WhatsApp Business API. If you receive this error try sending a template in the Utility category instead of marketing as only Marketing templates are affected by this experiment.
+
+## Message failed to send because there are restrictions on how many messages can be sent from this phone number.
+
+This error is similar to the Spam Rate limit hit error. If you exceed the allowed number of messages for your number, you will receive this error. Please wait 24 hours before trying to send the message again. You can check your current limit by going to your [WhatsApp manager](https://business.facebook.com/wa/manage/phone-numbers).
+
+## Translated text too long
+
+This error means that the length of the variable text exceeds WhatsApp limits. It is often triggered by the header text of a template. The header is limited to 60 characters including the variable, if the text exceeds this limit you will receive this error. Please try to shorten the header text and try again.
+
+Another common reason is that you are sending a body text that is too long, the body is limited to 1024 characters including the variable.
+
+## The template does not exist in the specified language or the template has not been approved.
+
+This error occurs when you try sending a template whose language is not compatible with the recipient's language. One of the common reasons include sending, for example, an Spanish template to a Mexican recipient, even though the recipient's language is Spanish, the correct template language should be Spanish (MEX). Please try creating the template again with a different language. If the issue persists please [contact support](https://api.whatsapp.com/send?phone=+525592257050&text=Hi!%20I%20need%20help%20with%20Hilos.).
+
+## Internal server error
+
+This error occurs when an issue occured on our side. If you enconter this error please [contact support](https://api.whatsapp.com/send?phone=+525592257050&text=Hi!%20I%20need%20help%20with%20Hilos.) and provide the Inbox conversation link where the error happened so that we can investigate the issue.

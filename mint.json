@@ -141,6 +141,7 @@
             {
               "group": "FAQs and advanced usage",
               "pages": [
+                "docs/user/advanced/error-messages",
                 "docs/user/advanced/flow-execution-variables",
                 "docs/user/using-hilos/flows/flow-timeout",
                 "docs/user/advanced/wh-flow",
