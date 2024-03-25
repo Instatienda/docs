@@ -280,12 +280,19 @@
     {
       "group": "Account management",
       "pages": ["docs/apidocs/user/get-apiaccount-member"]
+    },
+    {
+      "group": "I'm a new agent",
+      "pages": [
+        {
+          "group": "Inbox",
+          "pages": ["docs/guides/new-agent/inbox"]
+        }
+      ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "linkedin": "https://www.linkedin.com/company/hilos-io/"
   },
   "feedback": {
     "thumbsRating": true
