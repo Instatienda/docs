@@ -286,7 +286,7 @@
       "pages": [
         {
           "group": "Inbox",
-          "pages": ["docs/guides/new-agent/inbox"]
+          "pages": ["docs/guides/new-agent/inbox", "docs/guides/new-agent/organize"]
         }
       ]
     }
