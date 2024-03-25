@@ -233,6 +233,7 @@
       "group": "Contacts",
       "pages": [
         "docs/apidocs/contact/delete-apicontact",
+        "docs/apidocs/contact/delete-contact-summary",
         "docs/apidocs/contact/get-apicontact-1",
         "docs/apidocs/contact/get-apicontact",
         "docs/apidocs/contact/patch-apicontact",
@@ -286,7 +287,10 @@
       "pages": [
         {
           "group": "Inbox",
-          "pages": ["docs/guides/new-agent/inbox", "docs/guides/new-agent/organize"]
+          "pages": [
+            "docs/guides/new-agent/inbox",
+            "docs/guides/new-agent/organize"
+          ]
         }
       ]
     }
