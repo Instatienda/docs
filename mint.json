@@ -283,7 +283,7 @@
       "pages": ["docs/apidocs/user/get-apiaccount-member"]
     },
     {
-      "group": "I'm a new agent",
+      "group": "Soy un agente nuevo",
       "pages": [
         {
           "group": "Inbox",
@@ -299,7 +299,7 @@
           ]
         },
         {
-          "group": "Organize Conversations",
+          "group": "Organizar Conversaciones",
           "pages": [
             "docs/guides/new-agent/organize-conversations/vistas-y-filtros",
             "docs/guides/new-agent/organize-conversations/crear-vistas-",
@@ -308,7 +308,7 @@
           ]
         },
         {
-          "group": "Contact",
+          "group": "Contactos",
           "pages": [
             "docs/guides/new-agent/contact/info-contacto",
             "docs/guides/new-agent/contact/subir-csv"
