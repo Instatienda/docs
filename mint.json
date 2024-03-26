@@ -290,28 +290,28 @@
           "pages": [
             "docs/guides/new-agent/inbox/empezar-conversacion",
             "docs/guides/new-agent/respuestas-rapidas",
-            "docs/guides/inbox/buscar-en-conversacion",
-            "docs/guides/inbox/encontrar-conversacion",
-            "docs/guides/inbox/info-conversacion",
-            "docs/guides/inbox/info-contacto",
-            "docs/guides/inbox/archivar",
-            "docs/guides/inbox/asignaciones"
+            "docs/guides/new-agent/inbox/buscar-en-conversacion",
+            "docs/guides/new-agent/inbox/encontrar-conversacion",
+            "docs/guides/new-agent/inbox/info-conversacion",
+            "docs/guides/new-agent/inbox/info-contacto",
+            "docs/guides/new-agent/inbox/archivar",
+            "docs/guides/new-agent/inbox/asignaciones"
           ]
         },
         {
-      "group": "Organize Conversations",
-      "pages": [
-        "docs/guides/new-agent/organize-conversations/vistas-y-filtros",
-        "docs/guides/new-agent/organize-conversations/crear-vistas-",
-        "docs/guides/new-agent/organize-conversations/vista-soporte",
-        "docs/guides/new-agent/organize-conversations/vista-ventas",
-      ]
-    },
+          "group": "Organize Conversations",
+          "pages": [
+            "docs/guides/new-agent/organize-conversations/vistas-y-filtros",
+            "docs/guides/new-agent/organize-conversations/crear-vistas-",
+            "docs/guides/new-agent/organize-conversations/vista-soporte",
+            "docs/guides/new-agent/organize-conversations/vista-ventas"
+          ]
+        },
         {
           "group": "Contact",
           "pages": [
-            "docs/guides/new-agent/info-contacto",
-            "docs/guides/new-agent/subir-csv"
+            "docs/guides/new-agent/contact/info-contacto",
+            "docs/guides/new-agent/contact/subir-csv"
           ]
         }
       ]
