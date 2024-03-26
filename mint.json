@@ -297,17 +297,16 @@
             "docs/guides/inbox/archivar",
             "docs/guides/inbox/asignaciones"
           ]
+        },
+        {
           "group": "Contact",
           "pages": [
             "docs/guides/new-agent/info-contacto",
             "docs/guides/new-agent/subir-csv"
           ]
-        }
+        },
         {
-          "group": "Hilos for Support",
-      "pages": [
-
-        }
+        },
       ]
     }
   ],
