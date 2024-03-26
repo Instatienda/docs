@@ -299,7 +299,8 @@
           ]
           "group": "Contact",
           "pages": [
-            "docs/guides/new-agent/info-contacto"
+            "docs/guides/new-agent/info-contacto",
+            "docs/guides/new-agent/subir-csv"
           ]
         }
         {
