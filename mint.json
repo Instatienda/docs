@@ -291,7 +291,9 @@
             "docs/guides/new-agent/inbox/empezar-conversacion",
             "docs/guides/new-agent/respuestas-rapidas", 
             "docs/guides/inbox/buscar-en-conversacion.",
-            "docs/guides/inbox/encontrar-conversacion"
+            "docs/guides/inbox/encontrar-conversacion",
+            "docs/guides/inbox/info-conversacion",
+            
           ]
         }
       ]
