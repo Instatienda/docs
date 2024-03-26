@@ -299,6 +299,15 @@
           ]
         },
         {
+      "group": "Organize Conversations",
+      "pages": [
+        "docs/guides/new-agent/organize-conversations/vistas-y-filtros",
+        "docs/guides/new-agent/organize-conversations/crear-vistas-",
+        "docs/guides/new-agent/organize-conversations/vista-soporte",
+        "docs/guides/new-agent/organize-conversations/vista-ventas",
+      ]
+    },
+        {
           "group": "Contact",
           "pages": [
             "docs/guides/new-agent/info-contacto",
