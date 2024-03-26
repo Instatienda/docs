@@ -283,27 +283,31 @@
       "pages": ["docs/apidocs/user/get-apiaccount-member"]
     },
     {
-      "group": "I'm a new agent",
+  "group": "I'm a new agent",
+  "pages": [
+    {
+      "group": "Inbox",
       "pages": [
-        {
-          "group": "Inbox",
-          "pages": [
-            "docs/guides/new-agent/inbox/empezar-conversacion","docs/guides/new-agent/respuestas-rapidas", "docs/guides/inbox/buscar-en-conversacion.","docs/guides/inbox/encontrar-conversacion",
-            "docs/guides/inbox/info-conversacion",
-            "docs/guides/inbox/info-contacto",
-            "docs/guides/inbox/archivar",
-            "docs/guides/inbox/asignaciones"
-          ]
-        },
-        {
-          "group": "Contact",
-          "pages": [
-            "docs/guides/new-agent/info-contacto",
-            "docs/guides/new-agent/subir-csv"
-          ]
-        },
+        "docs/guides/new-agent/inbox/empezar-conversacion",
+        "docs/guides/new-agent/respuestas-rapidas",
+        "docs/guides/inbox/buscar-en-conversacion",
+        "docs/guides/inbox/encontrar-conversacion",
+        "docs/guides/inbox/info-conversacion",
+        "docs/guides/inbox/info-contacto",
+        "docs/guides/inbox/archivar",
+        "docs/guides/inbox/asignaciones"
+      ]
+    },
+    {
+      "group": "Contact",
+      "pages": [
+        "docs/guides/new-agent/info-contacto",
+        "docs/guides/new-agent/subir-csv"
       ]
     }
+  ]
+}
+
   ],
   "footerSocials": {
     "linkedin": "https://www.linkedin.com/company/hilos-io/"
